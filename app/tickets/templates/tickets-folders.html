@@ -1,0 +1,15 @@
+<div class="rt-tickets-container row">
+<div class="col-md-8 ticketFolderBox" ng-if="vmtic.ticketFoldersList.length">
+    <div class="ticketFolder-box col-md-4" ng-repeat="ticketFolder in vmtic.ticketFoldersList | orderBy:'itemName'" ng-click="vmtic.getTicketDetails(ticketFolder.itemName)">
+        <a href="javascript:void(0)">
+            <p class="module_name">
+            {{ ticketFolder.itemName }}
+        </p>
+        <a href="javascript:void(0)">
+            {{ticketFolder.itemCount}}
+        </a>
+        </a>
+    </div>
+</div>
+  <p ng-if="!vmtic.ticketFoldersList.length" class="text-center">No ticket folders found, please contact admin user</p>
+</div>

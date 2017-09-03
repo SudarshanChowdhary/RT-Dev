@@ -1,0 +1,101 @@
+<div class="rt-admin-container row">
+		<form class="form-horizontal" name="teamForm" novalidate validate-form="vmtea.addTeamMember(vmtea.team, teamForm)">
+		<div class="row">
+				<div class="col-lg-6">
+						<div class="form-group">
+								<label for="newMember" class="col-lg-7 control-label">Member Name</label>
+									<div class="col-lg-4">
+									     	   <input type="text" class="form-control" name="memberName" ng-model="vmtea.team.newMember" required>
+									     	   <div ng-message="required" ng-if="teamForm.$submitted && teamForm.memberName.$pristine && teamForm.memberName.$error.required" class="validation-message">Required</div>
+									</div>
+						</div>
+						<div class="form-group">
+								<label for="newRole" class="col-lg-7 control-label">Role</label>
+									<div class="col-lg-4">
+									     	   <input type="text" class="form-control" name="role" ng-model="vmtea.team.newRole" required>
+									     	   <div ng-message="required" ng-if="teamForm.$submitted && teamForm.role.$pristine && teamForm.role.$error.required" class="validation-message">Required</div>
+									</div>
+						</div>
+						<div class="form-group">
+								<label for="newEmail" class="col-lg-7 control-label sub_division">Email</label>
+									<div class="col-lg-4">
+									     	   <input type="email" class="form-control" name="mail" ng-model="vmtea.team.newEmail" uib-tooltip="Email ID should match as in Apple directory" tooltip-placement="bottom" tooltip-enable="!vmtea.team.newEmail" required>
+									     	   <div ng-message="required" ng-if="teamForm.$submitted && teamForm.mail.$pristine && teamForm.mail.$error.required" class="validation-message">Required</div>
+									     	   <span class="validation-message" ng-show="teamForm.mail.$error.email"> Not a valid email !</span>	
+									</div>
+						</div>
+				   </div>
+				   <div class="col-lg-6">
+						<!-- <div class="form-group">
+								<label for="newPrimaryContact" class="col-lg-2 control-label sub_division">Primary Contact</label>
+									<div class="col-lg-4">
+									     	   <input type="text" class="form-control" name="primaryContact" ng-model="vmtea.team.newPrimaryContact" required>
+									     	   <div ng-message="required" ng-if="teamForm.$submitted && teamForm.primaryContact.$pristine && teamForm.primaryContact.$error.required" class="validation-message">Required</div>
+									     	   
+									</div>
+						</div> -->
+						
+						<div class="form-group">
+								<label for="newLevel" class="col-lg-2 control-label">Level</label>
+									<div class="col-lg-4">
+									     	   <select id="newLevel" name="level" class="form-control" ng-options="levelname.name as levelname.name for levelname in vmtea.levelname" ng-model="vmtea.team.newLevel" required>
+														<option value="">Select Option</option>
+												</select>
+												<div ng-message="required" ng-if="teamForm.$submitted && teamForm.level.$pristine && teamForm.level.$error.required" class="validation-message">Required</div>
+									</div>
+						</div>
+						<div class="form-group">
+								<label for="newTeamName" class="col-lg-2 control-label sub_division">Team</label>
+									<div class="col-lg-4">
+									     	 <!--  <select id="newTeamName"  name="team" class="form-control" ng-options="team for team in vmtea.teamDetails" ng-model="vmtea.team.newTeamName" ng-change="vmtea.checkTeamTypeAddNew(team)" required>
+														<option value="">add new team type</option>
+												</select>
+												<input type="text" class="form-control" ng-if="vmtea.showTeamTypeText"> -->
+												<ui-select ng-model="vmtea.team.newTeamName" reset-search-input="true" required="true" ng-maxlength="40" name="team">
+									          <ui-select-match placeholder="Add new">
+									            <span>{{$select.selected || $select.search}}</span>
+									            <a class="btn btn-xs btn-link pull-right" ng-click="vmtea.clear($event, $select)"><i class="glyphicon glyphicon-remove"></i></a>
+									          </ui-select-match>
+									          <ui-select-choices repeat="team in (vmtea.teamDetails | filter:  $select.search )" refresh="vmtea.refreshResults($select)" refresh-delay="0">
+									            <span>{{team}}</span>
+									          </ui-select-choices>
+									        </ui-select>
+									        <div ng-message="required" ng-if="teamForm.$submitted && teamForm.team.$pristine && teamForm.team.$error.required" class="validation-message">Required</div>
+									</div>
+						</div>
+						<div class="form-group">
+								<label for="newManager" class="col-lg-2 control-label">Manager</label>
+									<div class="col-lg-4">
+									     	   <select id="newManager" name="manager" class="form-control" ng-options="manager.id as manager.name for manager in vmtea.teamTypeManagers | filter : vmtea.showManagerByLevels" ng-model="vmtea.team.newManager" uib-tooltip="Manager is based on level and team type" tooltip-placement="bottom" tooltip-enable="!vmtea.team.newTeamName || !vmtea.team.newLevel"  ng-if="vmtea.team.newLevel == '0'">
+														<option value="">Select Option</option>
+												</select>
+												<select id="newManager" name="manager" class="form-control" ng-options="manager.id as manager.name for manager in vmtea.teamTypeManagers | filter : vmtea.showManagerByLevels" ng-model="vmtea.team.newManager" uib-tooltip="Manager is based on level and team type" tooltip-placement="bottom" tooltip-enable="!vmtea.team.newTeamName || !vmtea.team.newLevel" required  ng-if="vmtea.team.newLevel != '0'">
+														<option value="">Select Option</option>
+												</select>
+												<div ng-message="required" ng-if="teamForm.$submitted  && teamForm.manager.$pristine && teamForm.manager.$error.required" class="validation-message">Required</div>
+									</div>
+						</div>
+				   </div>
+		   </div>
+		   <div class="row">
+			   	<div class="col-lg-12">
+			   		<div class="form-group  member-specialization">
+						<label for="memberDescription" class="col-lg-4 control-label">Member Specialization</label>
+							<div class="col-lg-7">
+								<textarea class="form-control" rows="2" name="memberDescription" ng-model="vmtea.team.memberDescription" ng-maxlength="300"></textarea>
+								<div ng-if="teamForm.memberDescription.$error.maxlength" class="validation-message">300 characters only !</div>
+							</div>
+					</div>
+			   	</div>
+		   </div>
+		   <div class="row">
+		  <div class="admin-buttons" style="text-align:center;">
+			  <button type="submit" class="btn btn-default" ng-if="!vmtea.updateTeam">Add</button>
+			  <button type="button" class="btn btn-default" ng-click="vmtea.addTeamMember(vmtea.team, teamForm)" ng-if="vmtea.updateTeam" ng-disabled="teamForm.$invalid">Save</button>
+			  <button type="button" class="btn btn-default" ng-if="!vmtea.updateTeam" ng-click="vmtea.resetForm(teamForm)">Clear</button>
+			  <button type="button" class="btn btn-default" ng-if="vmtea.updateTeam" ng-click="vmtea.cancelUpdate(teamForm)">Cancel</button>
+			 </div>
+		</div>
+		</form>
+		<table rt-grid  data="vmtea.data" columns="vmtea.columns" item-renderers="vmtea.itemRenderers" class="table--compact table-striped table--fixed adminTeamTable" grid-options="vmtea.gridOptions" data-nodata="No data"></table>
+</div>

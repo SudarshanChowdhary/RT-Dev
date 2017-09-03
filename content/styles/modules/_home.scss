@@ -1,0 +1,76 @@
+.home-container {
+    height: inherit;
+    max-height: inherit;
+    overflow-y: auto;
+    p.textBox {
+        position: absolute;
+        left: 45%;
+        bottom: 16%;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 5px;
+        color: #000;
+        font-size: 18px;
+        font-weight: 500;
+        max-height: 100px;
+        height: 100px;
+        width: 150px;
+        max-width: 150px;
+        text-align: center;
+        padding-top: 35px;
+        cursor:pointer;
+    }
+    div.carousel-inner {
+        position: relative;
+        height: 100%;
+        top: 40px;
+        .imageSize {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+        ul {
+            position: absolute;
+            left: 1%;
+            top: 10%;
+            font-size: 18px;
+            color: #fff;
+            width: 96%;
+            li {
+                text-shadow: 2px 2px #000;
+                word-wrap: break-word;
+            }
+            &.tickets-events,
+            &.team-events {
+                bottom: 30%;
+                top: auto;
+            }
+        }
+    }
+    .carousel-control {
+        position: absolute;
+        height: 100%;
+        top: 40px;
+    }
+    .carousel-indicators {
+        top: 100%;
+    }
+}
+.page-header-section {
+    .search-query {
+        height: 30px;
+        margin-top: 2px;
+        border-radius: 14px;
+        width: 90%;
+        float: right;
+    }
+    .tooltip-inner {
+        white-space: pre-wrap;
+        text-align: left;
+        background-color: #fffae6;
+        color: black;
+    }
+
+    .tooltip.left .tooltip-arrow {
+    border-left-color: #fffae6!important;
+    }
+}

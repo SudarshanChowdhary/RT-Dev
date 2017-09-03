@@ -1,0 +1,14 @@
+<div class="rt-reports-container">
+<div class="col-lg-5 report-box">
+    <ul class="list-group" ng-if="vmrep.reportList.length">
+        <li class="list-group-item" ng-repeat="reports in vmrep.reportList"><span class="glyphicon glyphicon-stats"></span>&nbsp;
+            <span class="badge"><span class="glyphicon glyphicon-download-alt" ng-click="vmrep.downloadReportsLink(reports.reportID)"></span></span>
+            <a href="javascript:void(0)" ng-click="vmrep.downloadReportsLink(reports.reportID)">{{reports.reportName}}
+            </a>
+        </li>
+        
+    </ul>
+<p class="text-center margin-top-20" ng-if="!vmrep.reportList.length">No Reports published</p>
+       <p class="reportsLink text-center"> <a href="mailto:SAP_RT_Dashboard_Admin@group.apple.com">Click here to request for a report</a><p>
+</div>
+</div>

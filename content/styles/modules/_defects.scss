@@ -1,0 +1,27 @@
+.rt-defects-container {
+    height: inherit;
+    max-height: inherit;
+    overflow-y: auto;
+    position: relative;
+    .rt-grid__wrapper {
+        position: relative;
+        span.more-data-link {
+            position: absolute;
+            bottom: 40px;
+            left: 45%;
+        }
+    }
+    .defects-descp:hover {
+        overflow-y: auto;
+    }
+    .filter-by {
+        background: rgba(192, 192, 192, 0.4);
+        position: absolute;
+        right: 0px;
+        padding: 10px;
+        width: 80px;
+        font-weight: 600;
+        z-index: 1000;
+        top: 0px;
+    }
+}

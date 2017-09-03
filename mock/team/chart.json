@@ -1,0 +1,59 @@
+{
+      "cols" : [
+          {"label": "Name", "pattern": "", "type": "string"},
+          {"label": "Manager", "pattern": "", "type": "string"},
+          {"label": "ToolTip", "pattern": "", "type": "string"}
+      ], 
+      "rows" : [
+          {"c": [
+              {"v": "1", "f": "Sivaprakash Mariyappan"},
+              {"v": ""},
+              {"v": "Apple Manager"}
+          ]},
+          {"c": [
+              {"v": "2", "f": "Siva Kumar Moturu"},
+              {"v": "1"},
+              {"v": "RT Onshore Lead"}
+          ]},
+          {"c": [
+              {"v": "3", "f": "Chidambaram Subbapillai"},
+              {"v": "2"},
+              {"v": "(Finance Onshore Lead)"}
+          ]},
+          {"c": [
+              {"v": "4", "f": "Satya Sai Seckhar Devarakonda"},
+              {"v": "2"},
+              {"v": "(Logistic Onshore Lead)"}
+          ]},
+          {"c": [
+              {"v": "5", "f": "Mudiyappa Madikeshwar"},
+              {"v": "2"},
+              {"v": "(Offshore Lead & Knowledge Management)"}
+          ]},
+          {"c": [
+              {"v": "6", "f": "Manohar Devaraj"},
+              {"v": "2"},
+              {"v": "(Process Compliance)"}
+          ]},
+          {"c": [
+              {"v": "7", "f": "Prasath Sivakumaran"},
+              {"v": "2"},
+              {"v": "(Repository Freshness)"}
+          ]},
+          {"c": [
+              {"v": "Vijayachandra Raju"},
+              {"v": "5"},
+              {"v": ""}
+          ]},
+          {"c": [
+              {"v": "Srikrishna Reddy"},
+              {"v": "5"},
+              {"v": ""}
+          ]},
+          {"c": [
+              {"v": "Franklin AL"},
+              {"v": "5"},
+              {"v": ""}
+          ]}
+      ]
+    }

@@ -1,0 +1,110 @@
+.rt-team-container {
+    height: inherit;
+    max-height: inherit;
+    overflow-y: auto;
+    position: relative;
+    .panel-heading a.collapsed:after {
+        content: "\f196";
+    }
+    div.team-person-details {
+        margin-top: 30px;
+        .person-photo {
+            width: 108px;
+            height: 108px;
+            border: 1px solid #ddd;
+            margin-right: 20px;
+            border-radius: 100%;
+            overflow: hidden;
+            position: relative;
+            top: 20px;
+            left:20px;
+            img {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: 140%;
+                transform: translate(-50%, -50%);
+            }
+            span.noPhoto {
+                font-size: 30px;
+                display: table-cell;
+                text-align: center;
+                vertical-align: middle;
+                }
+        }
+        .no-person-photo {
+            background-color: #dbdbdb;
+            width: 100px;
+            height: 100px;
+            display: table;
+        }
+
+        span.glyphicon.glyphicon-remove-circle{
+            font-size: 20px;
+            cursor: pointer;
+            padding: 10px;
+        }
+        .team-description{
+            
+            padding:15px;
+            textarea{
+                max-height:250px;min-height:250px;resize:none;
+            }
+        }
+    }
+    div.team-accordian-container{
+        border: solid 1px #ddd;
+        width: auto;
+        max-height: 900px;
+        overflow-y: auto;
+        min-height: 900px;
+        border-radius: 8px;
+        overflow-x: hidden;
+        .google-visualization-orgchart-table{
+            .google-visualization-orgchart-node{
+                max-width: 200px;
+                cursor: pointer;
+                min-width: 150px;
+                font-weight: bold;
+            }
+        }
+        h4.panel-title{
+            a[aria-expanded="true"]{
+                .glyphicon-plus{
+                    &:before{
+                        content:'\2212';
+                    }
+                    
+                }
+            }
+            a[aria-expanded="false"]{
+            .glyphicon-plus{
+                    &:before{
+                        content:'\002b';
+                    }
+                    
+                }
+            }
+            .team-details-accordian{
+                content:'\2212';
+            }
+        }
+        div.team-panel{
+            overflow-x :auto;
+        }
+        
+    }
+
+    div.panel-group{
+        padding: 5px;
+    }
+
+    div.panel.user-details-container{
+        height: 900px;
+        background-color: #f5f5f5;
+        .team-member-details{
+            padding-left:40px;
+        }
+    }
+
+}

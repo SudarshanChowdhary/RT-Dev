@@ -1,0 +1,62 @@
+
+<org-chart-renderer></org-chart-renderer>
+<div class="rt-team-container row">
+    <div id="top-of-page" ng-if="vmt.teamList.length" ng-class="{'col-md-7':vmt.personDetails,'col-md-12':!vmt.personDetails}">
+        <p id="top-of-container">
+            Meet the people and get the answers you're looking for
+        </p>
+        <div class="team-accordian-container">
+             <!-- <div id="chart_div"></div> -->
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default" ng-repeat="team in vmt.teamList" ng-hide="(team | uppercase) == 'ALL'">
+                <div class="panel-heading" role="tab" id="{{team}}">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)" data-target="#{{$index}}" aria-expanded="false" aria-controls="{{team}}" ng-click="vmt.getTeamData(team, $index);$event.preventDefault()"><i class="team-details-accordian glyphicon glyphicon-plus pull-right" ng-click="vmt.closePersonDetails()"></i>
+                            {{ team}}
+                        </a>
+                    </h4>
+                </div>
+                <div id="{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{team}}">
+                    <div class="panel-body team-panel">
+                         <div id="chart_div_{{$index}}"></div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+</div>
+<div class="col-md-5" ng-if="vmt.personDetails">
+    <div class="team-person-details">
+        <div class="panel panel-default user-details-container">
+           <span class="glyphicon glyphicon-remove-circle pull-right" ng-click="vmt.closePersonDetails()"></span>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="pull-left col-sm-2" ng-class="{'person-photo':vmt.personDetails.photo, 'person-photo no-person-photo':!vmt.personDetails.photo}">
+                            <img ng-src="data:image/png;base64, {{vmt.personDetails.photo}}" class="pull-left" ng-if="vmt.personDetails.photo">
+                            <span class="noPhoto" ng-if="!vmt.personDetails.photo"><span ng-if="vmt.userAvatar">{{vmt.userAvatar}}</span>
+                            <span ng-if="!vmt.userAvatar"><img src="images/default-pic.jpeg"></span></span>
+                    </div>
+                    
+                    
+                    <div class="col-sm-8 team-member-details">
+                        <p><b>Name:&nbsp;</b> <span ng-bind="vmt.fullName || '-'"></span></p>
+                        <p><b>Role:&nbsp;</b>{{vmt.personDetails.role}}</p>
+                        <p><b>Email:&nbsp;</b><a href="mailto:{{vmt.personDetails.email}}">{{vmt.personDetails.email}}</a></p>
+                        <p ng-if="vmt.personDetails.primaryphoneNo"><b>Primary Contact:&nbsp;</b>{{vmt.personDetails.primaryphoneNo}}</p>
+                        <p ng-if="vmt.personDetails.mobilenumber"><b>Mobile Number:&nbsp;</b>{{vmt.personDetails.mobilenumber}}</p>
+                        <p><b>Official Chat:&nbsp;</b><span ng-bind="vmt.personDetails.officalchat || '-'"></span></p>
+                       
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group team-description">
+                              <p><b>Description:&nbsp;</b><br><textarea  class="form-control" rows="2" ng-bind="vmt.personDetails.description || '-'" readonly></textarea></p>  
+                        </div>
+                </div>
+                 
+            </div>
+        </div>
+    </div>
+</div>
+    <p ng-if="!vmt.teamList.length">No team data found. Please contact admin user.</p>
+</div>

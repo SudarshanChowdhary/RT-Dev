@@ -1,0 +1,15 @@
+label {
+  font-weight: $form-label-font-weight;
+}
+
+.form-control {
+  box-shadow: none;
+  font-weight: $form-control-font-weight;
+}
+
+select {
+  &.form-control {
+    appearance: none;
+    background: $input-bg url('../images/grey-down.svg') no-repeat right 8px center;
+  }
+}

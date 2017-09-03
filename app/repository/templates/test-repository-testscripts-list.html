@@ -1,0 +1,50 @@
+<div class="col-md-12">
+    <div class="col-md-4 test-repository-list">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <input type="checkbox" ng-model="vmtsl.selectedAll" ng-click="vmtsl.checkAll()" class="pull-left check-all" ng-disabled="!vmtsl.testScriptsList.length && !vmtsl.testScriptFolderList.length"/>
+                <span class="glyphicon glyphicon-download-alt pull-right" ng-click="vmtsl.downloadTestScript()" ng-if="vmtsl.testScriptsList.length">
+                </span>
+                Test Scripts
+            </div>
+            <div class="panel-body">
+                <!-- List group -->
+                <ul class="list-group list-of-test-folders" ng-if="vmtsl.testScriptFolderList.length"><!-- list of test folders if any -->
+                    <li class="list-group-item" ng-repeat="testFolder in vmtsl.testScriptFolderList">
+                        <span class="glyphicon glyphicon-plus" ng-click="vmtsl.getTestScriptsWithFolders(testFolder.itemName, testFolder.itemId)">
+                        </span>
+                        <a href="javascript:void(0)" ng-click="vmtsl.getTestScriptsWithFolders(testFolder.itemName, testFolder.itemId)">
+                            {{ testFolder.itemName }}&nbsp;&nbsp;({{testFolder.scriptCount}})
+                        </a>
+                    </li>
+                </ul>
+                <ul class="list-group" ng-if="vmtsl.testScriptsList.length"> <!-- list of test scripts -->
+                    <li class="list-group-item" ng-repeat="testscript in vmtsl.testScriptsList" ng-class="{'selected':$index == vmtsl.selectedTestScript}">
+                        <input type="checkbox" ng-model="testscript.Selected" class="pull-left" ng-click="vmtsl.isTestScriptChecked()" />
+                        <a href="javascript:void(0)" ng-click="vmtsl.getTestScriptDetails(testscript.itemId, $index, testscript.itemName)">
+                            {{ testscript.itemName }}
+                        </a>
+                    </li>
+                </ul>
+                <p ng-if="!vmtsl.testScriptsList.length && !vmtsl.testScriptFolderList.length" class="text-center">No test scripts found</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8" ng-if="vmtsl.testScriptsList.length && (vmtsl.checkCount <= 1) && !vmtsl.selectedAll">
+        <uib-tabset active="$root.activeTabIndex">
+            <uib-tab index="$index" ng-repeat="tab in vmtsl.testScriptsTabs" heading="{{ tab.title }}" disable="tab.disabled" select="vmtsl.showTabData($index)">
+                <div ng-include="vmtsl.template" class="test-script-data">
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+    <div class="col-md-8" ng-if="vmtsl.checkCount > 1 || vmtsl.selectedAll">
+         <div class="panel panel-default selectedTestScript">
+            <div class="panel-heading">Selected Test Scripts</div>
+                <div class="panel-body">
+                    <h4><span class="label label-primary" ng-repeat="selectedTestScript in vmtsl.checkedValues">{{selectedTestScript}}</span></h4>
+                    <button type="button" class="btn btn-default admin-buttons pull-left" ng-click="vmtsl.downloadTestScript()">Download</button>
+                </div>
+        </div>
+    </div>
+</div>

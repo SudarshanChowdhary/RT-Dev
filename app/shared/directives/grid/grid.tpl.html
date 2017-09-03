@@ -1,0 +1,89 @@
+<!-- <caption rt-grid-a11y role="alert" aria-live="polite">
+</caption> -->
+<thead role="rowgroup" class="table--generic__head">
+    <!--es-sort-column rt-grid-header-item-renderer -->
+    <tr role="row" class="table--generic__row--head table--generic__row-header">
+        <th ng-if="!col.isHidden" role="columnheader" ng-repeat="col in grid.columns" rt-grid-header-item-renderer grid-options="grid.gridOptions" column="col" role="columnheader" aria-sort="{{col.ariaSort}}" class="table--generic__cell--head {{col.thClasses}}">
+            {{::col.headerText}}
+        </th>
+    </tr>
+</thead>
+
+<tbody role="rowgroup" class="table--generic__body rt-grid__body">
+
+</tbody>
+<!--ng-if="grid.gridOptions.enablePagination" -->
+<tfoot class="table--generic__foot">
+    <tr ng-if="grid.gridOptions.enablePagination" class="table--generic__row--foot">
+        <td class="table--generic__cell--foot text-center" colspan="{{grid.columns.length}}">
+            <div ng-if="grid.filteredResult.length" rt-pagination="" class="pagination">
+            </div>
+        </td>
+    </tr>
+</tfoot>
+
+<!-- Row Template -->
+<script type="text/ng-template" id="defaultTableRowTemplate-tpl.html">
+    <tr ng-repeat="row in grid.filteredResult = (grid.data | gridGenericFilter:grid.criteriaMatch) | offset: (grid.currentPage-1) * grid.itemsByPage | limitTo: grid.itemsByPage track by $index" ROW_DEFAULT_ATTRS>
+        <td CELL_DEFAULT_ATTRS>
+        </td>
+    </tr>
+    <tr ng-if="grid.data && !grid.data.length" class="table--generic__row--nodata rt-grid__row--nodata">
+        <td class="table--generic__cell--nodata" colspan="{{grid.columns.length}}" ng-bind-html="grid.gridOptions.dataOptions.nodata">
+            // {{grid.gridOptions.dataOptions.nodata || 'No data'}}
+        </td>
+    </tr>
+</script>
+
+<!-- Simple Table for no custom itemrender -->
+<!-- Infinite scroll row template  | limitTo: grid.gridOptions.scrollLimit  -->
+<script type="text/ng-template" id="defaultSimpleTableRowTemplate-tpl.html">
+    <tr ng-repeat="row in grid.filteredResult = (grid.data ) track by $index" role="row" id="{{grid.gridOptions.tableId+''+$index}}" ng-init="rowIndex=$index" class="table--generic__row--body {{grid.gridOptions.rowClass}} {{row.rowStyleCls}}" ng-click="grid.onRowClick(row, $event)"
+        ng-class="{'table--generic__row--body--selection':row.selected}">
+        <td role="gridcell" ng-repeat="col in grid.columns" class="table--generic__cell--body rt-grid__cell--body {{col.tdClasses}}">
+            {{ BINDING_EXP row[col.dataField]}}
+        </td>
+    </tr>
+    <tr ng-if="grid.data && !grid.data.length" class="table--generic__row--nodata rt-grid__row--nodata">
+        <td class="table--generic__cell--nodata" colspan="{{grid.columns.length}}">
+            {{grid.gridOptions.dataOptions.nodata || 'No data'}}
+        </td>
+    </tr>
+</script>
+
+
+<!-- Accordion Table Row Template  es-accordion="row" -->
+<script type="text/ng-template" id="tableAccordionRow-tpl.html">
+    <tr ng-repeat-start="row in grid.filteredResult = (grid.data | gridGenericFilter:grid.criteriaMatch) | offset: (grid.currentPage-1) * grid.itemsByPage | limitTo: grid.itemsByPage track by $index" ROW_DEFAULT_ATTRS>
+        <td CELL_DEFAULT_ATTRS>
+        </td>
+    </tr>
+    ACCORDION_CUSTOM_ROW_TPL
+    <tr ng-if="grid.filteredResult && !grid.filteredResult.length" class="table--generic__row--nodata rt-grid__row--nodata">
+        <td class="table--generic__cell--nodata" colspan="{{grid.columns.length}}">
+            {{grid.gridOptions.dataOptions.nodata || 'No data'}}
+        </td>
+    </tr>
+</script>
+
+<!--ACCORDION ROW ATTRS-->
+<script type="text/ng-template" id="accordionRowAttrsTemplate.html">
+    <tr ng-repeat-end="" id="row-{{$index}}" role="row" class="table--generic__accordion-row--body" ng-class="{'table--generic__accordion-row--body--expanded':row.expand}">
+    </tr>
+</script>
+
+<!--ROW_DEFAULT_ATTRS  tbl-grid-row-item-renderer on-tbl-grid-render-completed  -->
+<script type="text/ng-template" id="tableRowAttrsTemplate.html">
+    <tr role="row" id="{{grid.gridOptions.tableId+''+$index}}" ng-init="rowIndex=$index" class="table--generic__row--body {{grid.gridOptions.rowClass}} {{row.rowStyleCls}}" ng-click="grid.onRowClick(row, $event)" ng-class="{'table--generic__row--body--selection':row.selected, 'table--generic__accordion-head--body--expanded':row.expand}">
+    </tr>
+</script>
+
+<!--CELL_DEFAULT_ATTRS-->
+<script type="text/ng-template" id="tableCellAttrsTemplate.html">
+    <td ng-if="!col.isHidden" role="gridcell" ng-repeat="col in grid.columns" tbl-grid-item-renderer item-renderers="grid.itemRenderers" item="row" data="grid.data" filtered-result="grid.filteredResult" column="col" row-index="{{rowIndex}}" grid-options="grid.gridOptions" class="table--generic__cell--body rt-grid__cell--body {{col.tdClasses}}">
+    </td>
+</script>
+
+<script type="text/ng-template" id="tablePaginationTemplate.html">
+
+</script>

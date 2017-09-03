@@ -1,0 +1,44 @@
+{
+  "testFoldersList": null,
+  "testScriptsDesignList": null,
+  "testScriptDetailsList": [
+    {
+      "itemId": "13257",
+      "itemName": "APO_BW_GLB_APO BW_repair actuals_ZSCG_C17",
+      "subType": "MANUAL",
+      "creationDate": "2015-10-07",
+      "businessCriticality": null,
+      "plannedAutomationDate": null,
+      "designer": "saikat_h",
+      "region": null,
+      "relevancy": null,
+      "scrubStatus": null,
+      "scriptStatus": null,
+      "consolidateStatus": null,
+      "status": null,
+      "usageCategory": null,
+      "description": "<html><body> \n<div align=\"left\">\n<font face=\"Arial\"><span style=\"font-size:8pt\">APO BW Objects for RT (New transformation ZSCG_C17)</span></font>\n</div>  \n</body></html>",
+      "itemType": "test",
+      "parentId": "1686"
+    },
+    {
+      "itemId": "21485",
+      "itemName": "APO_BW_GLB_Infopackage data validation to avoid repeated data loads",
+      "subType": "MANUAL",
+      "creationDate": "2016-11-09",
+      "businessCriticality": null,
+      "plannedAutomationDate": null,
+      "designer": "saikat_h",
+      "region": null,
+      "relevancy": null,
+      "scrubStatus": null,
+      "scriptStatus": null,
+      "consolidateStatus": null,
+      "status": null,
+      "usageCategory": null,
+      "description": "<html><body> \n<div align=\"left\">\n<font face=\"Arial\"><span style=\"font-size:8pt\">APO BW Objects for RT (New transformation ZSCG_C17)</span></font>\n</div>  \n</body></html>",
+      "itemType": "test",
+      "parentId": "1686"
+    }
+  ]
+}

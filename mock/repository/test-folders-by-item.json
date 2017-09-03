@@ -1,0 +1,69 @@
+{
+  "testFoldersList": [
+    {
+      "itemName": "Automation RT Scripts",
+      "itemId": "430",
+      "parentId": "1349",
+      "hierarchicalPath": "AAAAAMAADAAA",
+      "itemType": "test-folder",
+      "scriptCount": 727
+    },
+    {
+      "itemName": "Consolidated",
+      "itemId": "282",
+      "parentId": "1349",
+      "hierarchicalPath": "AAAAAMAADAAF",
+      "itemType": "test-folder",
+      "scriptCount": 21
+    },
+    {
+      "itemName": "SAP Transaction Scripts",
+      "itemId": "313",
+      "parentId": "1349",
+      "hierarchicalPath": "AAAAAMAADAAC",
+      "itemType": "test-folder",
+      "scriptCount": 360
+    },
+    {
+      "itemName": "TAO 3",
+      "itemId": "934",
+      "parentId": "1349",
+      "hierarchicalPath": "AAAAAMAADAAB",
+      "itemType": "test-folder",
+      "scriptCount": 179
+    },
+    {
+      "itemName": "TO BE REVIEWED",
+      "itemId": "432",
+      "parentId": "1349",
+      "hierarchicalPath": "AAAAAMAADAAD",
+      "itemType": "test-folder",
+      "scriptCount": 2218
+    },
+    {
+      "itemName": "Training",
+      "itemId": "2147",
+      "parentId": "1349",
+      "hierarchicalPath": "AAAAAMAADAAG",
+      "itemType": "test-folder",
+      "scriptCount": 17
+    },
+    {
+      "itemName": "Vertex Patch Testing",
+      "itemId": "222",
+      "parentId": "1349",
+      "hierarchicalPath": "AAAAAMAADAAE",
+      "itemType": "test-folder",
+      "scriptCount": 16
+    },
+    {
+      "itemName": "WebGui POC",
+      "itemId": "2305",
+      "parentId": "1349",
+      "hierarchicalPath": "AAAAAMAADAAH",
+      "itemType": "test-folder",
+      "scriptCount": 5
+    }
+  ],
+  "testScriptsList": null
+}

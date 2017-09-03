@@ -1,0 +1,187 @@
+$repository-box: #f5f5f5;
+$blue-color: #08c;
+.container.main-container{
+    position:relative;
+.rt-repository-container {
+    height: inherit;
+    max-height: inherit;
+    overflow-y: auto;
+  .testRepositoryBox{
+      left: 25%;
+      top: 40px;
+}
+
+  .modules-sub-modules{
+    left: 75px;
+    top: 40px;
+  }
+
+  .rt-test-repository-box {
+    background: $repository-box;
+    min-height: 200px;
+    border-radius: 10px;
+    margin-left: 15px;
+    padding: 20px;
+    text-align: center;
+    line-height: 150px;
+    margin-bottom: 15px;
+    &:hover {
+      cursor: pointer;
+      border: 1px solid $blue-color;
+    }
+    a {
+      display: block;
+    }
+  }
+  .rt-test-repository-module-box {
+    background: $repository-box;
+    min-height: 100px;
+    border-radius: 10px;
+    margin: 0 0 15px 10px;
+    padding: 20px;
+    text-align: center;
+    &:hover {
+      cursor: pointer;
+      border: 1px solid $blue-color;
+      display: block;
+      margin: 0 0 15px 10px;
+    }
+    a {
+      display: block;
+      font-size: 20px;
+    }
+    .module_name {
+      max-width: 45%;
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-transform: capitalize;
+      margin: 0 0 0px 1px;
+    }
+  }
+  .test-repository-list {
+  span.glyphicon-download-alt{
+    cursor: pointer;
+  }
+    ul.list-of-test-folders{
+      margin-bottom: 0px !important;
+    }
+    .panel {
+    max-height: 725px;
+    min-height: 725px;
+      input.check-all {
+        margin-right: 10px;
+      }
+
+      .panel-body {
+      padding: 0px;
+      overflow-y: auto;
+      height: 670px;
+      ul {
+        li {
+          border-bottom: 1px solid #ddd;
+          margin-bottom: 0px;
+          border-right: none;
+          border-left: none;
+          border-bottom-right-radius: 0px;
+          border-top: none;
+          border-bottom-left-radius: 0px;
+          display: inline-block;
+          width: 100%;
+          word-wrap: break-word;
+          input {
+            margin-right: 10px;
+          }
+          a {
+            width: 90%;
+          }
+          span.glyphicon-download-alt {
+            cursor: pointer;
+            width: 5%;
+            float: right;
+            text-align: right;
+          }
+          span.glyphicon-plus {
+            float: left;
+            margin-right: 10px;
+          }
+        }
+      }
+      p{
+      margin-top:10px;
+      }
+    }
+
+    .panel-heading{
+    background: linear-gradient(to bottom, #e5e5e5 10%, #ffffff 100%);
+    }
+    }
+
+  }
+  .details-tab {
+    label {
+      text-align: left;
+    }
+    .test-script-description{
+      min-height: 200px;
+      max-height:300px;
+      overflow-y:auto;
+      margin-top:10px;
+    }
+  }
+  .test-script-data {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-top: none;
+    overflow-y: auto;
+    height: inherit;
+    .no-attachments-data {
+      list-style: none;
+      text-align: center;
+      margin-top: 50px;
+      span {
+        font-weight: bold;
+      }
+    }
+    li.no-attachments-data{
+      margin-top: 0px;
+    }
+  }
+.selectedTestScript{
+  height: 682px;
+  overflow-y: auto;
+}
+  .list-group-item {
+     &.selected {
+       background: rgba(230, 250, 255, 0.85);
+      cursor: pointer;
+     }
+     a{
+      display: inline-block;
+     }
+}
+    ul.list-group.attachmentsListGroup{
+    span.glyphicon-download-alt{
+      cursor: pointer;
+    }
+      padding-top: 15px;
+    }
+    div.tab-pane{
+      height: 682px;
+    }
+
+    }
+
+    .label-primary{
+      display: inline-block;
+      margin: 0 10px 10px 0;
+    }
+
+    .selectedTestScript{
+      .panel-heading{
+        background: linear-gradient(to bottom, #e5e5e5 10%, #ffffff 100%);
+      }
+    }
+
+}

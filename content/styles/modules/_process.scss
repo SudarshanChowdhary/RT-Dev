@@ -1,0 +1,47 @@
+.rt-process-container {
+    height: inherit;
+    max-height: inherit;
+    overflow-y: auto;
+    ul li {
+        margin-bottom: 3px;
+    }
+    hr {
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #ccc;
+        margin: 1px;
+    }
+    h4 {
+        color: #337ab7;
+        font-size: 20px;
+        font-weight: 400;
+    }
+    h2 {
+        font-weight: 500;
+    }
+    p {
+        &.rtActivities, &.rtProjects {
+            font-weight: 600;
+        }
+    }
+    a[aria-expanded="true"]{
+                .glyphicon-plus{
+                    &:before{
+                        content:'\2212';
+                    }
+                    
+                }
+            }
+            a[aria-expanded="false"]{
+            .glyphicon-plus{
+                    &:before{
+                        content:'\002b';
+                    }
+                    
+                }
+            }
+            .process-accordian{
+                content:'\2212';
+            }
+}

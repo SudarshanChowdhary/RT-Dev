@@ -1,0 +1,40 @@
+<div class="rt-defects-container row" ng-if="!vmdef.defectsError">
+		<a href="javascript:void(0)" class="filter-by" ng-click="vmdef.showFilterOptions()"><span class="glyphicon glyphicon-filter"></span>Filter</a>
+    <div class="rt-grid__wrapper">
+        <p role="alert" aria-atomic="true" id="table-sort-alert" class="a11y">
+        </p>
+        <table rt-grid  data="vmdef.data" columns="vmdef.columns" item-renderers="vmdef.itemRenderers" grid-options="vmdef.gridOptions" class="table--compact table-striped table--fixed" nodata="vmdef.nodata">
+        </table>
+        <span class="more-data-link" ng-if="vmdef.data.length > 0 && !(vmdef.filterDefects.searchKeyword)">Fetched {{vmdef.data.length}} of {{vmdef.defectsCount}} <span ng-if="!vmdef.selectedYear && !vmdef.selectedQuarter"> from Current Quarter</span><span ng-if="vmdef.selectedYear">from Year-{{vmdef.selectedYear}} <span ng-if="vmdef.selectedQuarter">and Quarter-{{vmdef.selectedQuarter}}</span></span>&nbsp;<a  href="javascript:void(0)" ng-click="vmdef.loadMore(vmdef.count)" ng-if="!(vmdef.data.length >= vmdef.defectsCount)" class="btn btn-default">Fetch more</a></span>
+        <span class="more-data-link" ng-if="vmdef.filterDefects.searchKeyword && !(vmdef.data.length == 0)">Filtered {{vmdef.data.length}} of {{vmdef.defectsCount}} <span ng-if="!vmdef.selectedYear && !vmdef.selectedQuarter"> from Current Quarter</span></span>
+    </div>
+    <div class="sidenav hide">
+    	<button type="button" class="btn btn-link export-btn" ng-click="vmdef.exportToExcel()" ng-disabled="vmdef.filterDefects.defectQuarter && !vmdef.filterDefects.defectYear"><span class="glyphicon glyphicon-export"></span>&nbsp;Export to excel</button>
+		<span class="glyphicon glyphicon-remove-circle" ng-click="vmdef.hideSideFilterOptions()"></span>
+		<form ng-submit="vmdef.populateDefectsFilterData(vmdef.filterDefects,1)" name="defectsFilterForm">
+			 <div class="form-group">
+			  <label for="defectsSearch"></label>
+					<input type="text" name="defectsSearch" class="search-query form-control" placeholder="Enter keyword to search" ng-model="vmdef.filterDefects.searchKeyword" ng-keyup="vmdef.searchDefectsTable(vmdef.filterDefects.searchKeyword)">
+				</div>
+		 <div class="form-group">
+			  <label for="defectYear">Select Year</label>
+			    <select class="form-control" name="defectYear" ng-options="year for year in vmdef.defectFilterYear" ng-model="vmdef.filterDefects.defectYear">
+			    	<option value="">Select Year</option>
+			    </select>
+		  </div>
+		  <div class="form-group">
+		    <label for="defectQuarter">Select Quarter</label>
+		     <select class="form-control" name="defectQuarter" ng-options="quarter for quarter in vmdef.defectsFilterQuarter" ng-model="vmdef.filterDefects.defectQuarter">
+		    	<option value="">Select Quarter</option>
+		    </select>
+		  </div>
+		 
+		  <div class="form-group">
+			    <div>
+			      <button type="submit" class="btn btn-default" ng-disabled="vmdef.checkFilterSelection(vmdef.filterDefects)">Apply</button>
+			       <button type="button" class="btn btn-default" ng-click="vmdef.resetFilter(defectsFilterForm)">Reset</button>
+			    </div>
+			  </div>
+		 </form>
+	</div>
+</div>

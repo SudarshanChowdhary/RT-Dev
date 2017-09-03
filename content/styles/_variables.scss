@@ -1,0 +1,59 @@
+$font-color: #333;
+$font-link-color: #0079bb;
+$border-color: #eee;
+$default-font-family: 'Myriad Set Pro',
+'Helvetica Neue',
+Helvetica,
+Arial,
+sans-serif;
+$font-family-base: $default-font-family !default;
+$headings-font-weight: 200;
+$font-size-base: 14px !default;
+$font-size-large: ceil(($font-size-base * 1.7)) !default; // ~18px
+$font-size-small: ceil(($font-size-base * .85)) !default; // ~12px
+$font-size-h1: floor(($font-size-base * 2.6)) !default; // ~36px
+$font-size-h2: floor(($font-size-base * 2)) !default; // ~28px
+$font-size-h3: ceil(($font-size-base * 1.7)) !default; // ~24px
+$font-size-h4: ceil(($font-size-base * 1.25)) !default; // ~18px
+$font-size-h5: $font-size-base !default;
+$font-size-h6: ceil(($font-size-base * .85)) !default; // ~12px
+$font-size-icon: 22px;
+$nav-link-hover-bg: transparent;
+$nav-pills-active-link-hover-color: #c1c1c1;
+$nav-pills-active-link-hover-bg: transparent;
+$navbar-default-bg: #303030;
+$navbar-default-brand-color: #fff;
+$navbar-border-radius: 0;
+$navbar-default-link-color: #fff !default;
+$navbar-default-link-hover-color: #818181 !default;
+$navbar-default-link-hover-bg: transparent !default;
+$navbar-default-link-active-color: rgba($navbar-default-link-color, .6) !default;
+$navbar-default-link-active-bg: transparent;
+$spinner-border-color: #03a9f4;
+$spinner-border-no-color: rgba(165, 162, 162, .2);
+$input-border: #d6d6d6;
+$form-control-font-weight: 400;
+$form-label-font-weight: 400;
+$btn-font-weight: 400;
+$btn-primary-bg: #0070c9;
+$btn-primary-border: #07c;
+$btn-primary-bg-gradient: #42a1ec;
+$btn-primary-hover-bg: #147bcd;
+$btn-primary-hover-bg-gradient: #51a9ee;
+$btn-primary-hover-border: #1482d0;
+$btn-default-color: #0070c9;
+$btn-default-bg: #e3e3e3;
+$btn-default-border: #d6d6d6;
+$btn-default-bg-gradient: #fff;
+$btn-default-hover-bg: #eee;
+$btn-default-hover-bg-gradient: #fff;
+$btn-default-hover-border: #d9d9d9;
+$table-border-color: #eee;
+$table-header-color: #f0f5f9;
+$tab-active-border-color: #639bf1;
+$dashboard-card-link-color: #08c;
+$dashboard-card-bg-color: #fff;
+$dashboard-border-color: #d6d6d6;
+$table-search-control-bgcolor: #f9f9f9;
+$status-selected: #00882B;
+$modal-close-color: #818181;

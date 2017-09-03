@@ -1,0 +1,35 @@
+.table > thead > tr > th {
+  border-bottom: 0;
+  padding: 10px;
+}
+
+.table > tbody > tr > td {
+  border-bottom: 0;
+  padding: 7px 12px;
+}
+
+.col-lg-1 {
+  width: 4.33333%;
+}
+
+.people-search-table table {
+  margin-bottom: 0;
+}
+
+thead {
+  background-color: #f0f5f9;
+}
+
+table {
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.table-striped {
+  > tbody > tr:nth-of-type(even) {
+    background-color: $table-bg-accent;
+  }
+  > tbody > tr:nth-of-type(odd) {
+    background-color: #ffffff;
+  }
+}

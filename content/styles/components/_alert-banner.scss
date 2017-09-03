@@ -1,0 +1,13 @@
+.bannerWrapper {
+  position: fixed;
+  right: 1%;
+  margin: 15px 0 0 0;
+  top: 55px;
+  z-index: 99999;
+  .alert {
+    padding: 5px;
+  }
+  .msg-holder {
+    padding: 0 15px;
+  }
+}

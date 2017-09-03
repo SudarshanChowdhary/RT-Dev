@@ -1,0 +1,49 @@
+<nav class="navbar navbar-default navbar-logo">
+    <div class="container">
+        <div class="navbar-header">
+            <a ui-sref="home" class="navbar-brand"><span></span>SAP RT Dashboard</a>
+        </div>
+        <div class="navbar-collapse">
+           
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <div class="rt-navbar-user">
+                        <!-- <img src="images/default-pic.jpeg"/> -->
+                        <span>{{$ctrl.userAvatar}}</span>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <button class="btn btn-link rt-navbar-user-name">
+                        {{$ctrl.fullName}}
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<nav class="navbar navbar-default navbar-links">
+    <div class="container">
+     <div class="main-nav-links">
+             <ul class="nav navbar-nav navbar-left">
+                <li ui-sref-active="active"><a href="javascript:void(0);" ui-sref="home">Home</a></li>
+                <li ui-sref-active="active"><a href="javascript:void(0);" ui-sref="root.repository.testfolders" ui-sref-opts="{reload: true}">Repository</a></li>
+                <li ui-sref-active="active"><a href="javascript:void(0);" ui-sref="root.ticketfolders">Tickets</a></li>
+                <li ui-sref-active="active"><a href="javascript:void(0);" ui-sref="root.defects">Defects</a></li>
+                <li ui-sref-active="active"><a href="javascript:void(0);" ui-sref="root.process">Process</a></li>
+                <li ui-sref-active="active"><a href="javascript:void(0);" ui-sref="root.reports.reporthome" ui-sref-opts="{reload: true}">Reports</a></li>
+                <li ui-sref-active="active"><a href="javascript:void(0);" ui-sref="root.team">Team</a></li>
+                <li ui-sref-active="active" ng-if="$ctrl.isAdminUser"><a href="javascript:void(0);" ui-sref="root.admin">Admin</a></li>
+              </ul>
+              <div class="col-lg-3 pull-right">
+                    <form id="custom-search-form" class="form-search form-horizontal pull-right" ng-submit="$ctrl.getTestScripts($ctrl.searchText)">
+                         <div class="search-test-scripts">
+                            <input type="text" class="search-query form-control" placeholder="Keyword of test script name / BHU ID" ng-model="$ctrl.searchText" uib-tooltip="Test script:  3 chars minimum &nbsp; &nbsp; &nbsp; &nbsp; BHU ID : 5 digits" tooltip-placement="bottom" tooltip-trigger="'mouseenter'" tooltip-enable="!$ctrl.searchText">
+                            <button type="submit" class="btn"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </div>
+</nav>
+    <rt-breadcrumb></rt-breadcrumb>
+    

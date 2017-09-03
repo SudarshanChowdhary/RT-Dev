@@ -1,0 +1,10 @@
+.idea/
+node_modules/
+bower_components/
+__TestUser__.json
+dist/
+src/styles/css
+!src/styles/css/google-fonts.css
+
+#build folder contents
+

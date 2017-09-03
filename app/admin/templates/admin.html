@@ -1,0 +1,20 @@
+<div class="rt-admin-container row">
+	<div class="panel panel-primary" ng-repeat="item in vmadm.admindata" ng-click="vmadm.adminClick(item.id)">
+		<div class="panel-body">
+				<div class="row">
+					<div class="col-lg-4">
+						<img class="adminImage" ng-src="{{::item.image}}">
+					</div>
+						<div class="col-lg-8 text-left">
+							<p>{{item.title}}</p>
+							<p class="sub-title"> {{item.subtitle}}</p>
+						</div>
+				</div> 
+		</div>
+		<div class="panel-footer">
+					View Details
+					<span class="pull-right"><span class="glyphicon glyphicon-arrow-right"></span>
+
+		</div>
+	</div> 
+</div> 

@@ -1,0 +1,33 @@
+[
+  {
+    "spotlight": "Spotlight 1",
+    "edit": "edit",
+    "delete": "delete"
+    
+  },
+  {
+    "spotlight": "Spotlight 2",
+    "edit": "edit",
+    "delete": "delete"
+  },
+  {
+    "spotlight": "Spotlight 3",
+    "edit": "edit",
+    "delete": "delete"
+  },
+  {
+    "spotlight": "Spotlight 4",
+    "edit": "edit",
+    "delete": "delete"
+  },
+  {
+    "spotlight": "Spotlight 5",
+    "edit": "edit",
+    "delete": "delete"
+  },
+  {
+    "spotlight": "Spotlight 6",
+    "edit": "edit",
+    "delete": "delete"
+  }
+]

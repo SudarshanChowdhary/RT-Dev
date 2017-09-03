@@ -1,0 +1,25 @@
+.navbar {
+  li > a {
+    font-weight: 400;
+    &:hover,
+    &:active {
+      font-weight: 400;
+    }
+  }
+}
+
+.navbar-collapse {
+  text-align: center;
+}
+
+.navbar-fixed-top {
+  border-width: 0;
+}
+
+.navbar-nav {
+  &>li {
+    &>.dropdown-menu {
+      margin-top: 0;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<div class="rt-admin-container row">
+			<form class="form-horizontal" name="ticketForm" novalidate validate-form="vmtic.addTicket(vmtic.newTicketCategory, ticketForm)">
+				<div class="form-group">
+					<label for="newTicketCategory" class="control-label col-lg-5">Ticket Type</label>
+					<div class="col-lg-2">
+						<input type="text" name="newTicketCateg" class="form-control" id="newTicket" ng-model="vmtic.newTicketCategory" uib-tooltip="Ticket type should match the Ticket type in HP ALM" tooltip-placement="bottom" tooltip-enable="!vmtic.newTicketCategory" required>
+						<div ng-message="required" ng-if="ticketForm.$submitted && ticketForm.newTicketCateg.$pristine && ticketForm.newTicketCateg.$error.required" class="validation-message">Required</div>
+					</div>
+					<div class="col-lg-3 admin-buttons">
+						<button type="submit" class="btn btn-default" ng-if="!vmtic.updateTicket">Add</button>
+			            <button type="button" class="btn btn-default" ng-click="vmtic.addTicket(vmtic.newTicketCategory, ticketForm)" ng-if="vmtic.updateTicket">Save</button>
+			            <button type="button" class="btn btn-default" ng-if="!vmtic.updateTicket" ng-click="vmtic.resetForm(ticketForm)">Clear</button>
+			            <button type="button" class="btn btn-default" ng-if="vmtic.updateTicket" ng-click="vmtic.cancelUpdate(ticketForm)">Cancel</button>
+			          </div>
+				</div>
+			</form>			
+	<table rt-grid  data="vmtic.ticketRowdata" columns="vmtic.columns" item-renderers="vmtic.itemRenderers" grid-options="vmtic.gridOptions"  class="table--compact table-striped table--fixed adminTeamTable" data-nodata="No data"></table>
+</div>

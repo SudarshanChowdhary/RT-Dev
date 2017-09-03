@@ -1,0 +1,37 @@
+<form name="paginationForm" novalidate class="pagination__form" validate-form>
+    <!--ng-if="grid.paginationData.length"-->
+    <div class="pagination__inner">
+        <ul class="pagination__carousel column large-3 small-5 small-centered large-centered ">
+            <li class="pagination__carousel-item">
+                <button type="button" ng-click="grid.gotoPrevPage()" ng-disabled="!grid.hasPrevPage()" class="icon icon-paddleleft pagination__carousel--left-arrow" aria-label="Previous"><span class="glyphicon glyphicon-menu-left"></span> </button>
+            </li>
+            <li class="pagination__carousel-item" ng-class="{'is-error':grid.hasFormError(paginationForm.pageNum)}">
+                <label for="pagination__carousel-field" class="a11y">page input</label>
+                <!--es-on-page-change="grid.onRequestPageChange()" -->
+                <input id="pagination__carousel-field" type="text" value="1" name="pageNum" ng-model="grid.currentPage" rt-on-page-change="grid.onCurrentPageChange()" rt-min="1" rt-max="grid.totalPages" ng-pattern="/^[\d]+$/" class="pagination__carousel-field form-textbox" ng-required="true">
+                <span class="pagination__pagination-text"> of {{grid.totalNumOfPages()}}</span>
+                <div ng-messages="paginationForm.pageNum.$error" ng-if="grid.hasFormError(paginationForm.pageNum)" class="pagination-errors form-message-wrapper">
+                    <ul class="pagination-errors__list list-unstyled" role="alert">
+                        <li ng-message="required" class="pagination-errors__item form-message">Enter page number</li>
+                        <li ng-message="pattern" class="pagination-errors__item form-message">Invalid page number</li>
+                        <li ng-message="min" class="pagination-errors__item form-message">Should not be less than 1</li>
+                        <li ng-message="max" class="pagination-errors__item form-message">Should not be greater than {{grid.totalPages}}</li>
+                    </ul>
+                </div>
+            </li>
+            <li class="pagination__carousel-item">
+                <button type="button" ng-click="grid.gotoNextPage()" ng-disabled="!grid.hasNextPage()" class="icon icon-paddleright pagination__carousel--right-arrow" aria-label="Next"><span class="glyphicon glyphicon-menu-right"></span></button>
+            </li>
+        </ul>
+        <ul class="pagination__page-select column large-2 small-7 small-last large-last">
+            <li class="pagination__page-select-item form-table has-label large-last">
+                <span class="column large-8 medium-8">Items per page :</span>
+                <select ng-options="item for item in grid.itemsPerPages" ng-model="grid.itemsByPage" ng-change="grid.onChangeItemPerPage()" class="column large-4 medium-4"></select>
+            </li>
+        </ul>
+
+    </div>
+    <div class="pagination__viewmore">
+        <button class="btn-clear" ng-show="grid.hasItemsToLoad()" ng-click="grid.loadMore()">View more <i class="icon icon-chevrondowncircle"></i></button>
+    </div>
+</form>

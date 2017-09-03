@@ -1,0 +1,169 @@
+<form class="form-horizontal details-tab">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Test Name
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="details.itemName" readonly/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Type
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="details.subType" readonly/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Creation Date
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-value="details.creationDate | date:'MM/dd/yyyy'"readonly/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Business Criticality
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="details.businessCriticality" readonly/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Planned for Automation
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="details.plannedAutomationDate" readonly/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Designer
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="details.designer" readonly/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Relevancy:
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="details.relevancy" readonly/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Region:
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="details.region" readonly/>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Scrub Status:
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="details.scrubStatus" readonly/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Script Status:
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="details.scriptStatus" readonly/>
+                </div>
+            </div>
+        </div>
+    </div> -->
+   <!--  <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    TAO Consolidation Status:
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="details.consolidateStatus" readonly/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Status:
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="details.status" readonly/>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Usage Category
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="details.usageCategory" readonly/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">
+                    Test Id
+                </label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="details.itemId" readonly/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label class="col-sm-12 control-label">
+                    Description
+                </label>
+                <div class="col-sm-12">
+                    <div ng-bind-html="details.description | sanitize" class="test-script-description form-control" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

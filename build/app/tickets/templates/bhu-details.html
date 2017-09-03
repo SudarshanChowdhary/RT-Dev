@@ -1,0 +1,9 @@
+<div class="modal-header">
+        <h4 class="modal-title">
+            Ticket Details for BHU Id #{{ctrl.selBhuId}}
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="ctrl.cancel()">&times;</button>
+        </h4>
+    </div>
+<div class="modal-body ticket-details-by-BHUID">
+	<table rt-grid  data="ctrl.ticketsBhuModalData" columns="ctrl.modalColumns" grid-options="ctrl.gridOptions" item-renderers="ctrl.itemRenderers" class="table--compact table-striped table--fixed" data-nodata="No data"></table>
+</div>	

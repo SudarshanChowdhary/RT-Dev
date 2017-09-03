@@ -1,0 +1,54 @@
+<l1>BHU Report</l1>
+<div class="rt-reports-container row" ng-if="!bhureport.bhuReportError">
+    <a href="javascript:void(0)" class="filter-by" ng-click="bhureport.showFilterOptions()"><span class="glyphicon glyphicon-filter"></span>Filter</a>
+    <div class="rt-grid__wrapper">
+        <p role="alert" aria-atomic="true" id="table-sort-alert" class="a11y">
+        </p>
+        <table rt-grid  data="bhureport.data" columns="bhureport.columns" item-renderers="bhureport.itemRenderers" grid-options="bhureport.gridOptions" 
+        class="table--compact table-striped table--fixed" nodata="bhureport.nodata">
+        </table>
+        <span class="more-data-link" ng-if="bhureport.data.length > 0 && !(bhureport.filterBhuReport.searchKeyword)">Fetched {{bhureport.data.length}} of {{bhureport.bhuReportCount}} 
+            <span ng-if="!bhureport.selectedYear && !bhureport.selectedQuarter"> from Current Quarter</span>
+            <span ng-if="bhureport.selectedYear">from Year-{{bhureport.selectedYear}} 
+                <span ng-if="bhureport.selectedQuarter">and Quarter-{{bhureport.selectedQuarter}}</span>
+            </span>&nbsp;
+            <a  href="javascript:void(0)" ng-click="bhureport.loadMore(bhureport.count)" ng-if="!(bhureport.data.length >= bhureport.bhuReportCount)" class="btn btn-default">Fetch more</a>
+        </span>
+        <span class="more-data-link" ng-if="bhureport.filterBhuReport.searchKeyword && !(bhureport.data.length == 0)">Filtered {{bhureport.data.length}} of {{bhureport.bhuReportCount}} 
+            <span ng-if="!bhureport.selectedYear && !bhureport.selectedQuarter"> from Current Quarter</span>
+        </span>
+    </div>
+    <div class="sidenav hide">
+        <button type="button" class="btn btn-link export-btn" ng-click="bhureport.exportToExcel()" ng-disabled="bhureport.filterBhuReport.bhurptQuarter && !bhureport.filterBhuReport.bhurptYear">
+            <span class="glyphicon glyphicon-export"></span>&nbsp;
+            Export to excel
+        </button>
+        <span class="glyphicon glyphicon-remove-circle" ng-click="bhureport.hideSideFilterOptions()"></span>
+        <form ng-submit="bhureport.populateBhuReportFilterData(bhureport.filterBhuReport,1)" name="bhuReportFilterForm">
+            <div class="form-group">
+            <label for="bhuReportSearch"></label>
+                    <input type="text" name="bhuReportSearch" class="search-query form-control" placeholder="Enter keyword to search" ng-model="bhureport.filterBhuReport.searchKeyword" 
+                    ng-keyup="bhureport.searchBhuReportTable(bhureport.filterBhuReport.searchKeyword)">
+                </div>
+        <div class="form-group">
+            <label for="bhurptYear">Select Year</label>
+                <select class="form-control" name="bhurptYear" ng-options="year for year in bhureport.bhurptFilterYear" ng-model="bhureport.filterBhuReport.bhurptYear">
+                    <option value="">Select Year</option>
+                </select>
+        </div>
+        <div class="form-group">
+            <label for="bhurptQuarter">Select Quarter</label>
+            <select class="form-control" name="bhurptQuarter" ng-options="quarter for quarter in bhureport.bhuReportFilterQuarter" ng-model="bhureport.filterBhuReport.bhurptQuarter">
+                <option value="">Select Quarter</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+                <div>
+                <button type="submit" class="btn btn-default" ng-disabled="bhureport.checkFilterSelection(bhureport.filterBhuReport)">Apply</button>
+                <button type="button" class="btn btn-default" ng-click="bhureport.resetFilter(bhuReportFilterForm)">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

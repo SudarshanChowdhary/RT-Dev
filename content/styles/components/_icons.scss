@@ -1,0 +1,80 @@
+%icon-common {
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  display: inline-block;
+  background-size: 18px 18px;
+  padding-left: 25px;
+  vertical-align: bottom;
+}
+
+.icon-user-role {
+  @extend %icon-common;
+  background-image: url(../images/user-role.svg);
+  background-size: 18px 18px
+}
+
+.icon-person-search {
+  position: absolute;
+  background: url('../images/search.svg') no-repeat top center;
+  height: 20px;
+  width: 20px;
+  padding: 10px;
+  display: inline-block;
+  left: 20px;
+  top: 18px;
+}
+
+.icon-user-info {
+  @extend %icon-common;
+  height: 18px;
+  background-image: url(../images/info.svg);
+}
+
+.icon-success {
+  background-image: url(../images/successful.svg);
+  display: block;
+  height: 50px;
+  width: 50px;
+}
+
+.icon-permitted {
+  @extend %icon-common;
+  background-image: url(../images/permitted.svg);
+  padding-right: 10px
+}
+
+.icon-edit {
+  @extend %icon-common;
+  background-image: url(../images/edit.svg);
+  height: 18px;
+}
+
+.icon-close {
+  @extend %icon-common;
+  background-image: url(../images/cancel.svg);
+  top: 15px;
+  position: absolute;
+  left: 15px;
+  height: 20px;
+}
+
+.icon-resource-group {
+  background: url('../images/resource-table.svg') no-repeat top center;
+  background-size: 16px;
+  height: 18px;
+  width: 33px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.icon-resource-search {
+  background: url('../images/search.svg') no-repeat top center;
+  height: 20px;
+  width: 20px;
+  padding: 10px;
+  display: inline-block;
+  left: 40px;
+  top: 116px;
+  position: absolute;
+}

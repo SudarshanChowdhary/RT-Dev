@@ -1,0 +1,37 @@
+.rt-reports-container {
+    height: inherit;
+    max-height: inherit;
+    overflow-y: auto;
+    position: relative;
+    .report-box {
+         border: 1px solid #ddd;
+        position: absolute;
+        left: 25%;
+        top: 5%;
+        padding:0px;
+        box-shadow: 1px 3px 3px #ddd;
+    }
+    span.glyphicon.glyphicon-download-alt {
+        cursor: pointer;
+    }
+    li.list-group-item {
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        background-color: rgba(217, 237, 247, 0.44);
+        margin-bottom: 1px;
+    }
+    ul.list-group {
+       
+        border-radius: 4px;
+        max-height: 600px;
+        position: relative;
+        overflow-y: auto;
+        p.reportsLink {
+            margin-top: 400px;
+        }
+    }
+    a.reportsLink {
+        position: absolute;
+    }
+}

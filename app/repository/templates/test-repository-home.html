@@ -1,0 +1,8 @@
+<div class="col-md-8 testRepositoryBox" ng-if="vmrep.testFoldersList.length">
+    <div class="rt-test-repository-box col-md-4" ng-repeat="testFolder in vmrep.testFoldersList | orderBy:'itemName'">
+        <a href="javascript:void(0)" ng-click="vmrep.getChildFolders(testFolder.itemName, testFolder.itemId)">
+            {{ testFolder.itemName }}
+        </a>
+    </div>
+</div>
+ <p ng-if="!vmrep.testFoldersList.length" class="text-center">No test folders found, please contact admin user</p>

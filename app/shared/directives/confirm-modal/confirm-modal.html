@@ -1,0 +1,24 @@
+<div class="confirm-modal">
+    <div class="modal-header">
+        <h4 class="modal-title">
+            {{ ctrl.modal.title }}
+        </h4>
+    </div>
+    <div class="modal-body">
+        <p class="confirm-modal-question">
+            {{ ctrl.modal.content }}
+        </p>
+        <p class="confirm-modal-content">
+            {{ ctrl.modal.note }}
+        </p>
+    </div>
+    <div class="modal-footer" ng-if="!noFooter">
+        {{ ctrl.modal.okCaption }}
+        <button class="btn" type="button" ng-click="ctrl.cancel()">
+            {{ ctrl.modal.cancelCaption || 'Cancel' }}
+        </button>
+        <button class="btn btn-primary" type="button" ng-click="ctrl.confirm()">
+            {{ ctrl.modal.confirmCaption || 'Confirm' }}
+        </button>
+    </div>
+</div>

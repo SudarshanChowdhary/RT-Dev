@@ -1,0 +1,10 @@
+<span class="sort">  
+  <button ng-if="col.sort && grid.data.length" class="sort__btn btn-clear {{col.sorted}}" ng-click="orderByField($event)">
+    <!-- <span class="sort__text">{{::col.headerText}}</span> -->
+    <span class="sort__sort-state a11y">{{::col.ariaSortState}}</span>
+    <span class="sort__icon icon {{col.toggleSortIcon}}"></span>
+  </button>
+  <button ng-if="!(col.sort && grid.data.length)" class="sort__btn btn-clear {{col.sorted}}">
+      <!-- <span class="sort__text">{{::col.headerText}}</span> -->    
+  </button>
+</span>

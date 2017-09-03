@@ -1,0 +1,22 @@
+.btn {
+  padding: 6px 20px;
+}
+
+.btn-primary {
+  background: linear-gradient($btn-primary-bg-gradient, $btn-primary-bg);
+  &:hover,
+  &:focus {
+    background: linear-gradient($btn-primary-hover-bg-gradient, $btn-primary-hover-bg);
+    border-color: $btn-primary-hover-border;
+  }
+}
+
+.btn-default {
+  margin-right: 10px;
+  background: linear-gradient($btn-default-bg-gradient, $btn-default-bg);
+  &:hover,
+  &:focus {
+    background: linear-gradient($btn-default-hover-bg-gradient, $btn-default-hover-bg);
+    border-color: $btn-default-hover-border;
+  }
+}

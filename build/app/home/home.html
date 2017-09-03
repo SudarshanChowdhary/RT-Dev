@@ -1,0 +1,62 @@
+<div class="home-container row">
+    <div class="col-xs-12">
+       
+    <div id="rt-carousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#rt-carousel" data-slide-to="0" class="active"></li>
+          <li data-target="#rt-carousel" data-slide-to="1"></li>
+          <li data-target="#rt-carousel" data-slide-to="2"></li>
+          <li data-target="#rt-carousel" data-slide-to="3"></li>
+          <li data-target="#rt-carousel" data-slide-to="4"></li>
+       </ol>
+  
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+        <a ui-sref="root.repository.testfolders"><img src="images/slide-2.png" class="imageSize"></a>
+        <p class="textBox" ui-sref="root.repository.testfolders" ui-sref-opts="{reload: true}">Repository</p><ul>
+            <li ng-repeat="repository in vmhome.repositoryArr | orderBy:'-id'">
+                {{ repository.text }}
+            </li></ul>
+    </div>
+    <div class="item ">
+        <a ui-sref="root.ticketfolders"><img src="images/slide-1.png" class="imageSize"></a>
+        <p class="textBox" ui-sref="root.ticketfolders">Tickets</p><ul class="tickets-events">
+        <li ng-repeat="tickets in vmhome.ticketsArr | orderBy:'-id'">
+            {{ tickets.text }}
+        </li></ul>
+    </div>
+    
+    <div class="item">
+        <a ui-sref="root.defects"><img src="images/slide-3.png" class="imageSize"></a>
+        <p class="textBox" ui-sref="root.defects">Defects</p><ul>
+            <li ng-repeat="defects in vmhome.defectsArr | orderBy:'-id'">
+                {{ defects.text }}
+            </li></ul>
+    </div>
+    <div class="item">
+       <a ui-sref="root.reports"> <img src="images/reports-slide.jpg" class="imageSize"></a>
+       <p class="textBox" ui-sref="root.reports">Reports</p><ul>
+       <li ng-repeat="reports in vmhome.reportsArr | orderBy:'-id'">
+                {{ reports.text }}
+            </li></ul>
+    </div>
+    <div class="item">
+       <a ui-sref="root.team"> <img src="images/slide-4.png" class="imageSize"></a>
+       <p class="textBox" ui-sref="root.team">Team</p><ul class="team-events">
+            <li ng-repeat="team in vmhome.teamArr | orderBy:'-id'">
+                {{ team.text }}
+            </li></ul>
+    </div>
+  </div>
+
+  <a class="left carousel-control" href="#rt-carousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#rt-carousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+  </div>
+</div>

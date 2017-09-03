@@ -1,0 +1,72 @@
+[
+  {
+    "rtTeamMemberId": 1,
+    "groupName": "all",
+    "memberName": "Sivaprakash",
+    "memberEmailId": "abc@apple.com",
+    "memberTitle": "Apple Manager",
+    "primaryPhone": null,
+    "managerId": null,
+    "nodeLevel": 0
+  },
+  {
+    "rtTeamMemberId": 2,
+    "groupName": "all",
+    "memberName": "sivakumar",
+    "memberEmailId": "abc@apple.com",
+    "memberTitle": "RT Onshore Lead",
+    "primaryPhone": null,
+    "managerId": 1,
+    "nodeLevel": 1
+  },
+  {
+    "rtTeamMemberId": 3,
+    "groupName": "finance",
+    "memberName": "Chidambaram",
+    "memberEmailId": null,
+    "memberTitle": "Finance Onshore Lead",
+    "primaryPhone": null,
+    "managerId": 2,
+    "nodeLevel": 2
+  },
+  {
+    "rtTeamMemberId": 4,
+    "groupName": "finance",
+    "memberName": "Mudiyappa",
+    "memberEmailId": null,
+    "memberTitle": "Offshore Lead & KM",
+    "primaryPhone": null,
+    "managerId": 2,
+    "nodeLevel": 2
+  },
+  {
+    "rtTeamMemberId": 5,
+    "groupName": "finance",
+    "memberName": "Manohar",
+    "memberEmailId": null,
+    "memberTitle": "Process Compliance",
+    "primaryPhone": null,
+    "managerId": 2,
+    "nodeLevel": 2
+  },
+  {
+    "rtTeamMemberId": 6,
+    "groupName": "finance",
+    "memberName": "Vijaychandra",
+    "memberEmailId": null,
+    "memberTitle": "Member",
+    "primaryPhone": null,
+    "managerId": 4,
+    "nodeLevel": 3
+  },
+  {
+    "rtTeamMemberId": 7,
+    "groupName": "finance",
+    "memberName": "Srikrishna",
+    "memberEmailId": null,
+    "memberTitle": "Member",
+    "primaryPhone": null,
+    "managerId": 4,
+    "nodeLevel": 3
+  }
+]

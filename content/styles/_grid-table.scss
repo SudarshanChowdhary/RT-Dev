@@ -1,0 +1,373 @@
+/*
+*
+*  Table Generic
+*  It has 4 variants like .table--secondary, .table--compact, .table--fixed and .table--flexbox-fixed 
+*
+*/
+
+$table-head-text-color: #333333;
+$table-border-color: #e3e3e3;
+$table-row-hover-color: #EFF9FE;
+$table-accordion-row-bg-color: #f4f4f4;
+
+/* Secondary Table Variables */
+
+$table--secondary-row-hover-color: #0887C9;
+$table--secondary-header-row-bgcolor: #EFEEEE;
+
+/*Table--fixed Variables */
+
+$table--fixed-body-height: 500px;
+
+/* ===========================================================================
+    Table--generic variant for application wide styles to table component 
+============================================================================== */
+
+.table--generic {
+  width: 100%;
+}
+
+.table--generic__head {
+  box-sizing: border-box;
+  height: 60px;
+  white-space: nowrap;
+  background: -webkit-linear-gradient(top, #143548, #1B5270);;
+  border-top: 1px solid $table-border-color;
+}
+
+.table--generic__row--head {
+  height: 60px;
+}
+
+.table--generic__cell--head {
+  //font-size: 0.7rem;
+  color: $table-head-text-color;
+  padding: 15px 10px;
+}
+
+.table--generic__row--body {
+  border-bottom: 1px solid $table-border-color;
+  height: 60px;
+  &:hover {
+    background-color: $table-row-hover-color;
+  }
+}
+
+.table--generic__cell--body {
+  font-weight: normal;
+  padding: 15px 10px;
+  vertical-align: top;
+}
+
+.table--generic__cell--nodata {
+  text-align: center;
+  padding: 15px;
+}
+
+.table--generic__row--nodata {
+  border-bottom: 1px solid $table-border-color;
+}
+
+.table--generic__accordion-row--body {
+  border: 0;
+  display: none;
+  background-color: $table-accordion-row-bg-color;
+}
+
+.table--generic__accordion-row--body--expanded {
+  display: table-row;
+}
+
+.sort__text {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  font-size: 1.5rem;
+}
+
+.sort__icon {
+  display: inline-block;
+  position: relative;
+  width: 12px;
+  height: 16px;
+  margin: 3px 0 0 3px;
+  color:#999;
+}
+
+
+/* ========================================================
+    Table--generic variant secondary 
+=========================================================== */
+
+.table--secondary {
+  font-size: 1.4rem;
+  .table--generic__head {
+    background-color: $table--secondary-header-row-bgcolor;
+    padding-left: 0px;
+  }
+  .table--generic__row--head {
+    font-size: 1.4rem;
+    color: #333;
+  }
+  .table--generic__row--body {
+    border-bottom: none;
+    &:hover {
+      color: #fff;
+      background-color: $table--secondary-row-hover-color;
+    }
+    td {
+      vertical-align: top;
+    }
+  }
+  .table--generic__row--body--selection {
+    color: #fff;
+    background-color: $table--secondary-row-hover-color;
+  }
+  .sort__text {
+    font-size: 1.4rem;
+  }
+}
+
+
+/* ========================================================
+    Table--compact variant for small table view
+=========================================================== */
+
+.table--compact {
+  font-size: 1.4rem;
+  .table--generic__head,
+  .table--generic__row--head {
+    height: auto;
+    min-height: 30px;
+    th.width30 {
+      width: 30%;
+    }
+    th.width10 {
+      width: 10%;
+    }
+  }
+  .table--generic__row--head {
+    font-size: 1.4rem;
+  }
+  .table--generic__cell--head {
+    padding: 8px 12px;
+    font-weight: 600;
+  }
+  .table--generic__row--body {
+    height: auto;
+    min-height: 30px;
+  }
+  .table--generic__cell--body {
+    padding: 8px 12px;
+  }
+  .sort__text {
+    font-size: 1.4rem;
+  }
+}
+
+
+/* ========================================================
+   Table--fixed variant for fixed header with tbody scroll
+=========================================================== */
+
+.table--fixed *,
+.table--fixed *:before,
+.table--fixed *:after {}
+
+.table--fixed {
+  //table-layout: fixed;
+  width: 100%;
+  .table--generic__head {
+    width: 100%;
+  }
+  .table--generic__body {
+    width: 100%;
+   // max-height: $table--fixed-body-height;
+    //overflow-y: auto;
+  }
+  .table--generic__row--head {
+    th.width15 {
+      width: 15%;
+      white-space:normal;
+    }
+    th.width80 {
+      width: 80%;
+    }
+    th.width60{
+    width: 60%;
+    }
+    th.width65{
+    width: 65%;
+    }
+    th.width50{
+    width: 50%;
+    }
+    th.width40 {
+      width: 40%;
+    }
+    th.width35 {
+      width: 35%;
+    }
+    th.width30 {
+      width: 30%;
+    }
+    th.width25 {
+      width: 25%;
+    }
+    th.width5 {
+      width: 5%;
+    }
+    th.width20 {
+      width: 20%;
+    }
+    th.width38 {
+      width: 38%;
+      white-space:normal;
+    }
+    th.width13 {
+      width: 13%;
+    }
+    th.width58 {
+      width: 58%;
+    }
+    th.width12 {
+      width: 12%;
+      white-space:normal;
+    }
+    th.width10 {
+      width: 10%;
+      white-space:normal;
+    }
+    th.width75 {
+      width: 75%;
+    }
+    th.width70 {
+      width: 70%;
+    }
+  }
+  .table--generic__row--body {
+    td.width25 {
+      width: 25%;
+    }
+    td.width80 {
+      width: 80%;
+    }
+     td.width60{
+    width: 60%;
+    }
+     td.width65{
+    width: 65%;
+    }
+     td.width50 {
+      width: 50%;
+    }
+    td.width40 {
+      width: 40%;
+    }
+    td.width35 {
+      width: 35%;
+    }
+    td.width30 {
+      width: 30%;
+    }
+    td.width15 {
+      width: 15%;
+    }
+    td.width20 {
+      width: 20%;
+    }
+    td.width38 {
+      width: 38%;
+    }
+    td.width58 {
+      width: 58%;
+    }
+    td.width12 {
+      width: 12%;
+    }
+    td.width13 {
+      width: 13%;
+    }
+    td.width10 {
+      width: 10%;
+    }
+     td.width5 {
+      width: 5%;
+    }
+     td.width75 {
+      width: 75%;
+    }
+    td.width70 {
+      width: 70%;
+    }
+    td.wordwrap-text {
+      word-wrap: break-word;
+    }
+  }
+  .table--generic__head,
+  .table--generic__row--head,
+  .table--generic__cell--head,
+  .table--generic__body,
+  .table--generic__row--body,
+  .table--generic__cell--body,
+  .table--generic__row--nodata {
+    display: block;
+  }
+  .table--generic__row--head,
+  .table--generic__row--body,
+  .table--generic__row--nodata {
+    // clear: both;
+    @include clearfix;
+  }
+  .table--generic__cell--body,
+  .table--generic__cell--head,
+  .table--generic__cell--nodata {
+    float: left;
+  }
+  .table--generic__cell--nodata {
+    width: 100%;
+  }
+  .table--generic__row--nodata {
+    border-bottom: none;
+  }
+  .table--generic__cell--body{
+    min-height:50px;
+    max-height:50px;
+    overflow:hidden;
+    border-right: 1px solid #ddd;
+     &:hover {
+      overflow: auto;
+    }
+  }
+}
+
+
+/* ================================================================
+   Table--flexbox-fixed variant for fixed header with tbody scroll
+================================================================== */
+
+.table--flexbox-fixed {
+  .table--generic__head,
+  .table--generic__body {
+    display: block;
+  }
+  .table--generic__body {
+    width: 100%;
+    min-height: 40px;
+   // max-height: $table--fixed-body-height;
+    //overflow-y: auto;
+  }
+  .table--generic__row--head,
+  .table--generic__row--body,
+  .table--generic__row--nodata {
+    display: flex;
+  }
+  .table--generic__cell--head,
+  .table--generic__cell--body,
+  .table--generic__cell--nodata {
+    flex: 1;
+  }
+  .table--generic__row--nodata {
+    border-bottom: none;
+  }
+}

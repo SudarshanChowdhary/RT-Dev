@@ -1,0 +1,149 @@
+.container.main-container {
+    position: relative;
+    .rt-tickets-container {
+        height: inherit;
+        max-height: inherit;
+        overflow-y: auto;
+        position: relative;
+        /* The side navigation menu */
+        /* The navigation menu links */
+        /* When you mouse over the navigation links, change their color */
+        /* Position and style the close button (top right corner) */
+        
+        .rt-grid__wrapper {
+            position: relative;
+            span.more-data-link {
+                position: absolute;
+                bottom: 40px;
+                left: 42%;
+            }
+        }
+        .ticketFolderBox {
+            position: absolute;
+            top: 10%;
+            left: 25%;
+        }
+        .glyphicon-info-sign {
+            position: relative;
+            top: 2px;
+            left: 3px;
+        }
+        .ticketFolder-box {
+            background: #f5f5f5;
+            min-height: 100px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            margin: 0 0 15px 10px;
+            padding: 20px;
+            text-align: center;
+            &:hover {
+                cursor: pointer;
+                border: 1px solid #08c;
+            }
+            a {
+                display: block;
+            }
+            p.module_name {
+            color: #000;
+                display: inline-block;
+                white-space: nowrap;
+                text-transform: capitalize;
+                margin: 0 0 0px 1px;
+            }
+            a.ng-binding {
+                display: block;
+                font-size: 20px;
+            }
+        }
+        .defects-descp {
+            overflow: hidden;
+            &:hover {
+                overflow: auto;
+            }
+        }
+        .filter-by {
+            background: rgba(192, 192, 192, 0.4);
+            position: absolute;
+            right: 0px;
+            padding: 10px;
+            width: 80px;
+            font-weight: 600;
+            z-index: 1000;
+            top: 0px;
+        }
+        .sidenav {
+            position: relative;
+            height: 100%;
+            /* 100% Full-height */
+            
+            width: 0;
+            /* 0 width - change this with JavaScript */
+            
+            z-index: 1;
+            /* Stay on top */
+            
+            top: 0;
+            right: 0;
+            background-color: #fff;
+            /* Black*/
+            
+            border: 1px solid #ccc;
+            overflow-x: hidden;
+            /* Disable horizontal scroll */
+            
+            padding-top: 40px;
+            /* Place content 60px from the top */
+            
+            transition: 0.5s;
+            /* 0.5 second transition effect to slide in the sidenav */
+            
+            .glyphicon-remove-circle {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                font-size: 20px;
+            }
+            a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+                &:hover {
+                    color: #f1f1f1;
+                }
+            }
+        }
+        .offcanvas a:focus {
+            color: #f1f1f1;
+        }
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+    }
+    .tooltip-inner {
+        white-space: pre-wrap;
+        background-color: #fffae6;
+        color: black;
+    }
+    span.glyphicon.glyphicon-info-sign {
+        cursor: pointer;
+    }
+}
+.ticket-details-by-BHUID span.glyphicon.glyphicon-info-sign {
+    cursor: pointer;
+}
+.tooltip-inner {
+        white-space: pre-wrap;
+        background-color: #fffae6;
+        color: black;
+    }
+.tooltip.bottom .tooltip-arrow {
+    border-bottom-color: #fffae6!important;
+        }
+

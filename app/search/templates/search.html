@@ -1,0 +1,44 @@
+<div class="rt-search-container rt-repository-container">
+	<div class="col-md-12">
+		<div class="col-md-4">
+				<div class="panel panel-default">
+			  <div class="panel-heading searchPanel">
+			    <h3 class="panel-title">{{vmsea.testScriptCount}} test scripts found</h3>
+			  </div>
+			  <div class="panel-body">
+			  	<ul>
+			  		<li ng-repeat="folderPath in vmsea.folderPath" class="testFolderPath">
+			  			<!-- <input type="checkbox" ng-model="vmsea.selectedAll[$index]" ng-click="vmsea.checkAll($index)" ng-init="checked=false" class="pull-left check-all search-checkBox"/>
+                		<span class="glyphicon glyphicon-download-alt pull-right search-testscript-download" ng-click="vmsea.downloadTestScript($index)">
+                		</span>
+			  			<p ng-bind="vmsea.formatFolderPath(folderPath.testFolderPath)" class="searchScript"></p> -->
+			  			<div class="checkbox searchScript">
+						    <span class="glyphicon glyphicon-download-alt pull-right search-testscript-download" ng-click="vmsea.downloadTestScript($index)"></span>
+						    <label>
+						      <input type="checkbox" ng-model="vmsea.selectedAll[$index]" ng-click="vmsea.checkAll($index)" ng-init="checked=false" class="check-all search-checkBox"/>{{vmsea.formatFolderPath(folderPath.testFolderPath)}} 
+                		
+						    </label>
+						  </div>
+			  			<ul class="folderPath">
+			  				<li ng-repeat="folderPathTestScripts in folderPath.searchDTO" class="testScriptList" ng-class="{'selected':$parent.$index == vmsea.selectedParentTestScript && $index == vmsea.selectedTestScript}"><a href="javascript:void(0);" ng-click="vmsea.getTestScriptDetails(folderPathTestScripts.id, $parent.$index, $index, folderPathTestScripts.name)" class="pull-right">{{folderPathTestScripts.name}}</a>
+			  				<input type="checkbox" ng-model="folderPathTestScripts.Selected" ng-click="vmsea.isTestScriptChecked($parent.$index, $index, $event)" class="inner-checkbox"/><br style="clear: both;"></li>
+			  			</ul>
+			  		</li>
+				  		<li ng-if="vmsea.testScriptCount == '0'">
+					           <p class="text-center"> No relevant scripts are found</p>
+						</li>
+			  	</ul>
+			  </div>
+			</div>
+		</div>
+		<div class="col-md-8" ng-if="!(vmsea.testScriptCount == '0')">
+			<uib-tabset active="$root.activeTabIndex">
+            <uib-tab index="$index" ng-repeat="tab in vmsea.testScriptsTabs" heading="{{ tab.title }}" disable="tab.disabled" select="vmsea.showTabData($index)">
+                <div ng-include="vmsea.template" class="test-script-data">
+                </div>
+            </uib-tab>
+        </uib-tabset>
+		</div>
+		
+	</div>
+</div>

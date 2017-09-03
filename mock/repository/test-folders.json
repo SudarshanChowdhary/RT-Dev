@@ -1,0 +1,33 @@
+{
+  "testFoldersList": [
+    {
+      "lastModified": "2015-08-18 05:00:38",
+      "system": "A",
+      "verStamp": "0",
+      "attachmentFlag": null,
+      "hierarchicalPath": "AAAAAMAAD",
+      "itemName": "AUTOMATION",
+      "description": null,
+      "itemVersion": null,
+      "itemId": "1349",
+      "orderId": "3",
+      "parentId": "2",
+      "itemType": "test-folder"
+    },
+    {
+      "lastModified": "2015-08-18 05:07:15",
+      "system": "A",
+      "verStamp": "0",
+      "attachmentFlag": null,
+      "hierarchicalPath": "AAAAAMAAC",
+      "itemName": "MANUAL",
+      "description": null,
+      "itemVersion": null,
+      "itemId": "1350",
+      "orderId": "6",
+      "parentId": "2",
+      "itemType": "test-folder"
+    }
+  ],
+  "testScriptsList": null
+}

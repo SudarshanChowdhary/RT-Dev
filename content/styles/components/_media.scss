@@ -1,0 +1,62 @@
+@media only screen and (min-width:1400px) {
+  .table-fixed {
+    tbody {
+      max-height: 400px !important;
+    }
+  }
+  body {
+    font-size: 15px;
+  }
+  h1 {
+    font-size: 2.571em;
+  }
+  h2 {
+    font-size: 2em;
+  }
+  h3 {
+    font-size: 1.714em;
+  }
+  h4 {
+    font-size: 1.286em;
+  }
+  h5 {
+    font-size: 1em;
+  }
+  h6 {
+    font-size: 0.857em;
+  }
+  .dropdown-menu {
+    font-size: 1em;
+    padding-bottom: 13px;
+  }
+  .btn-link {
+    font-size: 1em;
+    padding-bottom: 13px;
+  }
+  .people-search-wrapper {
+    .people-search-header {
+      font-size: 23px;
+    }
+  }
+  .table > tbody > tr > td {
+    height: 45px !important;
+    line-height: 29px;
+  }
+}
+
+@media only screen and (max-width:1800px) {
+  .main-container {
+    height: 575px;
+    max-height: 575px;
+    overflow-y: auto;
+  }
+}
+
+@media only screen and (min-width:1800px) {
+  .main-container {
+    height: 670px;
+    max-height: 670px;
+    overflow-y: auto;
+  }
+ 
+}

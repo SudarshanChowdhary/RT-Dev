@@ -1,0 +1,17 @@
+<div class="col-lg-12">
+    <ul class="list-group attachmentsListGroup" >
+        <li class="list-group-item" ng-repeat="attachment in attachmentsDataList" >
+           <span class="glyphicon glyphicon-link"></span>
+            <span class="glyphicon glyphicon-download-alt pull-right" ng-click="downloadAttachmentLink(attachment.attachmentID)"></span>
+            <a href="javascript:void(0)" ng-click="downloadAttachmentLink(attachment.attachmentID)" title="{{ attachment.attachmentName }}">
+                {{ attachment.attachmentName }}
+            </a>
+        </li>
+        <li ng-if="!attachmentsDataList.length" class="no-attachments-data">
+            no attachments found for the selected test script
+            <span>
+                &quot;{{ selectedTestScript }}&quot;
+            </span>
+        </li>
+    </ul>
+</div>

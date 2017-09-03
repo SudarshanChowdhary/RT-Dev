@@ -1,0 +1,66 @@
+.rt-search-container {
+    height: inherit;
+    max-height: inherit;
+    overflow-y: auto;
+    ul {
+        list-style-type: none;
+        padding-left: 0px;
+        input.search-checkBox {
+            margin-bottom: 8px;
+            margin-right: 10px;
+        }
+        span.glyphicon.glyphicon-download-alt.search-testscript-download {
+            margin-top: 2px;
+            cursor: pointer;
+            margin-right: 6px;
+        }
+    }
+    div.panel-body {
+        word-wrap: break-word;
+        padding-left: 0px;
+        padding-top: 0px;
+        padding-right: 0px;
+        overflow-y: auto;
+        height: 683px;
+    }
+    div.checkbox.searchScript {
+        background-color: #ddd;
+        font-size: 14px;
+        font-weight: 400;
+        margin-bottom: 0px;
+        padding-left: 5px;
+        margin-top: 0px;
+    }
+    li.testFolderPath:last-child {
+        margin-bottom: 0px;
+    }
+    ul.folderPath {
+        font-size: 14px;
+        .testScriptList a {
+            width: 96%;
+            padding-left: 8px;
+        }
+    }
+    h3.panel-title {
+        font-weight: 600;
+    }
+    li.testScriptList {
+        padding: 5px 20px 10px 5px;
+        border-bottom: 1px solid #ddd;
+        font-size: 13px;
+        &:last-child {
+            margin-bottom: 0px;
+        }
+    }
+    .panel .searchPanel {
+        background: linear-gradient(to bottom, #e5e5e5 10%, #ffffff 100%);
+    }
+    li.testFolderPath li.testScriptList.selected {
+        background: rgba(230, 250, 255, 0.85);
+        cursor: pointer;
+    }
+    .checkbox label{
+        display: block !important;
+        cursor: default !important;
+    }
+}

@@ -1,0 +1,12 @@
+<div class="bannerWrapper" id="bannerWrapper">
+    <div class="alert banner"   ng-class="success ? 'alert-success' : 'alert-danger'" ng-show="message" ng-cloak>
+        <button class="close alert-close" ng-click="closeBtn()" aria-label="close">
+            &times;
+        </button>
+        <i class = 'glyphicon' ng-class="success ? 'glyphicon-ok' : 'glyphicon-ban-circle'">
+        </i>
+        <span class = "msg-holder">
+            {{ message }}
+        </span>
+    </div>
+</div>

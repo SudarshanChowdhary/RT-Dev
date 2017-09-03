@@ -1,0 +1,134 @@
+.rt-navbar-user {
+  border-radius: 100%;
+  width: 35px;
+  height: 35px;
+  overflow: hidden;
+  margin: 8px 0 0 60px;
+  position: relative;
+  background: #fff;
+  span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 140%;
+    transform: translate(-50%, -50%);
+  }
+  &-name {
+    padding: 15px 15px 15px 5px;
+  }
+}
+
+.user-menu-down {
+  top: 2px;
+  margin-left: 3px;
+}
+
+.navbar-center {
+  display: inline-block;
+  float: none;
+  text-align: center;
+  height: 40px;
+}
+
+.dropdown-toggle {
+  outline: none;
+  &:focus,
+  &:hover {
+    outline: none;
+    text-decoration: none;
+  }
+  &.btn {
+    &:active,
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.navbar-logo {
+  margin-bottom: 0px;
+  background: #1B5270;
+}
+
+.navbar-links {
+  background: #143548;
+  margin-bottom: 0px;
+  ul {
+    margin-left: 20px;
+  }
+  box-shadow:2px 0 10px rgba(0, 0, 0, 0.1);
+  form#custom-search-form {
+    width: 100%;
+    .search-test-scripts {
+      position: relative;
+      button {
+        position: absolute;
+        right: 10px;
+        ;
+        top: 8px;
+        text-align: right;
+        padding: 0px;
+        i {
+          font-weight: normal;
+          color: #bbb;
+        }
+      }
+    }
+  }
+}
+
+.navbar-default {
+  border: none!important;
+  .navbar-options {
+    float: right
+  }
+  .navbar-nav {
+    & > .menu-item {
+      & > a {
+        padding-left: 3px;
+        padding-right: 3px;
+        margin-left: 15px;
+        margin-right: 15px;
+      }
+    }
+    & > .active {
+      & > a {
+        color: $navbar-default-brand-color;
+        border-bottom: 3px solid $tab-active-border-color;
+        padding-bottom: 13px;
+        &:hover {
+          border-bottom: 3px solid $tab-active-border-color;
+        }
+        &:focus {
+          border-bottom: 3px solid $tab-active-border-color;
+        }
+      }
+    }
+  }
+  .navbar-brand {
+    span {
+      position: relative;
+      top: 1px;
+      padding-right: 10px;
+    }
+  }
+}
+
+.main-nav-links {
+  ul {
+    li {
+      width: auto;
+      a {
+        text-align: left;
+      }
+    }
+  }
+  #custom-search-form {
+    position: relative;
+    top: 10px;
+    padding: 0px;
+  }
+}
+.navbar-default .navbar-nav > li:not(:first-child) > a{
+  padding: 15px 23px;
+}

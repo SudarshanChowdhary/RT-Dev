@@ -1,0 +1,10 @@
+<div class="col-md-12 modules-sub-modules">
+    <div class="rt-test-repository-module-box col-md-2" ng-repeat="module in vmrmc.modulesData" ng-click="vmrmc.getTestScriptsWithFolders(module.itemName, module.itemId)">
+        <p class="module_name">
+            {{ module.itemName }}
+        </p>
+        <a href="javascript:void(0)">
+            {{ module.scriptCount }}
+        </a>
+    </div>
+</div>
