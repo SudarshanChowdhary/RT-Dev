@@ -19,7 +19,7 @@ function ReportsRoute($stateProvider) {
                 controller: 'ReportsController',
                 controllerAs: 'vmrep'
             },
-            'reportscontainer@root.reports.reporthome': {
+            'reportscontainer@root.R.reporthome': {
                 templateUrl: 'app/reports/templates/reports-home.html'
             }
         },

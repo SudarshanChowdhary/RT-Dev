@@ -1996,8 +1996,6 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
      * Intializing On Load Services for BhuReport Page
      */
     function init() {
-        debugger;
-        alert("bhu report loaded");
         bhureport.bhuReportFilterQuarter = sharedService.getQuarter();
         bhureport.bhurptFilterYear = sharedService.getYears();
          bhureport.gridOptions = {
@@ -2014,8 +2012,8 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
     }
 
     function getBhuReportList(){
-        debugger;
          reportservice.getBhuReportData().then(function(bhuReportData) {
+             debugger;
             if(bhuReportData && bhuReportData.errorCode){
                 $scope.$emit('alert', {
                 message: 'RT Dashboard currently down for Maintenance. We will be back soon. Thank you for your patience.',
@@ -2030,115 +2028,114 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         }
 
     function populateBhuReportDetailsData(bhuReportList, count){
-        debugger;
         bhureport.gridOptions.dataOptions.nodata = '';
         bhureport.columns = [{
             headerText: 'BHU / IHU',
             dataField: 'bhuIhu',
-            tdClasses: 'width30',
-            thClasses: 'width30',
-            sort: true
+            sort: true,
+            thClasses: 'width5',
+            tdClasses: 'width5'
         }, {
-            headerText: 'CURRENT STATUS',
+            headerText: 'CURRENT</br> STATUS',
             dataField: 'currentStatus',
-            thClasses: 'width60',
-            tdClasses: 'width60'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         }, {
             headerText: 'SIZE',
             dataField: 'size',
-            thClasses: 'width15',
-            tdClasses: 'width15',
-            sort: true
+            sort: true,
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'NO OF OBJECTS',
             dataField: 'noOfObjects',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'PROJECT MANAGER',
             dataField: 'projectManager',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'RT SPOC',
             dataField: 'rtspoc',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'EXTENDED TEAM MEMBERS',
             dataField: 'extendedTeamMembers',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'SCRIPTS SHARED',
             dataField: 'scriptShared',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'SCRIPTS UTILIZED',
             dataField: 'scriptUtilized',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'SCRIPT EXECUTED',
             dataField: 'scriptExecuted',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'RT DEFECTS',
             dataField: 'rtDefects',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'RT MISS',
             dataField: 'rtMiss',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'WARRANTY ISSUES',
             dataField: 'warrantyIssue',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'SCRIPT EXECUTED PART OF WARRANTY',
             dataField: 'scriptExcpartOfwarranty',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'NEW SCRIPT RECEIVED',
             dataField: 'newscriptReceived',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'SCRIPTS MODIFIED',
             dataField: 'scriptsModified',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'EFFORTS UTILIZED',
             dataField: 'efortsUtilized',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         }
     ];
         bhureport.itemRenderers = {
             //link going to appear in grid
-            'bhuIhu': 'bhuIhu-link-renderer',
-            'currentStatus': 'currentStatus-link-renderer',
-            'warrantyIssue':'warrantyIssue-link-renderer'
+            // 'bhuIhu': 'bhuIhu-link-renderer',
+            // 'currentStatus': 'currentStatus-link-renderer',
+            // 'warrantyIssue':'warrantyIssue-link-renderer'
             //other formatted columns
         };
-        // bhureport.data = bhuReportList;
-        // bhureport.dataCopy = angular.copy(bhureport.data);
-        // bhureport.bhuReportCount = count;
-        // if(bhureport.selectedYear && bhureport.selectedQuarter){
-        //     bhureport.gridOptions.dataOptions.nodata = $sce.trustAsHtml('No data found for the selected year - &quot;<b>'+bhureport.selectedYear+ '</b>&quot; and Quarter - &quot;<b>'+bhureport.selectedQuarter+ '</b>&quot;. Use filter to find other data');
-        // }else if(bhureport.selectedYear && !bhureport.selectedQuarter){
-        //     bhureport.gridOptions.dataOptions.nodata = $sce.trustAsHtml('No data found for the selected year - &quot;<b>'+bhureport.selectedYear+'</b>&quot;. Use filter to find other data');
-        // }else{
-        //     bhureport.gridOptions.dataOptions.nodata = 'No data found for the current quarter. Use filter to find other data';
-        // }
-        // bhureport.calculateTotalRecords(bhureport.bhuReportCount);
+        bhureport.data = bhuReportList;
+        bhureport.dataCopy = angular.copy(bhureport.data);
+        bhureport.bhuReportCount = count;
+        if(bhureport.selectedYear && bhureport.selectedQuarter){
+            bhureport.gridOptions.dataOptions.nodata = $sce.trustAsHtml('No data found for the selected year - &quot;<b>'+bhureport.selectedYear+ '</b>&quot; and Quarter - &quot;<b>'+bhureport.selectedQuarter+ '</b>&quot;. Use filter to find other data');
+        }else if(bhureport.selectedYear && !bhureport.selectedQuarter){
+            bhureport.gridOptions.dataOptions.nodata = $sce.trustAsHtml('No data found for the selected year - &quot;<b>'+bhureport.selectedYear+'</b>&quot;. Use filter to find other data');
+        }else{
+            bhureport.gridOptions.dataOptions.nodata = 'No data found for the current quarter. Use filter to find other data';
+        }
+        bhureport.calculateTotalRecords(bhureport.bhuReportCount);
     }
 
     function searchBhuReportTable(keyword){
@@ -2298,38 +2295,9 @@ getReportsList.$inject = ['reportservice','$q', '$http', '$stateParams', 'spinne
 
 function getReportsList(reportservice, $q, $http, $stateParams, spinnerService) {
     // return reportservice.getReportsList();
-    var userProfileData = [
-        {
-          "itemName": "Enhancement Request",
-          "itemCount": 478,
-          "idList": null
-        },
-        {
-          "itemName": "Project",
-          "itemCount": 1295,
-          "idList": null
-        },
-        {
-          "itemName": "Project Warranty",
-          "itemCount": 1002,
-          "idList": null
-        },
-        {
-          "itemName": "Production Support",
-          "itemCount": 1508,
-          "idList": null
-        },
-        {
-          "itemName": "Enhancement Warranty",
-          "itemCount": 18,
-          "idList": null
-        }
-      ];
-
      var def = $q.defer();
          spinnerService.show();
-           // $http.get("https://rtdashboardp.rno.apple.com:9012/reports/list?callback=angular.callbacks._0")
-           $http.get("userProfileData")
+            $http.get("[]")
                 .success(function(data) {
                     def.resolve(data);
                     spinnerService.hide();
@@ -2416,7 +2384,7 @@ function ReportsRoute($stateProvider) {
                 controller: 'ReportsController',
                 controllerAs: 'vmrep'
             },
-            'reportscontainer@root.reports.reporthome': {
+            'reportscontainer@root.R.reporthome': {
                 templateUrl: 'app/reports/templates/reports-home.html'
             }
         },
@@ -2479,14 +2447,12 @@ function ReportsService($http, $q,spinnerService){
 	};
 
 	return reportsService;
-
-
     
 	function getReportsList() {
         debugger;
         var def = $q.defer();
          spinnerService.show();
-            $http.get("https://rtdashboardp.rno.apple.com:9012/reports/list?callback=angular.callbacks._0")
+            $http.get("[]")
                 .success(function(data) {
                     def.resolve(data);
                     spinnerService.hide();
@@ -2503,15 +2469,76 @@ function ReportsService($http, $q,spinnerService){
     
     // BHU Report services **************************************************/
     function getBhuReportData() {
-        debugger;
         var def = $q.defer();
         spinnerService.show();
-        $http.get("https://rtdashboardp.rno.apple.com:9012/bhureports/details?start-index=1&callback=angular.callbacks._0").success(function(data) {
-            def.resolve(data);
-            spinnerService.hide();
-        }).error(function() {
-            def.reject("Failed to get data");
-        });
+
+        var _responseData = {"bhurptDetails":[{
+            "bhuIhu" : "4534 (Refer next page for details)",
+            "currentStatus":"Go live date(Refer next page for details)",
+            "size":"small",
+            "noOfObjects":"4",
+            "projectManager":"Venu",
+            "rtsSpoc":"Amudha",
+            "extteammembers":"6",
+            "scriptshared":"4",
+            "scriptutilized":"3",
+            "scriptexecuted":"2",
+            "rtdefects":"4",
+            "rtmiss":"0",
+            "warrantyissue":"5(Refer next page for details)",
+            "scrptExcpartOf":"5",
+            "newscriptreceived":"3",
+            "scriptsmodified":"2",
+            "efortsutilized":"90(Refer next page for details)"
+           },
+           {
+            "bhuIhu" : "4534 (Refer next page for details)",
+            "currentStatus":"Go live date(Refer next page for details)",
+            "size":"small",
+            "noOfObjects":"4",
+            "projectManager":"Venu",
+            "rtsSpoc":"Amudha",
+            "extteammembers":"6",
+            "scriptshared":"4",
+            "scriptutilized":"3",
+            "scriptexecuted":"2",
+            "rtdefects":"4",
+            "rtmiss":"0",
+            "warrantyissue":"5(Refer next page for details)",
+            "scrptExcpartOf":"5",
+            "newscriptreceived":"3",
+            "scriptsmodified":"2",
+            "efortsutilized":"90(Refer next page for details)"
+           },
+           {
+            "bhuIhu" : "4534 (Refer next page for details)",
+            "currentStatus":"Go live date(Refer next page for details)",
+            "size":"small",
+            "noOfObjects":"4",
+            "projectManager":"Venu",
+            "rtsSpoc":"Amudha",
+            "extteammembers":"6",
+            "scriptshared":"4",
+            "scriptutilized":"3",
+            "scriptexecuted":"2",
+            "rtdefects":"4",
+            "rtmiss":"0",
+            "warrantyissue":"5(Refer next page for details)",
+            "scrptExcpartOf":"5",
+            "newscriptreceived":"3",
+            "scriptsmodified":"2",
+            "efortsutilized":"90(Refer next page for details)"
+           }
+           ]};
+        // $http.get("https://rtdashboardp.rno.apple.com:9012/bhureports/details?start-index=1&callback=angular.callbacks._0").success(function(data) {
+        //     def.resolve(data);
+        //     spinnerService.hide();
+        // }).error(function() {
+        //     def.reject("Failed to get data");
+        // });
+        debugger;
+        var responseMockData= _responseData;
+        def.resolve(responseMockData);
         return def.promise;
     }
 

@@ -30,8 +30,6 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
      * Intializing On Load Services for BhuReport Page
      */
     function init() {
-        debugger;
-        alert("bhu report loaded");
         bhureport.bhuReportFilterQuarter = sharedService.getQuarter();
         bhureport.bhurptFilterYear = sharedService.getYears();
          bhureport.gridOptions = {
@@ -48,8 +46,8 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
     }
 
     function getBhuReportList(){
-        debugger;
          reportservice.getBhuReportData().then(function(bhuReportData) {
+             debugger;
             if(bhuReportData && bhuReportData.errorCode){
                 $scope.$emit('alert', {
                 message: 'RT Dashboard currently down for Maintenance. We will be back soon. Thank you for your patience.',
@@ -64,115 +62,114 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         }
 
     function populateBhuReportDetailsData(bhuReportList, count){
-        debugger;
         bhureport.gridOptions.dataOptions.nodata = '';
         bhureport.columns = [{
             headerText: 'BHU / IHU',
             dataField: 'bhuIhu',
-            tdClasses: 'width30',
-            thClasses: 'width30',
-            sort: true
+            sort: true,
+            thClasses: 'width5',
+            tdClasses: 'width5'
         }, {
-            headerText: 'CURRENT STATUS',
+            headerText: 'CURRENT</br> STATUS',
             dataField: 'currentStatus',
-            thClasses: 'width60',
-            tdClasses: 'width60'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         }, {
             headerText: 'SIZE',
             dataField: 'size',
-            thClasses: 'width15',
-            tdClasses: 'width15',
-            sort: true
+            sort: true,
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'NO OF OBJECTS',
             dataField: 'noOfObjects',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'PROJECT MANAGER',
             dataField: 'projectManager',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'RT SPOC',
             dataField: 'rtspoc',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'EXTENDED TEAM MEMBERS',
             dataField: 'extendedTeamMembers',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'SCRIPTS SHARED',
             dataField: 'scriptShared',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'SCRIPTS UTILIZED',
             dataField: 'scriptUtilized',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'SCRIPT EXECUTED',
             dataField: 'scriptExecuted',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'RT DEFECTS',
             dataField: 'rtDefects',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'RT MISS',
             dataField: 'rtMiss',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'WARRANTY ISSUES',
             dataField: 'warrantyIssue',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'SCRIPT EXECUTED PART OF WARRANTY',
             dataField: 'scriptExcpartOfwarranty',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'NEW SCRIPT RECEIVED',
             dataField: 'newscriptReceived',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'SCRIPTS MODIFIED',
             dataField: 'scriptsModified',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'EFFORTS UTILIZED',
             dataField: 'efortsUtilized',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         }
     ];
         bhureport.itemRenderers = {
             //link going to appear in grid
-            'bhuIhu': 'bhuIhu-link-renderer',
-            'currentStatus': 'currentStatus-link-renderer',
-            'warrantyIssue':'warrantyIssue-link-renderer'
+            // 'bhuIhu': 'bhuIhu-link-renderer',
+            // 'currentStatus': 'currentStatus-link-renderer',
+            // 'warrantyIssue':'warrantyIssue-link-renderer'
             //other formatted columns
         };
-        // bhureport.data = bhuReportList;
-        // bhureport.dataCopy = angular.copy(bhureport.data);
-        // bhureport.bhuReportCount = count;
-        // if(bhureport.selectedYear && bhureport.selectedQuarter){
-        //     bhureport.gridOptions.dataOptions.nodata = $sce.trustAsHtml('No data found for the selected year - &quot;<b>'+bhureport.selectedYear+ '</b>&quot; and Quarter - &quot;<b>'+bhureport.selectedQuarter+ '</b>&quot;. Use filter to find other data');
-        // }else if(bhureport.selectedYear && !bhureport.selectedQuarter){
-        //     bhureport.gridOptions.dataOptions.nodata = $sce.trustAsHtml('No data found for the selected year - &quot;<b>'+bhureport.selectedYear+'</b>&quot;. Use filter to find other data');
-        // }else{
-        //     bhureport.gridOptions.dataOptions.nodata = 'No data found for the current quarter. Use filter to find other data';
-        // }
-        // bhureport.calculateTotalRecords(bhureport.bhuReportCount);
+        bhureport.data = bhuReportList;
+        bhureport.dataCopy = angular.copy(bhureport.data);
+        bhureport.bhuReportCount = count;
+        if(bhureport.selectedYear && bhureport.selectedQuarter){
+            bhureport.gridOptions.dataOptions.nodata = $sce.trustAsHtml('No data found for the selected year - &quot;<b>'+bhureport.selectedYear+ '</b>&quot; and Quarter - &quot;<b>'+bhureport.selectedQuarter+ '</b>&quot;. Use filter to find other data');
+        }else if(bhureport.selectedYear && !bhureport.selectedQuarter){
+            bhureport.gridOptions.dataOptions.nodata = $sce.trustAsHtml('No data found for the selected year - &quot;<b>'+bhureport.selectedYear+'</b>&quot;. Use filter to find other data');
+        }else{
+            bhureport.gridOptions.dataOptions.nodata = 'No data found for the current quarter. Use filter to find other data';
+        }
+        bhureport.calculateTotalRecords(bhureport.bhuReportCount);
     }
 
     function searchBhuReportTable(keyword){
