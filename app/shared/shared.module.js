@@ -23,6 +23,12 @@ module.exports = angular
     .directive('validateForm', require('./directives/grid-admin-validation.directive'))
     .directive('checkRepository', require('./check-repository/check-repository.directive'))
     .directive('rtRepoBreadcrumb', require('./directives/generate-repository-breadcrumb.directive'))
+    //2nd enhancment in report
+    .directive('currentStatuslinkrenderer',require('./directives/grid-report-status.directive'))
+    .directive('warrantyIssuelinkrenderer',require('./directives/grid-report-warrantyIssue.directive'))
+    .directive('efortsutilizedlinkrenderer',require('./directives/grid-report-efortsutilize.directive'))
+    
+
     .factory('spinnerService', require('./spinner/spinner.service'))
     .factory('checkRepositoryService', require('./check-repository/check-repository.service'))
     .factory('sharedService', require('./shared.service'));

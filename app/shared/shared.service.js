@@ -40,41 +40,11 @@ function SharedService($http, $q, spinnerService) {
         return def.promise;
     }
 
-    var userProfileData = [
-        {
-          "itemName": "Enhancement Request",
-          "itemCount": 478,
-          "idList": null
-        },
-        {
-          "itemName": "Project",
-          "itemCount": 1295,
-          "idList": null
-        },
-        {
-          "itemName": "Project Warranty",
-          "itemCount": 1002,
-          "idList": null
-        },
-        {
-          "itemName": "Production Support",
-          "itemCount": 1508,
-          "idList": null
-        },
-        {
-          "itemName": "Enhancement Warranty",
-          "itemCount": 18,
-          "idList": null
-        }
-      ];
-
-
     function getUser(){
       var def = $q.defer();
         spinnerService.show();
-        //$http.get("https://rtdashboardp.rno.apple.com:9012/homepage/userProfile?callback=angular.callbacks._0").success(function(data) {
-            $http.get("userProfileData/homepage/userProfile?callback=angular.callbacks._0").success(function(data) {   
-        def.resolve(data);
+        $http.get("https://rtdashboardp.rno.apple.com:9012/homepage/userProfile?callback=angular.callbacks._0").success(function(data) {
+            def.resolve(data);
             spinnerService.hide();
         }).error(function() {
             def.reject("Failed to get data");

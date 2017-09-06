@@ -2,12 +2,12 @@
 $ = jQuery = require('jquery');
 var angular = require('angular');
 require('jquery-ui');
-//require('angular-sanitize');
+// require('angular-sanitize');
 // external or vendor dependencies
 require('bootstrap-sass/assets/javascripts/bootstrap');
 require('angular-ui-bootstrap');
 require('angular-ui-router');
-// require('angular-sanitize');
+require('angular-sanitize');
 require('ui-select');
 require('angular-messages');
 // application modules
@@ -29,7 +29,7 @@ angular
 // application top level module
     .module('rt', [
         // external modules
-        'ui.router', 'ui.bootstrap', 'ui.select', 'ncy-angular-breadcrumb',
+        'ui.router', 'ui.bootstrap', 'ui.select', 'ncy-angular-breadcrumb', 'ngSanitize',
         // application modules
         home.name,
         layout.name,

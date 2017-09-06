@@ -4,7 +4,7 @@ function getReportsList(reportservice, $q, $http, $stateParams, spinnerService) 
     // return reportservice.getReportsList();
      var def = $q.defer();
          spinnerService.show();
-            $http.get("[]")
+            $http.get("https://rtdashboardp.rno.apple.com:9012/reports/list?callback=angular.callbacks._0")
                 .success(function(data) {
                     def.resolve(data);
                     spinnerService.hide();

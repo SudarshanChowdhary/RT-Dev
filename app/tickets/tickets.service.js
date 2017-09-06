@@ -34,8 +34,9 @@ function TicketsService($http, $q,spinnerService) {
 
     function getTicketTypeDetails(tType, startIndex) {
         var def = $q.defer();
+        debugger;
          spinnerService.show();
-            $http.get("tickets/details/"+tType+"?start-index="+startIndex)
+            $http.get("https://rtdashboardp.rno.apple.com:9012/tickets/details/"+tType+"?start-index="+startIndex+"&callback=angular.callbacks._0")
                 .success(function(data) {
                     def.resolve(data);
                     spinnerService.hide();
@@ -77,7 +78,7 @@ function TicketsService($http, $q,spinnerService) {
     function getTicketBhuDetails(bhuId){
         var def = $q.defer();
          spinnerService.show();
-            $http.get("tickets/bhudetails/"+bhuId)
+            $http.get("https://rtdashboardp.rno.apple.com:9012/tickets/bhudetails/"+bhuId+"&callback=angular.callbacks._0")
                 .success(function(data) {
                     def.resolve(data);
                     spinnerService.hide();
