@@ -884,7 +884,7 @@ module.exports = angular
     .controller('AdminTeamController', require('./admin-team.controller'))
     .controller('AdminTicketController', require('./admin-ticket.controller'))
     .factory('adminservice', require('./admin.service'));
-},{"./admin-folder.controller":1,"./admin-spotlight.controller":2,"./admin-team.controller":3,"./admin-ticket.controller":4,"./admin.constants":5,"./admin.controller":6,"./admin.route":8,"./admin.service":9,"angular":102}],8:[function(require,module,exports){
+},{"./admin-folder.controller":1,"./admin-spotlight.controller":2,"./admin-team.controller":3,"./admin-ticket.controller":4,"./admin.constants":5,"./admin.controller":6,"./admin.route":8,"./admin.service":9,"angular":106}],8:[function(require,module,exports){
 AdminRoute.$inject = ['$stateProvider'];
 
 function AdminRoute($stateProvider) {
@@ -1260,6 +1260,7 @@ var shared = require('./shared/shared.module');
 var repository = require('./repository/repository.module');
 var tickets = require('./tickets/tickets.module');
 var process = require('./process/process.module');
+var projectlifecycle = require('./projectlifecycle/projectlifecycle.module');
 var team = require('./team/team.module');
 var angGrid = require('./shared/directives/grid/grid.module');
 var defects = require('./defects/defects.module');
@@ -1279,6 +1280,7 @@ angular
         repository.name,
         tickets.name,
         process.name,
+        projectlifecycle.name,
         team.name,
         shared.name,
         angGrid.name,
@@ -1299,7 +1301,7 @@ angular
       })
     .run(require('./app.run.js')); 
     
-},{"./admin/admin.module":7,"./app.route.js":11,"./app.run.js":12,"./defects/defects.module":14,"./error/error.module":18,"./home/home.module":21,"./layout/layout.module":24,"./process/process.module":26,"./reports/reports.module":32,"./repository/repository.module":39,"./search/search.module":44,"./shared/breadcrumb/angular-breadcrumb.js":46,"./shared/directives/grid/grid.module":74,"./shared/shared.module":79,"./team/team.module":85,"./tickets/tickets.module":91,"angular":102,"angular-messages":95,"angular-sanitize":97,"angular-ui-bootstrap":99,"angular-ui-router":100,"bootstrap-sass/assets/javascripts/bootstrap":103,"jquery":105,"jquery-ui":104,"ui-select":107}],11:[function(require,module,exports){
+},{"./admin/admin.module":7,"./app.route.js":11,"./app.run.js":12,"./defects/defects.module":14,"./error/error.module":18,"./home/home.module":21,"./layout/layout.module":24,"./process/process.module":26,"./projectlifecycle/projectlifecycle.module":30,"./reports/reports.module":36,"./repository/repository.module":43,"./search/search.module":48,"./shared/breadcrumb/angular-breadcrumb.js":50,"./shared/directives/grid/grid.module":78,"./shared/shared.module":83,"./team/team.module":89,"./tickets/tickets.module":95,"angular":106,"angular-messages":99,"angular-sanitize":101,"angular-ui-bootstrap":103,"angular-ui-router":104,"bootstrap-sass/assets/javascripts/bootstrap":107,"jquery":109,"jquery-ui":108,"ui-select":111}],11:[function(require,module,exports){
 AppRoute.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function AppRoute($stateProvider, $urlRouterProvider) {
@@ -1623,7 +1625,7 @@ module.exports = angular
     .factory('defectsservice', require('./defects.service'));
 
 
-},{"./defects.controller":13,"./defects.route":15,"./defects.service":16,"angular":102}],15:[function(require,module,exports){
+},{"./defects.controller":13,"./defects.route":15,"./defects.service":16,"angular":106}],15:[function(require,module,exports){
 DefectsRoute.$inject = ['$stateProvider'];
 
 function DefectsRoute($stateProvider) {
@@ -1726,7 +1728,7 @@ module.exports = angular
     .config(require('./error.route'))
     .controller('ErrorController', require('./error.controller'));
 
-},{"./error.controller":17,"./error.route":19,"angular":102}],19:[function(require,module,exports){
+},{"./error.controller":17,"./error.route":19,"angular":106}],19:[function(require,module,exports){
 ErrorRoute.$inject = ['$stateProvider'];
 
 function ErrorRoute($stateProvider) {
@@ -1920,7 +1922,7 @@ var angular = require('angular');
 module.exports = angular
     .module('rt.layout', [])
     .component('rtHeader', require('./header/header.component'));
-},{"./header/header.component":23,"angular":102}],25:[function(require,module,exports){
+},{"./header/header.component":23,"angular":106}],25:[function(require,module,exports){
 ProcessController.$inject = ['$state', '$scope', '$log'];
 
 function ProcessController($state, $scope, $log) {
@@ -1944,7 +1946,7 @@ module.exports = angular
     .config(require('./process.route'))
     .controller('ProcessController', require('./process.controller'));
 
-},{"./process.controller":25,"./process.route":27,"angular":102}],27:[function(require,module,exports){
+},{"./process.controller":25,"./process.route":27,"angular":106}],27:[function(require,module,exports){
 ProcessRoute.$inject = ['$stateProvider'];
 
 function ProcessRoute($stateProvider) {
@@ -1964,6 +1966,101 @@ function ProcessRoute($stateProvider) {
 }
 module.exports = ProcessRoute;
 },{}],28:[function(require,module,exports){
+
+
+ModalInstanceController.$inject = ['$scope', '$modalInstance', 'userForm'];
+
+function ModalInstanceController ($scope, $modalInstance, userForm) {
+    $scope.form = {}
+    $scope.submitForm = function () {
+        if ($scope.form.userForm.$valid) {
+            console.log('user form is in scope');
+            $modalInstance.close('closed');
+        } else {
+            console.log('userform is not in scope');
+        }
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+};
+
+module.exports = ModalInstanceController;
+},{}],29:[function(require,module,exports){
+ProjectLifeCycleController.$inject = ['$state', '$scope', '$modal', '$log'];
+
+function ProjectLifeCycleController($state, $scope, $modal, $log) {
+    var vmpro = this;
+    // Variable Definitions
+    // Function Definitions
+    vmpro.init = init;
+    init();
+     $scope.showForm = function () {
+            $scope.message = "Show Form Button Clicked";
+            console.log($scope.message);
+
+            var modalInstance = $modal.open({
+                templateUrl: 'modal-form.html',
+                controller: ModalInstanceCtrl,
+                scope: $scope,
+                resolve: {
+                    userForm: function () {
+                        return $scope.userForm;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+
+
+    /**
+     * init
+     * Intializing On Load Services for Set Up Client Page
+     */
+    function init() {}
+}
+
+
+module.exports = ProjectLifeCycleController;
+
+
+
+
+},{}],30:[function(require,module,exports){
+var angular = require('angular');
+
+module.exports = angular
+    .module('rt.projectlifecycle', [])
+    .config(require('./projectlifecycle.route'))
+    .controller('ProjectLifeCycleController', require('./projectlifecycle.controller'))
+    .controller('ModalInstanceController', require('./modalinstance.controller'));
+
+},{"./modalinstance.controller":28,"./projectlifecycle.controller":29,"./projectlifecycle.route":31,"angular":106}],31:[function(require,module,exports){
+ProjectLifeCycleRoute.$inject = ['$stateProvider'];
+
+function ProjectLifeCycleRoute($stateProvider) {
+    $stateProvider.state('root.projectlifecycle', {
+        url: '/projectlifecycle',
+        views: {
+            '@root': {
+                templateUrl: 'app/projectlifecycle/templates/projectlifecycle.html',
+                controller: 'ProjectLifeCycleController',
+                controllerAs: 'vmpro'
+            }
+        },
+        ncyBreadcrumb: {
+            label: 'RT Project Life Cycle'
+        }
+    });
+}
+module.exports = ProjectLifeCycleRoute;
+},{}],32:[function(require,module,exports){
 BhuReportsController.$inject = ['$state', '$scope', '$http','$filter','$sce', 'reportservice', 'sharedService'];
 
 function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice, sharedService) {
@@ -2292,7 +2389,7 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
 
 }
 module.exports = BhuReportsController;
-},{}],29:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 BhuRptModalController.$inject = ['$uibModalInstance', 'modal'];
 
 function BhuRptModalController($uibModalInstance, modal) {
@@ -2377,7 +2474,7 @@ function BhuModalDirective($uibModal, reportservice) {
     };
 }
 module.exports = BhuModalDirective;
-},{}],30:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 getReportsList.$inject = ['reportservice','$q', '$http', '$stateParams', 'spinnerService'];
 
 function getReportsList(reportservice, $q, $http, $stateParams, spinnerService) {
@@ -2397,7 +2494,7 @@ function getReportsList(reportservice, $q, $http, $stateParams, spinnerService) 
 
 module.exports = getReportsList;
 
-},{}],31:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 ReportsController.$inject = ['$state', '$scope', '$log', 'reportsList', 'reportservice'];
 
 function ReportsController($state, $scope, $log, reportsList, reportservice) {
@@ -2430,7 +2527,7 @@ function ReportsController($state, $scope, $log, reportsList, reportservice) {
 }
 
 module.exports = ReportsController;
-},{}],32:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -2443,7 +2540,7 @@ module.exports = angular
     .directive('effortsutilizedLink', require('./reports-bhu-directive'))
     .directive('warrantyissueLink', require('./reports-bhu-directive'))
     .directive('currentstatusLink', require('./reports-bhu-directive'));
-},{"./reports-bhu-controller":28,"./reports-bhu-directive":29,"./reports.controller":31,"./reports.route":33,"./reports.service":34,"angular":102}],33:[function(require,module,exports){
+},{"./reports-bhu-controller":32,"./reports-bhu-directive":33,"./reports.controller":35,"./reports.route":37,"./reports.service":38,"angular":106}],37:[function(require,module,exports){
 ReportsRoute.$inject = ['$stateProvider'];
 
 function ReportsRoute($stateProvider) {
@@ -2511,7 +2608,7 @@ function ReportsRoute($stateProvider) {
     })
 }
 module.exports = ReportsRoute;
-},{"./reports-list.resolve":30}],34:[function(require,module,exports){
+},{"./reports-list.resolve":34}],38:[function(require,module,exports){
 ReportsService.$inject = ['$http', '$q', 'spinnerService'];
 
 function ReportsService($http, $q,spinnerService){
@@ -2705,7 +2802,7 @@ function ReportsService($http, $q,spinnerService){
 }
 
 module.exports = ReportsService;
-},{}],35:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 RepositoryModulesController.$inject = ['$state', '$scope','$rootScope', '$log', 'repositoryservice'];
 
 function RepositoryModulesController($state, $scope,$rootScope, $log, repositoryservice) {
@@ -2783,7 +2880,7 @@ function RepositoryModulesController($state, $scope,$rootScope, $log, repository
 
 }
 module.exports = RepositoryModulesController;
-},{}],36:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 RepositoryTestScriptListController.$inject = ['$state', '$stateParams', '$scope', '$rootScope', '$log', '$filter', '$timeout', 'repositoryservice'];
 
 function RepositoryTestScriptListController($state, $stateParams, $scope, $rootScope, $log, $filter, $timeout, repositoryservice) {
@@ -3048,7 +3145,7 @@ function RepositoryTestScriptListController($state, $stateParams, $scope, $rootS
 
 }
 module.exports = RepositoryTestScriptListController;
-},{}],37:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 RepositoryController.$inject = ['$state', '$scope', '$log', 'repositoryservice', 'testFolders'];
 
 function RepositoryController($state, $scope, $log, repositoryservice, testFolders) {
@@ -3095,7 +3192,7 @@ function RepositoryController($state, $scope, $log, repositoryservice, testFolde
     }
 }
 module.exports = RepositoryController;
-},{}],38:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 RepositoryFilter.$inject = ['$sce'];
 
 function RepositoryFilter($sce) {
@@ -3104,7 +3201,7 @@ function RepositoryFilter($sce) {
     }
 }
 module.exports = RepositoryFilter;
-},{}],39:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -3117,7 +3214,7 @@ module.exports = angular
     .filter('sanitize', require('./repository.filter'));
 
 
-},{"./repository-modules.controller":35,"./repository-testscripts-list.controller":36,"./repository.controller":37,"./repository.filter":38,"./repository.route":40,"./repository.service":41,"angular":102}],40:[function(require,module,exports){
+},{"./repository-modules.controller":39,"./repository-testscripts-list.controller":40,"./repository.controller":41,"./repository.filter":42,"./repository.route":44,"./repository.service":45,"angular":106}],44:[function(require,module,exports){
 RepositoryRoute.$inject = ['$stateProvider', '$breadcrumbProvider'];
 
 function RepositoryRoute($stateProvider, $breadcrumbProvider) {
@@ -3200,7 +3297,7 @@ function RepositoryRoute($stateProvider, $breadcrumbProvider) {
     });
 }
 module.exports = RepositoryRoute;
-},{"./test-folders.resolve":42}],41:[function(require,module,exports){
+},{"./test-folders.resolve":46}],45:[function(require,module,exports){
 RepositoryService.$inject = ['$http', '$q', 'spinnerService'];
 
 function RepositoryService($http, $q, spinnerService) {
@@ -3329,7 +3426,7 @@ function RepositoryService($http, $q, spinnerService) {
     }
 }
 module.exports = RepositoryService;
-},{}],42:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 getTestFolders.$inject = ['repositoryservice', '$http', '$stateParams', '$q', 'spinnerService'];
 
 function getTestFolders(repositoryservice, $http, $stateParams, $q, spinnerService) { //To fetch root level test folders which are defined in RT Dashboard database
@@ -3345,7 +3442,7 @@ function getTestFolders(repositoryservice, $http, $stateParams, $q, spinnerServi
         return def.promise;
 }
 module.exports = getTestFolders;
-},{}],43:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 SearchController.$inject = [    
     '$state',
     '$scope',
@@ -3634,7 +3731,7 @@ function SearchController($state, $scope,$rootScope, $http,$filter,$timeout, rep
 }
 
 module.exports = SearchController;
-},{}],44:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -3644,7 +3741,7 @@ module.exports = angular
     
 
 
-},{"./search.controller":43,"./search.route":45,"angular":102}],45:[function(require,module,exports){
+},{"./search.controller":47,"./search.route":49,"angular":106}],49:[function(require,module,exports){
 SearchRoute.$inject = ['$stateProvider'];
 
 function SearchRoute($stateProvider) {
@@ -3678,7 +3775,7 @@ function SearchRoute($stateProvider) {
     });
 }
 module.exports = SearchRoute;
-},{}],46:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 /*! angular-breadcrumb - v0.5.0
 * http://ncuillery.github.io/angular-breadcrumb
 * Copyright (c) 2016 Nicolas Cuillery; Licensed MIT */
@@ -4084,7 +4181,7 @@ angular.module('ncy-angular-breadcrumb', ['ui.router.state'])
     .directive('ncyBreadcrumbLast', BreadcrumbLastDirective)
     .directive('ncyBreadcrumbText', BreadcrumbTextDirective);
 })(window, window.angular);
-},{}],47:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 BreadCrumbController.$inject = ['$rootScope','$state','repositoryservice'];
 
 function BreadCrumbController($rootScope, $state, repositoryservice) {
@@ -4097,7 +4194,7 @@ var breadcrumbComponent = {
 };
 
 module.exports = breadcrumbComponent;
-},{}],48:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 function checkRepository() {
     return function($scope, element, attrs) {
         $scope.$on("show_repository_breadcrumb", function() {
@@ -4112,7 +4209,7 @@ function checkRepository() {
     };
 }
 module.exports = checkRepository;
-},{}],49:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 checkRepositoryService.$inject = ['$rootScope'];
 
 function checkRepositoryService($rootScope) {
@@ -4126,7 +4223,7 @@ function checkRepositoryService($rootScope) {
     };
 }
 module.exports = checkRepositoryService;
-},{}],50:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
     rtAlert.$inject = [];
     /* @ngInject */
     function rtAlert() {
@@ -4158,7 +4255,7 @@ module.exports = checkRepositoryService;
         return alertDirective;
     }
     module.exports = rtAlert;
-},{}],51:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 ConfirmModalController.$inject = ['$uibModalInstance', 'modal'];
 
 function ConfirmModalController($uibModalInstance, modal) {
@@ -4217,7 +4314,7 @@ function ConfirmModalDirective($uibModal) {
     };
 }
 module.exports = ConfirmModalDirective;
-},{}],52:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 rtRepoChain.$inject = [];
 /* @ngInject */
 function rtRepoChain() {
@@ -4284,7 +4381,7 @@ function rtRepoChain() {
     return rtRepoDirective;
 }
 module.exports = rtRepoChain;
-},{}],53:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 
 function delItemRenderer(){
 
@@ -4306,7 +4403,7 @@ function delItemRenderer(){
 }
 
 module.exports = delItemRenderer;
-},{}],54:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 
 function formValidation($parse){
 
@@ -4372,7 +4469,7 @@ function formValidation($parse){
 }
 
 module.exports = formValidation;
-},{}],55:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 
 function bhuIdLinkRenderer(){
 
@@ -4395,7 +4492,7 @@ function bhuIdLinkRenderer(){
 }
 
 module.exports = bhuIdLinkRenderer;
-},{}],56:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 
 function editItemRenderer(){
 
@@ -4415,7 +4512,7 @@ function editItemRenderer(){
 }
 
 module.exports = editItemRenderer;
-},{}],57:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 
 function dateFormat($filter){
 
@@ -4435,7 +4532,7 @@ function dateFormat($filter){
 }
 
 module.exports = dateFormat;
-},{}],58:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 
 function descItemRenderer(){
 
@@ -4465,7 +4562,7 @@ function descItemRenderer(){
 }
 
 module.exports = descItemRenderer;
-},{}],59:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 
 function defectsSummaryItemRenderer(){
 
@@ -4482,7 +4579,7 @@ function defectsSummaryItemRenderer(){
 }
 
 module.exports = defectsSummaryItemRenderer;
-},{}],60:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 
 function itemnameLinkRenderer(){
 
@@ -4523,7 +4620,7 @@ function itemnameLinkRenderer(){
 }
 
 module.exports = itemnameLinkRenderer;
-},{}],61:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 
 function efortsutilizedlinkrenderer(){
 
@@ -4546,7 +4643,7 @@ function efortsutilizedlinkrenderer(){
     }
     
     module.exports = efortsutilizedlinkrenderer;
-},{}],62:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 
 function currentStatuslinkrenderer(){
     return {
@@ -4567,7 +4664,7 @@ function currentStatuslinkrenderer(){
     }
     
     module.exports = currentStatuslinkrenderer;
-},{}],63:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 
 function warrantyIssuelinkrenderer(){
     return {
@@ -4588,7 +4685,7 @@ function warrantyIssuelinkrenderer(){
     }
     
     module.exports = warrantyIssuelinkrenderer;
-},{}],64:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 
 function repoDescItemRenderer(){
 
@@ -4605,7 +4702,7 @@ function repoDescItemRenderer(){
 }
 
 module.exports = repoDescItemRenderer;
-},{}],65:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 
 function expectedItemRenderer(){
 
@@ -4622,7 +4719,7 @@ function expectedItemRenderer(){
 }
 
 module.exports = expectedItemRenderer;
-},{}],66:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 
 function inputItemRenderer(){
 
@@ -4639,7 +4736,7 @@ function inputItemRenderer(){
 }
 
 module.exports = inputItemRenderer;
-},{}],67:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 function tcodeItemRenderer(){
 
     return {
@@ -4655,7 +4752,7 @@ function tcodeItemRenderer(){
 }
 
 module.exports = tcodeItemRenderer;
-},{}],68:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 
 function rtSpocDesc(sharedService){
 
@@ -4684,7 +4781,7 @@ function rtSpocDesc(sharedService){
 }
 
 module.exports = rtSpocDesc;
-},{}],69:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 
 function moduleItemRenderer(){
 
@@ -4702,7 +4799,7 @@ function moduleItemRenderer(){
 }
 
 module.exports = moduleItemRenderer;
-},{}],70:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 module.exports = function(app) {
 
     app.directive('rtGridA11y', function($compile, $timeout) {
@@ -4746,7 +4843,7 @@ module.exports = function(app) {
         }
     });
 };
-},{}],71:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 module.exports = function(app) {
 
     app.directive('rtAccordion', function($parse) {
@@ -4763,7 +4860,7 @@ module.exports = function(app) {
         }
     });
 };
-},{}],72:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 module.exports = function(app) {
 
     'use strict';
@@ -5308,7 +5405,7 @@ module.exports = function(app) {
             };
         });
 }
-},{}],73:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 module.exports = function(app) {
     'use strict';
 
@@ -5356,7 +5453,7 @@ module.exports = function(app) {
         }
     }
 }
-},{}],74:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 var rtGrid = angular.module('rtGrid', [ ]);
 
 require('./grid.directive.js')(rtGrid);
@@ -5370,7 +5467,7 @@ require('./grid.a11y.directive.js')(rtGrid);
 
 module.exports = rtGrid;
 
-},{"./grid.a11y.directive.js":70,"./grid.accordion.directive.js":71,"./grid.directive.js":72,"./grid.filter.js":73,"./grid.pagination.directive.js":75,"./grid.reorder.directive.js":76,"./grid.sort.directive.js":77,"./grid.sort.service.js":78}],75:[function(require,module,exports){
+},{"./grid.a11y.directive.js":74,"./grid.accordion.directive.js":75,"./grid.directive.js":76,"./grid.filter.js":77,"./grid.pagination.directive.js":79,"./grid.reorder.directive.js":80,"./grid.sort.directive.js":81,"./grid.sort.service.js":82}],79:[function(require,module,exports){
 module.exports = function(app) {
 
     app.directive('rtPagination', function() {
@@ -5380,7 +5477,7 @@ module.exports = function(app) {
         }
     });
 };
-},{}],76:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 module.exports = function(app) {
 
     app.directive('rtReorder', function($parse, $compile) {
@@ -5411,7 +5508,7 @@ module.exports = function(app) {
         }
     });
 };
-},{}],77:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 module.exports = function(app) {
     'use strict';
 
@@ -5452,7 +5549,7 @@ module.exports = function(app) {
         }
     }
 };
-},{}],78:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('gridSortComparator', function() {
         return {
@@ -5469,7 +5566,7 @@ module.exports = function(app) {
         };
     });
 }
-},{}],79:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -5506,7 +5603,7 @@ module.exports = angular
     .factory('sharedService', require('./shared.service'));
     
 
-},{"./breadcrumb/breadcrumb.component":47,"./check-repository/check-repository.directive":48,"./check-repository/check-repository.service":49,"./directives/alert-banner/alert-banner.directive":50,"./directives/confirm-modal/confirm-modal.directive":51,"./directives/generate-repository-breadcrumb.directive":52,"./directives/grid-admin-delete.directive":53,"./directives/grid-admin-validation.directive":54,"./directives/grid-bhu-id-link.directive":55,"./directives/grid-custom-template.directives":56,"./directives/grid-date-format.directive":57,"./directives/grid-defects-desc.directive":58,"./directives/grid-defects-summary.directive":59,"./directives/grid-item-link.directive":60,"./directives/grid-report-efortsutilize.directive":61,"./directives/grid-report-status.directive":62,"./directives/grid-report-warrantyIssue.directive":63,"./directives/grid-repository-design-desc.directive":64,"./directives/grid-repository-design-expected.directive":65,"./directives/grid-repository-design-inputdata.directive":66,"./directives/grid-repository-design-tcode.directive":67,"./directives/grid-spoc-details.directive":68,"./directives/grid-spotlight-modules.directive":69,"./shared.service":80,"./spinner.directive":81,"./spinner/spinner.service":82,"./user-photo/user-photo.component":83,"angular":102}],80:[function(require,module,exports){
+},{"./breadcrumb/breadcrumb.component":51,"./check-repository/check-repository.directive":52,"./check-repository/check-repository.service":53,"./directives/alert-banner/alert-banner.directive":54,"./directives/confirm-modal/confirm-modal.directive":55,"./directives/generate-repository-breadcrumb.directive":56,"./directives/grid-admin-delete.directive":57,"./directives/grid-admin-validation.directive":58,"./directives/grid-bhu-id-link.directive":59,"./directives/grid-custom-template.directives":60,"./directives/grid-date-format.directive":61,"./directives/grid-defects-desc.directive":62,"./directives/grid-defects-summary.directive":63,"./directives/grid-item-link.directive":64,"./directives/grid-report-efortsutilize.directive":65,"./directives/grid-report-status.directive":66,"./directives/grid-report-warrantyIssue.directive":67,"./directives/grid-repository-design-desc.directive":68,"./directives/grid-repository-design-expected.directive":69,"./directives/grid-repository-design-inputdata.directive":70,"./directives/grid-repository-design-tcode.directive":71,"./directives/grid-spoc-details.directive":72,"./directives/grid-spotlight-modules.directive":73,"./shared.service":84,"./spinner.directive":85,"./spinner/spinner.service":86,"./user-photo/user-photo.component":87,"angular":106}],84:[function(require,module,exports){
 SharedService.$inject = ['$http', '$q', 'spinnerService'];
 
 function SharedService($http, $q, spinnerService) {
@@ -5586,7 +5683,7 @@ function SharedService($http, $q, spinnerService) {
     }
 }
 module.exports = SharedService;
-},{}],81:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 function spinner() {
     return function($scope, element, attrs) {
         $scope.$on("spinner_show", function() {
@@ -5598,7 +5695,7 @@ function spinner() {
     };
 }
 module.exports = spinner;
-},{}],82:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 spinnerService.$inject = ['$rootScope'];
 
 function spinnerService($rootScope) {
@@ -5612,7 +5709,7 @@ function spinnerService($rootScope) {
     };
 }
 module.exports = spinnerService;
-},{}],83:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 PhotoController.$inject = [
     'photoservice'
 ];
@@ -5637,7 +5734,7 @@ var userPhotoComponent = {
 };
 
 module.exports = userPhotoComponent;
-},{}],84:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 TeamController.$inject = ['$state', '$scope', '$log', '$http', 'teamService', 'adminservice', '$location', '$anchorScroll'];
 
 function TeamController($state, $scope, $log, $http, teamService, adminservice, $location, $anchorScroll) {
@@ -5760,7 +5857,7 @@ function TeamController($state, $scope, $log, $http, teamService, adminservice, 
   }
 }
 module.exports = TeamController;
-},{}],85:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -5769,7 +5866,7 @@ module.exports = angular
     .controller('TeamController', require('./team.controller'))
     .factory('teamService', require('./team.service'));
 
-},{"./team.controller":84,"./team.route":86,"./team.service":87,"angular":102}],86:[function(require,module,exports){
+},{"./team.controller":88,"./team.route":90,"./team.service":91,"angular":106}],90:[function(require,module,exports){
 TeamRoute.$inject = ['$stateProvider'];
 
 function TeamRoute($stateProvider) {
@@ -5788,7 +5885,7 @@ function TeamRoute($stateProvider) {
     });
 }
 module.exports = TeamRoute;
-},{}],87:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 TeamService.$inject = [
      '$http',
     '$q',
@@ -5836,7 +5933,7 @@ function TeamService($http, $q,spinnerService) {
 
 module.exports = TeamService;
 
-},{}],88:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 BhuModalController.$inject = ['$uibModalInstance', 'modal'];
 
 function BhuModalController($uibModalInstance, modal) {
@@ -5928,7 +6025,7 @@ function BhuModalDirective($uibModal, ticketservice) {
     };
 }
 module.exports = BhuModalDirective;
-},{}],89:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 getTicketsFolders.$inject = ['ticketservice','$q', '$http', '$stateParams', 'spinnerService'];
 
 function getTicketsFolders(ticketservice, $q, $http, $stateParams, spinnerService) {
@@ -5947,7 +6044,7 @@ function getTicketsFolders(ticketservice, $q, $http, $stateParams, spinnerServic
 }
 module.exports = getTicketsFolders;
 
-},{}],90:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 TicketsController.$inject = [    
     '$state',
     '$scope',
@@ -6286,7 +6383,7 @@ function resetFilter(){
 
 module.exports = TicketsController;
 
-},{}],91:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -6297,7 +6394,7 @@ module.exports = angular
     .factory('ticketservice', require('./tickets.service'));
 
 
-},{"./bhu-modal.directive":88,"./tickets.controller":90,"./tickets.route":92,"./tickets.service":93,"angular":102}],92:[function(require,module,exports){
+},{"./bhu-modal.directive":92,"./tickets.controller":94,"./tickets.route":96,"./tickets.service":97,"angular":106}],96:[function(require,module,exports){
 TicketsRoute.$inject = [
     '$stateProvider'
 ];
@@ -6345,7 +6442,7 @@ function TicketsRoute(
 }
 
 module.exports = TicketsRoute;
-},{"./tickets-folders.resolve":89}],93:[function(require,module,exports){
+},{"./tickets-folders.resolve":93}],97:[function(require,module,exports){
 TicketsService.$inject = [
     '$http',
     '$q',
@@ -6451,7 +6548,7 @@ function TicketsService($http, $q,spinnerService) {
 
 module.exports = TicketsService;
 
-},{}],94:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.6
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -7177,11 +7274,11 @@ function ngMessageDirectiveFactory() {
 
 })(window, window.angular);
 
-},{}],95:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 require('./angular-messages');
 module.exports = 'ngMessages';
 
-},{"./angular-messages":94}],96:[function(require,module,exports){
+},{"./angular-messages":98}],100:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.6
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -7900,11 +7997,11 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
 
 })(window, window.angular);
 
-},{}],97:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 require('./angular-sanitize');
 module.exports = 'ngSanitize';
 
-},{"./angular-sanitize":96}],98:[function(require,module,exports){
+},{"./angular-sanitize":100}],102:[function(require,module,exports){
 /*
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
@@ -15441,12 +15538,12 @@ angular.module('ui.bootstrap.datepickerPopup').run(function() {!angular.$$csp().
 angular.module('ui.bootstrap.tooltip').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTooltipCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-tooltip-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-bottom > .tooltip-arrow,[uib-popover-popup].popover.top-left > .arrow,[uib-popover-popup].popover.top-right > .arrow,[uib-popover-popup].popover.bottom-left > .arrow,[uib-popover-popup].popover.bottom-right > .arrow,[uib-popover-popup].popover.left-top > .arrow,[uib-popover-popup].popover.left-bottom > .arrow,[uib-popover-popup].popover.right-top > .arrow,[uib-popover-popup].popover.right-bottom > .arrow,[uib-popover-html-popup].popover.top-left > .arrow,[uib-popover-html-popup].popover.top-right > .arrow,[uib-popover-html-popup].popover.bottom-left > .arrow,[uib-popover-html-popup].popover.bottom-right > .arrow,[uib-popover-html-popup].popover.left-top > .arrow,[uib-popover-html-popup].popover.left-bottom > .arrow,[uib-popover-html-popup].popover.right-top > .arrow,[uib-popover-html-popup].popover.right-bottom > .arrow,[uib-popover-template-popup].popover.top-left > .arrow,[uib-popover-template-popup].popover.top-right > .arrow,[uib-popover-template-popup].popover.bottom-left > .arrow,[uib-popover-template-popup].popover.bottom-right > .arrow,[uib-popover-template-popup].popover.left-top > .arrow,[uib-popover-template-popup].popover.left-bottom > .arrow,[uib-popover-template-popup].popover.right-top > .arrow,[uib-popover-template-popup].popover.right-bottom > .arrow{top:auto;bottom:auto;left:auto;right:auto;margin:0;}[uib-popover-popup].popover,[uib-popover-html-popup].popover,[uib-popover-template-popup].popover{display:block !important;}</style>'); angular.$$uibTooltipCss = true; });
 angular.module('ui.bootstrap.timepicker').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTimepickerCss && angular.element(document).find('head').prepend('<style type="text/css">.uib-time input{width:50px;}</style>'); angular.$$uibTimepickerCss = true; });
 angular.module('ui.bootstrap.typeahead').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTypeaheadCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-typeahead-popup].dropdown-menu{display:block;}</style>'); angular.$$uibTypeaheadCss = true; });
-},{}],99:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 require('./dist/ui-bootstrap-tpls');
 
 module.exports = 'ui.bootstrap';
 
-},{"./dist/ui-bootstrap-tpls":98}],100:[function(require,module,exports){
+},{"./dist/ui-bootstrap-tpls":102}],104:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.3.1
@@ -20023,7 +20120,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],101:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.6
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -51047,11 +51144,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],102:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":101}],103:[function(require,module,exports){
+},{"./angular":105}],107:[function(require,module,exports){
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -53416,7 +53513,7 @@ if (typeof jQuery === 'undefined') {
 
 }(jQuery);
 
-},{}],104:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 /*!
  * jQuery UI Widget 1.12.1
  * http://jqueryui.com
@@ -54151,7 +54248,7 @@ return $.widget;
 
 } ) );
 
-},{}],105:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v1.12.4
  * http://jquery.com/
@@ -65161,7 +65258,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}],106:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
@@ -67555,11 +67652,11 @@ $templateCache.put("selectize/match.tpl.html","<div ng-hide=\"$select.searchEnab
 $templateCache.put("selectize/no-choice.tpl.html","<div class=\"ui-select-no-choice selectize-dropdown\" ng-show=\"$select.items.length == 0\"><div class=\"selectize-dropdown-content\"><div data-selectable=\"\" ng-transclude=\"\"></div></div></div>");
 $templateCache.put("selectize/select-multiple.tpl.html","<div class=\"ui-select-container selectize-control multi plugin-remove_button\" ng-class=\"{\'open\': $select.open}\"><div class=\"selectize-input\" ng-class=\"{\'focus\': $select.open, \'disabled\': $select.disabled, \'selectize-focus\' : $select.focus}\" ng-click=\"$select.open && !$select.searchEnabled ? $select.toggle($event) : $select.activate()\"><div class=\"ui-select-match\"></div><input type=\"search\" autocomplete=\"off\" tabindex=\"-1\" class=\"ui-select-search\" ng-class=\"{\'ui-select-search-hidden\':!$select.searchEnabled}\" placeholder=\"{{$selectMultiple.getPlaceholder()}}\" ng-model=\"$select.search\" ng-disabled=\"$select.disabled\" aria-expanded=\"{{$select.open}}\" aria-label=\"{{ $select.baseTitle }}\" ondrop=\"return false;\"></div><div class=\"ui-select-choices\"></div><div class=\"ui-select-no-choice\"></div></div>");
 $templateCache.put("selectize/select.tpl.html","<div class=\"ui-select-container selectize-control single\" ng-class=\"{\'open\': $select.open}\"><div class=\"selectize-input\" ng-class=\"{\'focus\': $select.open, \'disabled\': $select.disabled, \'selectize-focus\' : $select.focus}\" ng-click=\"$select.open && !$select.searchEnabled ? $select.toggle($event) : $select.activate()\"><div class=\"ui-select-match\"></div><input type=\"search\" autocomplete=\"off\" tabindex=\"-1\" class=\"ui-select-search ui-select-toggle\" ng-class=\"{\'ui-select-search-hidden\':!$select.searchEnabled}\" ng-click=\"$select.toggle($event)\" placeholder=\"{{$select.placeholder}}\" ng-model=\"$select.search\" ng-hide=\"!$select.isEmpty() && !$select.open\" ng-disabled=\"$select.disabled\" aria-label=\"{{ $select.baseTitle }}\"></div><div class=\"ui-select-choices\"></div><div class=\"ui-select-no-choice\"></div></div>");}]);
-},{}],107:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 require('./dist/select.js');
 module.exports = 'ui.select';
 
-},{"./dist/select.js":106}]},{},[10])
+},{"./dist/select.js":110}]},{},[10])
 
 
 //# sourceMappingURL=rtdashboard.js.map

@@ -17,6 +17,7 @@ var shared = require('./shared/shared.module');
 var repository = require('./repository/repository.module');
 var tickets = require('./tickets/tickets.module');
 var process = require('./process/process.module');
+var projectlifecycle = require('./projectlifecycle/projectlifecycle.module');
 var team = require('./team/team.module');
 var angGrid = require('./shared/directives/grid/grid.module');
 var defects = require('./defects/defects.module');
@@ -36,6 +37,7 @@ angular
         repository.name,
         tickets.name,
         process.name,
+        projectlifecycle.name,
         team.name,
         shared.name,
         angGrid.name,
