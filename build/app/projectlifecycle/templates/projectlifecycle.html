@@ -1,15 +1,25 @@
-<div class="rt-process-container row">
-	<div class="col-md-12">
+<!-- 
+<div class="col-md-8 testRepositoryBox" >
 		
-		<h4>RT Project Life Cycle</h4>
-		<div class="rt-test-repository-box col-md-4">
-        <button class="btn btn-primary" ng-click="showForm()">RT PLC MILESTONE</button>
+	
+		<div class="rt-test-repository-box col-md-4 btn btn-primary">
+        <a href="javascript:void(0)" ng-click="showForm()">RT PLC MILESTONE</a>
     </div>
 
-<div class="rt-test-repository-box col-md-4">
-        <button class="btn btn-primary">RT PLC NOTIFICATION</button>
+<div class="rt-test-repository-box col-md-4 btn btn-primary">
+        <a href="javascript:void(0)" ng-click="showForm()">RT PLC NOTIFICATION</a>
     </div>		
 			
 			
-	</div>
+	
+</div>
+ -->
+
+
+<div class="col-md-8 testRepositoryBox" >
+    <div class="rt-test-repository-box col-md-4" ng-repeat="projectlifecycle in vmplc.projectlifecycleBtns">
+        <a href="javascript:void(0)" ui-sref="{{projectlifecycle.link}}">
+            {{ projectlifecycle.Name }}
+        </a>
+    </div>
 </div>

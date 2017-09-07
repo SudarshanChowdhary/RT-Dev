@@ -1988,10 +1988,11 @@ function ModalInstanceController ($scope, $modalInstance, userForm) {
 
 module.exports = ModalInstanceController;
 },{}],29:[function(require,module,exports){
-ProjectLifeCycleController.$inject = ['$state', '$scope', '$modal', '$log'];
+	ProjectLifeCycleController.$inject = ['$state', '$scope', '$modal', '$log'];
 
 function ProjectLifeCycleController($state, $scope, $modal, $log) {
-    var vmpro = this;
+    var vmplc = this;
+    vmplc.projectlifecycleBtns = [{"Name":"RT PLC MILESTONE","link":"root.projectlifecycle"},{"Name":"RT PLC NOTIFICATION","link":"root.projectlifecycle"}];
     // Variable Definitions
     // Function Definitions
     vmpro.init = init;
