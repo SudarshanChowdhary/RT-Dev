@@ -1,0 +1,9 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+          Current Status Details for BHU ID #{{ctrlSts.selctedBhu}}
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="ctrlSts.cancel()">&times;</button>
+    </h4>
+</div>
+<div class="modal-body ticket-details-by-BHUID">
+<table rt-grid  data="ctrlSts.currentStatusModalData" columns="ctrlSts.modalColumns" grid-options="ctrlSts.gridOptions" item-renderers="ctrlSts.itemRenderers" class="table--compact table-striped table--fixed" data-nodata="No data"></table>
+</div>

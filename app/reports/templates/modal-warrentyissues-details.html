@@ -1,0 +1,9 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        Bhu Warranty details for BHU Id #{{ctrlWar.selBhu}}
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="ctrlWar.cancel()">&times;</button>
+    </h4>
+</div>
+<div class="modal-body ticket-details-by-BHUID">
+<table rt-grid  data="ctrlWar.bhuWarrantyModalData" columns="ctrlWar.modalColumns" grid-options="ctrlWar.gridOptions" item-renderers="ctrlWar.itemRenderers" class="table--compact table-striped table--fixed" data-nodata="No data"></table>
+</div>

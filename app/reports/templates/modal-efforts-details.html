@@ -1,0 +1,9 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        Efforts details for BHU Id #{{ ctrlEfrt.selBhuId}}
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="ctrlEfrt.cancel()">&times;</button>
+    </h4>
+</div>
+<div class="modal-body ticket-details-by-BHUID">
+<table rt-grid  data="ctrlEfrt.EffortsModalData" columns="ctrlEfrt.modalColumns" grid-options="ctrlEfrt.gridOptions" item-renderers="ctrlEfrt.itemRenderers" class="table--compact table-striped table--fixed" data-nodata="No data"></table>
+</div>
