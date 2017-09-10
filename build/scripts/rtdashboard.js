@@ -2052,7 +2052,7 @@ function ProjectLifeCycleRoute($stateProvider) {
             '@root': {
                 templateUrl: 'app/projectlifecycle/templates/projectlifecycle.html',
                 controller: 'ProjectLifeCycleController',
-                controllerAs: 'vmpro'
+                controllerAs: 'vmplc'
             }
         },
         ncyBreadcrumb: {
