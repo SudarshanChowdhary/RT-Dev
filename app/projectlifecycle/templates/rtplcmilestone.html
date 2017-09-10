@@ -1,9 +1,9 @@
 <div class="modal-header">
-   
+   <h2>RT PLC MILESTONE</h2>
 </div>
 <form name="form.userForm" ng-submit="submitForm1()" novalidate>
     <div class="modal-body">
-        
+
         <div class="form-group row">
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="date">DATE* :</label></div>
@@ -15,22 +15,22 @@
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="bhu-ihu">BHU / IHU #* :</label></div>
            <div class="col-md-4"> <input type="text" name="bhu-ihu" class="form-control" ng-model="bhu-ihu" required> </div>
-         <div class="col-md-2"></div>  
+         <div class="col-md-2"></div>
         </div>
         <div class="form-group row">
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="rt-spoc">RT SPOC* :</label></div>
            <div class="col-md-4"> <input type="text" name="rt-spoc" class="form-control" ng-model="rt-spoc" required> </div>
-          <div class="col-md-2"></div> 
+          <div class="col-md-2"></div>
         </div>
         <div class="form-group row">
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="plc-milestone">RT PLC MILESTONE* :</label></div>
-           <div class="col-md-4"> <select type="text" name="plc-milestone" class="form-control" ng-model="plc-milestone" required> 
+           <div class="col-md-4"> <select type="text" name="plc-milestone" class="form-control" ng-model="plc-milestone" required>
             <option value="">1</option>
             <option value="">2</option>
             <option value="">3</option>
-            <option value="">4</option>    
+            <option value="">4</option>
            </select>
            </div>
         <div class="col-md-2"></div>
@@ -51,13 +51,13 @@
             </div>
         </div>
 
-       
+
 
     </div>
     <div class="modal-footer row ">
-        <div class="col-md-4"><button type="submit" class="btn" ng-disabled="form.userForm.$invalid">SAVE</button></div>
+        <div class="col-md-4 text-center"><button type="submit" class="btn btn-primary" ng-disabled="form.userForm.$invalid">SAVE</button></div>
 
-        <div class="col-md-4"><button type="RESET" class="btn" ng-disabled="form.userForm.$invalid">RESET</button></div>
-        <div class="col-md-4"><button class="btn" ng-click="cancel()">Cancel</button></div>
+        <div class="col-md-4 text-center"><button type="RESET" class="btn btn-primary" ng-disabled="form.userForm.$invalid">RESET</button></div>
+        <div class="col-md-4 text-center"><button class="btn btn-warning" ng-click="cancel()">Cancel</button></div>
     </div>
 </form>
