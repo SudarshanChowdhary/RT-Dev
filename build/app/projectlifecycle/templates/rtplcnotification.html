@@ -1,49 +1,60 @@
 <div class="modal-header">
    
 </div>
-<form name="form.userForm" ng-submit="submitForm()" novalidate>
+<form name="form.userForm1" ng-submit="submitForm1()" novalidate>
     <div class="modal-body">
-        <!-- NAME -->
-        <div class="form-group">
-            <label>DATE* :</label>
-            <input type="date" name="date" class="form-control" ng-model="date" required>
-            <p ng-show="form.userForm.date.$invalid && !form.userForm.date.$pristine" class="help-block">You date is required.</p>
+        
+        <div class="form-group row">
+        <div class="col-md-2"></div>
+           <div class="col-md-4"> <label for="date">BHU / IHU #* :</label></div>
+           <div class="col-md-4"> <input type="text" name="date" class="form-control" ng-model="date" required> </div>
+           <div class="col-md-2"></div>
         </div>
 
-        <!-- USERNAME -->
-        <div class="form-group">
-            <label>BHU / IHU #*</label>
-            <input type="number" name="BHU-IHU" class="form-control" ng-model="BHU-IHU" ng-minlength="0" ng-maxlength="50" required>
-            <p ng-show="form.BHU-IHU.$error.minlength" class="help-block">BHU-IHU is too short.</p>
-            <p ng-show="form.BHU-IHU.$error.maxlength" class="help-block">BHU-IHU is too long.</p>
+        <div class="form-group row">
+        <div class="col-md-2"></div>
+           <div class="col-md-4"> <label for="bhu-ihu">RT SPOC* :</label></div>
+           <div class="col-md-4"> <input type="text" name="bhu-ihu" class="form-control" ng-model="bhu-ihu" required> </div>
+         <div class="col-md-2"></div>  
         </div>
-        <div class="form-group">
-            <label>RT SPOC* :</label>
-            <input type="text" name="RT-SPOC" class="form-control" ng-model="RT-SPOC" required>
-            <p ng-show="form.userForm.name.$invalid && !form.userForm.name.$pristine" class="help-block">You RT-SPOC is required.</p>
+        <div class="form-group row">
+        <div class="col-md-2"></div>
+           <div class="col-md-4"> <label for="rt-spoc">RECIPIENTS* :</label></div>
+           <div class="col-md-4"> <input type="text" name="rt-spoc" class="form-control" ng-model="rt-spoc" required> </div>
+          <div class="col-md-2"></div> 
         </div>
-        <div class="form-group">
-            <label>RT PLC MILESTONE* :</label>
-            <input type="text" name="RT PLC MILESTONE" class="form-control" ng-model="RT-PLC-MILESTONE" required>
-            <p ng-show="form.RT-PLC-MILESTONE.$invalid && !form.RT-PLC-MILESTONE.$pristine" class="help-block">You RT-PLC-MILESTONE is required.</p>
+        <div class="form-group row">
+        <div class="col-md-2"></div>
+           <div class="col-md-4"> <label for="plc-milestone">RT PLC Phase* :</label></div>
+           <div class="col-md-4"> <select type="text" name="plc-milestone" class="form-control" ng-model="plc-milestone" required> 
+            <option value="">Kick-Off</option>
+            <option value="">Design & Development</option>
+            <option value="">IT </option>
+            <option value="">UAT</option>
+            <option value="">RT</option>
+            <option value="">Warranty Phase</option>
+            <option value="">P2S Handover</option>     
+           </select>
+           </div>
+        <div class="col-md-2"></div>
         </div>
-        <div class="form-group">
-            <label>ELUCIDATION/MOM* :</label>
-            <input type="text" name="ELUCIDATION-MOM" class="form-control" ng-model="ELUCIDATION-MOM" required>
-            <p ng-show="form.ELUCIDATION-MOM.$invalid && !form.ELUCIDATION-MOM.$pristine" class="help-block">You ELUCIDATION/MOM is required.</p>
-        </div>
-        <div class="form-group">
-            <label>EFFORTS* :</label>
-            <input type="text" name="EFFORTS" class="form-control" ng-model="EFFORTS" required>
-            <p ng-show="form.EFFORTS.$invalid && !form.EFFORTS.$pristine" class="help-block">You EFFORTS is required.</p>
+
+        <div class="form-group row">
+        <div class="col-md-2"></div>
+           <div class="col-md-4">  <label>CONTENT* :</label></div>
+            <div class="col-md-2"><input type="email" name="EFFORTS" class="form-control" ng-model="EFFORTS" required placeholder="HH:MM"></div>
+            <div class="offset">
+                <div class="col-md-2"></div>
+            </div>
         </div>
 
        
 
     </div>
-    <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" ng-disabled="form.userForm.$invalid">SAVE</button>
-        <button type="RESET" class="btn btn-primary" ng-disabled="form.userForm.$invalid">RESET</button>
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    <div class="modal-footer row ">
+        <div class="col-md-4"><button type="submit" class="btn" ng-disabled="form.userForm.$invalid">SAVE</button></div>
+
+        <div class="col-md-4"><button type="RESET" class="btn" ng-disabled="form.userForm.$invalid">RESET</button></div>
+        <div class="col-md-4"><button class="btn" ng-click="cancel()">Cancel</button></div>
     </div>
 </form>
