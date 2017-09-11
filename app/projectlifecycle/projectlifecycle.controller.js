@@ -1,8 +1,8 @@
 ProjectLifeCycleController.$inject = ['$state', '$scope', '$uibModal', '$log'];
 
 function ProjectLifeCycleController($state, $scope, $uibModal, $log) {
-    var vmplc = this;
-    vmplc.projectlifecycleBtns = [{"Name":"RT PLC MILESTONE","link":"root.projectlifecycle"},{"Name":"RT PLC NOTIFICATION","link":"root.projectlifecycle"}];
+   // var vmplc = this;
+   // vmplc.projectlifecycleBtns = [{"Name":"RT PLC MILESTONE","link":"root.projectlifecycle"},{"Name":"RT PLC NOTIFICATION","link":"root.projectlifecycle"}];
      $scope.showMileStoneForm = function () {
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/projectlifecycle/templates/rtplcmilestone.html',

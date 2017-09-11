@@ -6,7 +6,8 @@ module.exports = angular
     .controller('ReportsController', require('./reports.controller'))
     .controller('BhuReportsController', require('./reports-bhu-controller'))
     .factory('reportservice', require('./reports.service'))
-    .directive('bhuLink', require('./reports-bhu-directive'))
-    .directive('effortsutilizedLink', require('./reports-bhu-directive'))
-    .directive('warrantyissueLink', require('./reports-bhu-directive'))
-    .directive('currentstatusLink', require('./reports-bhu-directive'));
+    .directive('bhuLink', require('./reports-bhu.directive'))
+    .directive('effortsutilizedLink', require('./reports-efforts.directive'))
+    .directive('warrantyissueLink', require('./reports-warrentyissues.directive'))
+    .directive('currentstatusLink', require('./reports-status.directive'))
+    .directive('estimatedeffortsEdit',require("./report-admin-effort-edit.directive"));

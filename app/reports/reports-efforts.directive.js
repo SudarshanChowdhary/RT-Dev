@@ -1,6 +1,6 @@
-EffortsModalController.$inject = ['$uibModalInstance', 'modal'];
+EffortsModalController.$inject = ['$uibModalInstance', 'modal','$rootScope'];
 
-function EffortsModalController($uibModalInstance, modal) {
+function EffortsModalController($uibModalInstance, modal, $rootScope) {
     var ctrlEfrt = this;
     ctrlEfrt.modal = modal;
     ctrlEfrt.EffortsModalData = [];
@@ -35,6 +35,14 @@ function EffortsModalController($uibModalInstance, modal) {
         { headerText: 'TOTAL ACTUAL EFFORTS',dataField: 'actualEfforts', tdClasses: 'width7',thClasses: 'width7', sort: true},
         { headerText: 'DEVIATION',dataField: 'deviation', tdClasses: 'width5',thClasses: 'width5', sort: true}
     ];
+    ctrlEfrt.itemRenderers = {
+        "deviation":"highlight-cell"
+    };
+    
+    // if($rootScope.userRoles && $rootScope.userRoles.indexOf('admin') > -1){
+    //     ctrlEfrt.itemRenderers["estimatedEfforts"] = "estimatedefforts-edit";
+    //}
+
     ctrlEfrt.cancel = function () {
         $uibModalInstance.dismiss('cancel');
       };
@@ -44,11 +52,10 @@ BhuEffortsDirective.$inject = ['$uibModal', 'reportservice'];
 function BhuEffortsDirective($uibModal, reportservice) {
     return {
         restrict: 'A',
-        
         link: function(scope, element, attr, ctrlEfrt) {
             element.on('click', function() {
                if(!isNaN(scope.item.bhuId)){
-                reportservice.getReportEffortsDetails(scope.item.bhuId).then(function(resp){
+                reportservice.getReportEffortsDetails(scope.item.bhuId, scope.item.size).then(function(resp){
                         if(resp && resp.errorCode){
                             $scope.$emit('alert', {
                             message: resp.message,

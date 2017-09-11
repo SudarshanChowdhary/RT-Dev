@@ -8175,4 +8175,8 @@ textarea {
 .table--flexbox-fixed .table--generic__row--nodata {
   border-bottom: none; }
 
+.plc-form-textarea {
+  min-height: 100px !important;
+  min-width: 250px !important; }
+
 /*# sourceMappingURL=rtdashboard.css.map */

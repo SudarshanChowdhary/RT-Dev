@@ -884,7 +884,7 @@ module.exports = angular
     .controller('AdminTeamController', require('./admin-team.controller'))
     .controller('AdminTicketController', require('./admin-ticket.controller'))
     .factory('adminservice', require('./admin.service'));
-},{"./admin-folder.controller":1,"./admin-spotlight.controller":2,"./admin-team.controller":3,"./admin-ticket.controller":4,"./admin.constants":5,"./admin.controller":6,"./admin.route":8,"./admin.service":9,"angular":105}],8:[function(require,module,exports){
+},{"./admin-folder.controller":1,"./admin-spotlight.controller":2,"./admin-team.controller":3,"./admin-ticket.controller":4,"./admin.constants":5,"./admin.controller":6,"./admin.route":8,"./admin.service":9,"angular":109}],8:[function(require,module,exports){
 AdminRoute.$inject = ['$stateProvider'];
 
 function AdminRoute($stateProvider) {
@@ -1301,7 +1301,7 @@ angular
       })
     .run(require('./app.run.js')); 
     
-},{"./admin/admin.module":7,"./app.route.js":11,"./app.run.js":12,"./defects/defects.module":14,"./error/error.module":18,"./home/home.module":21,"./layout/layout.module":24,"./process/process.module":26,"./projectlifecycle/projectlifecycle.module":29,"./reports/reports.module":35,"./repository/repository.module":42,"./search/search.module":47,"./shared/breadcrumb/angular-breadcrumb.js":49,"./shared/directives/grid/grid.module":77,"./shared/shared.module":82,"./team/team.module":88,"./tickets/tickets.module":94,"angular":105,"angular-messages":98,"angular-sanitize":100,"angular-ui-bootstrap":102,"angular-ui-router":103,"bootstrap-sass/assets/javascripts/bootstrap":106,"jquery":108,"jquery-ui":107,"ui-select":110}],11:[function(require,module,exports){
+},{"./admin/admin.module":7,"./app.route.js":11,"./app.run.js":12,"./defects/defects.module":14,"./error/error.module":18,"./home/home.module":21,"./layout/layout.module":24,"./process/process.module":26,"./projectlifecycle/projectlifecycle.module":29,"./reports/reports.module":39,"./repository/repository.module":46,"./search/search.module":51,"./shared/breadcrumb/angular-breadcrumb.js":53,"./shared/directives/grid/grid.module":81,"./shared/shared.module":86,"./team/team.module":92,"./tickets/tickets.module":98,"angular":109,"angular-messages":102,"angular-sanitize":104,"angular-ui-bootstrap":106,"angular-ui-router":107,"bootstrap-sass/assets/javascripts/bootstrap":110,"jquery":112,"jquery-ui":111,"ui-select":114}],11:[function(require,module,exports){
 AppRoute.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function AppRoute($stateProvider, $urlRouterProvider) {
@@ -1625,7 +1625,7 @@ module.exports = angular
     .factory('defectsservice', require('./defects.service'));
 
 
-},{"./defects.controller":13,"./defects.route":15,"./defects.service":16,"angular":105}],15:[function(require,module,exports){
+},{"./defects.controller":13,"./defects.route":15,"./defects.service":16,"angular":109}],15:[function(require,module,exports){
 DefectsRoute.$inject = ['$stateProvider'];
 
 function DefectsRoute($stateProvider) {
@@ -1728,7 +1728,7 @@ module.exports = angular
     .config(require('./error.route'))
     .controller('ErrorController', require('./error.controller'));
 
-},{"./error.controller":17,"./error.route":19,"angular":105}],19:[function(require,module,exports){
+},{"./error.controller":17,"./error.route":19,"angular":109}],19:[function(require,module,exports){
 ErrorRoute.$inject = ['$stateProvider'];
 
 function ErrorRoute($stateProvider) {
@@ -1922,7 +1922,7 @@ var angular = require('angular');
 module.exports = angular
     .module('rt.layout', [])
     .component('rtHeader', require('./header/header.component'));
-},{"./header/header.component":23,"angular":105}],25:[function(require,module,exports){
+},{"./header/header.component":23,"angular":109}],25:[function(require,module,exports){
 ProcessController.$inject = ['$state', '$scope', '$log'];
 
 function ProcessController($state, $scope, $log) {
@@ -1946,7 +1946,7 @@ module.exports = angular
     .config(require('./process.route'))
     .controller('ProcessController', require('./process.controller'));
 
-},{"./process.controller":25,"./process.route":27,"angular":105}],27:[function(require,module,exports){
+},{"./process.controller":25,"./process.route":27,"angular":109}],27:[function(require,module,exports){
 ProcessRoute.$inject = ['$stateProvider'];
 
 function ProcessRoute($stateProvider) {
@@ -1969,8 +1969,8 @@ module.exports = ProcessRoute;
 ProjectLifeCycleController.$inject = ['$state', '$scope', '$uibModal', '$log'];
 
 function ProjectLifeCycleController($state, $scope, $uibModal, $log) {
-    var vmplc = this;
-    vmplc.projectlifecycleBtns = [{"Name":"RT PLC MILESTONE","link":"root.projectlifecycle"},{"Name":"RT PLC NOTIFICATION","link":"root.projectlifecycle"}];
+   // var vmplc = this;
+   // vmplc.projectlifecycleBtns = [{"Name":"RT PLC MILESTONE","link":"root.projectlifecycle"},{"Name":"RT PLC NOTIFICATION","link":"root.projectlifecycle"}];
      $scope.showMileStoneForm = function () {
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/projectlifecycle/templates/rtplcmilestone.html',
@@ -2056,7 +2056,7 @@ module.exports = angular
     .config(require('./projectlifecycle.route'))
     .controller('ProjectLifeCycleController', require('./projectlifecycle.controller'))
 
-},{"./projectlifecycle.controller":28,"./projectlifecycle.route":30,"angular":105}],30:[function(require,module,exports){
+},{"./projectlifecycle.controller":28,"./projectlifecycle.route":30,"angular":109}],30:[function(require,module,exports){
 ProjectLifeCycleRoute.$inject = ['$stateProvider'];
 
 function ProjectLifeCycleRoute($stateProvider) {
@@ -2076,6 +2076,28 @@ function ProjectLifeCycleRoute($stateProvider) {
 }
 module.exports = ProjectLifeCycleRoute;
 },{}],31:[function(require,module,exports){
+
+function estimatedeffortsEdit($sce){
+    return {
+            restrict: 'EA',
+            template: ['<div ng-bind-html="formatCell(item.estimatedEfforts)">',
+                '</div>'
+            ].join(''),
+            link: function(scope, element, attr) {
+            scope.formatCell = function(estimatedEfforts) {
+                return $sce.trustAsHtml('<input type="text" name="estimatedEfforts" style="width: 50%" ng-model="ctrlEfrt.EffortsModalData.estimatedEfforts" value="'+ estimatedEfforts +'">\
+                &nbsp;&nbsp;&nbsp;<i style="cursor:pointer" ng-click="" title="update efforts" class="glyphicon glyphicon-floppy-disk"></i>');
+                //glyphicon glyphicon-floppy-disk
+                //glyphicon glyphicon-edit
+                //<span style="margin-right:20%">'+estimatedEfforts+'<span>
+                //<input type="text" name="estimatedEfforts" style="width: 100%" ng-model="ctrlEfrt.EffortsModalData.estimatedEfforts" value="'+ estimatedEfforts +'">')
+            }
+        }
+    };
+}
+
+module.exports = estimatedeffortsEdit;
+},{}],32:[function(require,module,exports){
 BhuReportsController.$inject = ['$state', '$scope', '$http','$filter','$sce', 'reportservice', 'sharedService'];
 
 function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice, sharedService) {
@@ -2098,8 +2120,9 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
     bhureport.checkFilterSelection = checkFilterSelection;
     bhureport.searchBhuReportTable = searchBhuReportTable;
     bhureport.calculateTotalRecords = calculateTotalRecords;
-    bhureport.loadMore = loadMore;
     bhureport.exportToExcel = exportToExcel;
+    bhureport.loadQuarterMonths = getMonthsForQuarter;
+    bhureport.loadYearQuarter = getQuarterYear;
     init();
     bhureport.bhuReportError = false;  
     //$rootScope.folderName = $state.params.folderName;
@@ -2108,8 +2131,9 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
      * Intializing On Load Services for BhuReport Page
      */
     function init() {
-        bhureport.bhuReportFilterQuarter = sharedService.getQuarter();
         bhureport.bhurptFilterYear = sharedService.getYears();
+        bhureport.bhuReportPhase = sharedService.getPhase();
+
          bhureport.gridOptions = {
             bindType: 1,
             data: {
@@ -2146,18 +2170,20 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             headerText: 'BHU / IHU',
             dataField: 'bhuId',
             thClasses: 'width5',
-            tdClasses: 'width5'
+            tdClasses: 'width5',
+            sort: true,
         }, {
             headerText: 'CURRENT STATUS',
             dataField: 'currentStatus',
             thClasses: 'width5',
-            tdClasses: 'width5'
+            tdClasses: 'width5',
+            sort: true
         }, {
             headerText: 'SIZE',
             dataField: 'size',
             //sort: true,
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'NO OF OBJECTS',
             dataField: 'noOfObjects',
@@ -2166,18 +2192,20 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         },{
             headerText: 'PROJECT MANAGER',
             dataField: 'projectManager',
-            thClasses: 'width5',
-            tdClasses: 'width5'
+            thClasses: 'width10',
+            tdClasses: 'width10',
+            sort: true,
         },{
             headerText: 'RT SPOC',
             dataField: 'rtsSpoc',
-            thClasses: 'width5',
-            tdClasses: 'width5'
+            thClasses: 'width10',
+            tdClasses: 'width10',
+            sort: true
         },{
             headerText: 'EXTENDED TEAM MEMBERS',
             dataField: 'extteammembers',
-            thClasses: 'width10',
-            tdClasses: 'width10'
+            thClasses: 'width5',
+            tdClasses: 'width5'
         },{
             headerText: 'SCRIPTS SHARED',
             dataField: 'scriptshared',
@@ -2207,7 +2235,8 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             headerText: 'WARRANTY ISSUES',
             dataField: 'warrantyissue',
             thClasses: 'width5',
-            tdClasses: 'width5'
+            tdClasses: 'width5',
+            sort: true
         },{
             headerText: 'SCRIPT EXECUTED PART OF WARRANTY',
             dataField: 'scriptExcpartOfwarranty',
@@ -2227,21 +2256,27 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             headerText: 'EFFORTS UTILIZED',
             dataField: 'efortsutilized',
             thClasses: 'width5',
-            tdClasses: 'width5'
+            tdClasses: 'width5',
+            sort: true
         }
     ];
         bhureport.itemRenderers = {
             //link going to appear in grid
             'bhuId': 'bhu-id-link-renderer',
-            'currentStatus': 'currentstatus-link-renderer',
-            'warrantyissue': 'warrantyissue-link-renderer',
-            'efortsutilized': 'efortsutilized-link-renderer'
+            'currentStatus': 'current-status-link-renderer',
+            'warrantyissue': 'warranty-issue-link-renderer',
+            'efortsutilized': 'efforts-utilized-link-renderer'
             //other formatted columns
         };
         bhureport.data = bhuReportList;
         bhureport.dataCopy = angular.copy(bhureport.data);
         bhureport.bhuReportCount = bhuReportList.length;
-        if(bhureport.selectedYear && bhureport.selectedQuarter){
+
+        if(bhureport.selectedYear && bhureport.selectedQuarter && bhureport.selectedMonth){
+            bhureport.gridOptions.dataOptions.nodata = $sce.trustAsHtml('No data found for the selected year - &quot;<b>'+bhureport.selectedYear+ '</b>&quot; and Quarter - &quot;<b>'+bhureport.selectedQuarter
+            + '</b>&quot; and Month - &quot<b>'+bhureport.selectedMonth+ '</b>&quot;. Use filter to find other data');
+        }
+        else if(bhureport.selectedYear && bhureport.selectedQuarter){
             bhureport.gridOptions.dataOptions.nodata = $sce.trustAsHtml('No data found for the selected year - &quot;<b>'+bhureport.selectedYear+ '</b>&quot; and Quarter - &quot;<b>'+bhureport.selectedQuarter+ '</b>&quot;. Use filter to find other data');
         }else if(bhureport.selectedYear && !bhureport.selectedQuarter){
             bhureport.gridOptions.dataOptions.nodata = $sce.trustAsHtml('No data found for the selected year - &quot;<b>'+bhureport.selectedYear+'</b>&quot;. Use filter to find other data');
@@ -2252,50 +2287,45 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
     }
 
     function searchBhuReportTable(keyword){
-        debugger;
         bhureport.count = 0;
         bhureport.count = bhureport.count  + 1;
         $scope.$watch('bhureport.filterBhuReport.searchKeyword', function(){
              if(keyword && keyword.length == 0){
                         bhureport.data = bhureport.dataCopy;
-                    }
-                    else if(keyword && keyword.length>=2){
+                }
+            else if(keyword && keyword.length>=2){
 
                         // var filteredData;
                             bhureport.data = $filter('filter')(bhureport.data, function(data) {
                               
-                            if  (data.bhurptName == null){
-                                data.bhurptName = "";
+                            if  (data.bhuId == null){
+                                data.bhuId = "";
                             }
                             
-                            if  (data.description == null){
-                                data.description = "";
+                            if  (data.currentStatus == null){
+                                data.currentStatus = "";
                             }
 
-                            if  (data.category == null){
-                                data.category = "";
+                            if  (data.projectManager == null){
+                                data.projectManager = "";
                             }
 
-                            if  (data.bussinessImpact == null){
-                                data.bussinessImpact = "";
+                            if  (data.rtsSpoc == null){
+                                data.rtsSpoc = "";
                             }
 
-                            if  (data.status == null){
-                                data.status = "";
+                            if  (data.size == null){
+                                data.size = "";
                             }
-
-                                return data.bhurptName.toString().toLowerCase().indexOf(bhureport.filterBhuReport.searchKeyword.toLowerCase()) > -1 || data.description.toString().toLowerCase().indexOf(bhureport.filterBhuReport.searchKeyword.toLowerCase()) > -1 
-                                    || data.category.toString().toLowerCase().indexOf(bhureport.filterBhuReport.searchKeyword.toLowerCase()) > -1 || data.bussinessImpact.toString().toLowerCase().indexOf(bhureport.filterBhuReport.searchKeyword.toLowerCase()) > -1
-                                    || data.status.toString().toLowerCase().indexOf(bhureport.filterBhuReport.searchKeyword.toLowerCase()) > -1;
-
-                            
+                                return data.bhuId.toString().toLowerCase().indexOf(bhureport.filterBhuReport.searchKeyword.toLowerCase()) > -1 || data.currentStatus.toString().toLowerCase().indexOf(bhureport.filterBhuReport.searchKeyword.toLowerCase()) > -1 
+                                    || data.projectManager.toString().toLowerCase().indexOf(bhureport.filterBhuReport.searchKeyword.toLowerCase()) > -1 || data.rtsSpoc.toString().toLowerCase().indexOf(bhureport.filterBhuReport.searchKeyword.toLowerCase()) > -1
+                                    || data.size.toString().toLowerCase().indexOf(bhureport.filterBhuReport.searchKeyword.toLowerCase()) > -1;
                             });
                          bhureport.gridOptions.dataOptions.nodata = $sce.trustAsHtml('No data found for the search keyword &quot;<b>'+keyword+'</b>&quot;');
                     }else{
                         bhureport.data = bhureport.dataCopy;
                     }
         });
-       
     }
     
     function showFilterOptions(){
@@ -2312,34 +2342,50 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         angular.element('.filter-by').toggleClass('hide');
     }
 
-    function populateBhuReportFilterData(filterbhuReport, startIndex){
-        debugger;
-        bhureport.selectedQuarter = filterbhuReport.bhurptQuarter;
-        bhureport.selectedYear = filterbhuReport.bhurptYear;
-        if(filterbhuReport.bhurptYear && !filterbhuReport.bhurptQuarter){
-             reportservice.getBhuReportFilterDetailsByYear(filterbhuReport.bhurptYear, startIndex).then(function(resp){
+    function populateBhuReportFilterData(filter, startIndex){
+        bhureport.selectedQuarter = filter.bhurptQuarter;
+        bhureport.selectedYear = filter.bhurptYear;
+        bhureport.selectedPhase = filter.bhurptPhase;
+        bhureport.selectedMonth = filter.bhurptMonth;
+
+        if(filter.bhurptYear && !filter.bhurptQuarter){
+             reportservice.getBhuReportFilterDetailsByYear(filter.bhurptYear, startIndex).then(function(resp){
                 if(resp && resp.errorCode){
                 $scope.$emit('alert', {
-                message: resp.message,
-                success: false
+                    message: resp.message,
+                    success: false
+                    });
+                }
+                else {
+                    bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
+                }
             });
-           }else{
-               bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
-           }
-            });
-         }else if(filterbhuReport.bhurptYear && filterbhuReport.bhurptQuarter){
-                reportservice.getBhuReportFilterDetailsByQuarter(filterbhuReport.bhurptYear, filterbhuReport.bhurptQuarter, startIndex).then(function(resp){
+         }else if(filter.bhurptYear && filter.bhurptQuarter){
+                reportservice.getBhuReportFilterDetailsByQuarter(filter.bhurptYear, filter.bhurptQuarter, startIndex).then(function(resp){
                     if(resp && resp.errorCode){
                         $scope.$emit('alert', {
                         message: resp.message,
                         success: false
                     });
-           }else{
-                   bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
-               }
+                    }else{
+                        bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
+                    }
                 });
         }
          bhureport.filterBhuReport.searchKeyword = '';
+    }
+
+    function getQuarterYear(year){
+        if(!isNaN( year)){
+            bhureport.bhuReportFilterQuarter = sharedService.getQuarter();
+        }
+        else{
+            bhureport.bhuReportFilterQuarter =[];
+        }
+    }
+    function getMonthsForQuarter(quarter){
+       var months = sharedService.getQuarterMonths(quarter);
+       bhureport.bhuReportFilterMonth = months;
     }
 
     function hideSideFilterOptions(){
@@ -2357,15 +2403,20 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         bhureport.filterBhuReport = {};
         bhureport.selectedYear = '';
         bhureport.selectedQuarter = '';
+        bhureport.selectedPhase = '';
+        bhureport.selectedMonth = '';
+        bhureport.bhuReportFilterMonth = [];
+        bhureport.bhuReportFilterQuarter =[];
+        
         bhureport.getBhuReportList();
     }
 
     function checkFilterSelection(filterSelected){
-        if(!filterSelected.bhurptYear){
-            return true;
+        if( filterSelected.bhurptYear || filterSelected.bhurptPhase){
+                return false;
             }
             else{
-                return false;
+                return true;
             }
     }
 
@@ -2375,36 +2426,64 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         bhureport.nOfIndexs = (Math.round(c / 100));
     }
 
-    function loadMore(i){   
-        bhureport.count = bhureport.count  + 1;
-        if(bhureport.selectedYear && !bhureport.selectedQuarter){
-            reportservice.getBhuReportFilterDetailsByYear(bhureport.selectedYear, (100*i)+1).then(function(resp){
-                bhureport.data =  bhureport.data.concat(resp.bhurptDetails);
-            });
-        }else if(bhureport.selectedYear && bhureport.selectedQuarter){
-            reportservice.getBhuReportFilterDetailsByQuarter(bhureport.selectedYear, bhureport.selectedQuarter, (100*i)+1).then(function(resp){
-                bhureport.data =  bhureport.data.concat(resp.bhurptDetails);
-            });
-        }else{
-             reportservice.getBhuReportData((100*i)+1).then(function(resp){
-                bhureport.data =  bhureport.data.concat(resp.bhurptDetails);
-           });
-         }
-    }
+    // function loadMore(i){   
+    //     bhureport.count = bhureport.count  + 1;
+    //     if(bhureport.selectedYear && !bhureport.selectedQuarter){
+    //         reportservice.getBhuReportFilterDetailsByYear(bhureport.selectedYear, (100*i)+1).then(function(resp){
+    //             bhureport.data =  bhureport.data.concat(resp.bhurptDetails);
+    //         });
+    //     }else if(bhureport.selectedYear && bhureport.selectedQuarter){
+    //         reportservice.getBhuReportFilterDetailsByQuarter(bhureport.selectedYear, bhureport.selectedQuarter, (100*i)+1).then(function(resp){
+    //             bhureport.data =  bhureport.data.concat(resp.bhurptDetails);
+    //         });
+    //     }else{
+    //          reportservice.getBhuReportData((100*i)+1).then(function(resp){
+    //             bhureport.data =  bhureport.data.concat(resp.bhurptDetails);
+    //        });
+    //      }
+    //  }
 
     function exportToExcel(){
-        if(bhureport.filterBhuReport.bhurptYear && !bhureport.filterBhuReport.bhurptQuarter){
-            window.location.href = reportservice.exportToExcelByYear(bhureport.filterBhuReport.bhurptYear);
-        }else if(bhureport.filterBhuReport.bhurptYear && bhureport.filterBhuReport.bhurptQuarter){
-            window.location.href = reportservice.exportToExcelByQuarter(bhureport.filterBhuReport.bhurptYear, bhureport.filterBhuReport.bhurptQuarter);
-        }else{
-            window.location.href = reportservice.exportToExcelCurrentQuarter();
-        }
-    }
+        var p = bhureport.filterBhuReport.bhurptPhase ? bhureport.filterBhuReport.bhurptPhase : "null";
+        var y = bhureport.filterBhuReport.bhurptYear ? bhureport.filterBhuReport.bhurptYear : "null";
+        var q = bhureport.filterBhuReport.bhurptQuarter ? bhureport.filterBhuReport.bhurptQuarter : "null";
+        var m = bhureport.filterBhuReport.bhurptMonth ? bhureport.filterBhuReport.bhurptMonth : "null" ;
 
+        //this is the common url which will work for any filter
+        window.location.href = reportservice.exportExcel(p, y, q, m);
+
+        // if(p && !y){
+        //     window.location.href = reportservice.exportToExcelByPhase(p);
+        // }
+        // if(p){
+        //     if(p && y && !q){
+        //         window.location.href = reportservice.exportToExcelByPhaseAndYear(p, y);
+        //     }else if(p && y && q && !m){
+        //         window.location.href = reportservice.exportToExcelByQuarter(p, y, q);
+        //     }else if(p && y && q && m){
+        //         window.location.href = reportservice.exportExcel(p, y, q, m);
+        //     }else{
+        //         window.location.href = reportservice.exportToExcelByPhase(p);
+        //     }
+        // }
+        // else if (!p && y){
+        //     if(y && !q){
+        //         window.location.href = reportservice.exportToExcelByYear(y);
+        //     }else if(y && q && !m){
+        //         window.location.href = reportservice.exportToExcelByQuarter(p, y, q);
+        //     }else if(y && q && m){
+        //         window.location.href = reportservice.exportExcel(p, y, q, m);
+        //     }else{
+        //         window.location.href = reportservice.exportToExcelCurrentQuarter();
+        //     }
+        // }
+        // else{
+        //     window.location.href = reportservice.exportToExcelCurrentQuarter();
+        // }
+    }
 }
 module.exports = BhuReportsController;
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 BhuRptModalController.$inject = ['$uibModalInstance', 'modal'];
 
 function BhuRptModalController($uibModalInstance, modal) {
@@ -2450,16 +2529,16 @@ function BhuRptModalController($uibModalInstance, modal) {
         $uibModalInstance.dismiss('cancel');
       };
 }
-BhuModalDirective.$inject = ['$uibModal', 'reportservice'];
+BhuReportModalDirective.$inject = ['$uibModal', 'reportservice'];
 
-function BhuModalDirective($uibModal, reportservice) {
+function BhuReportModalDirective($uibModal, reportservice) {
     return {
         restrict: 'A',
         
         link: function(scope, element, attr, ctrl) {
             element.on('click', function() {
                if(!isNaN(scope.item.bhuId)){
-                reportservice.getReportBhuDetails(scope.item.bhuId).then(function(resp){
+                reportservice.getReportBhuDetails(scope.item.bhuId,"bDtl").then(function(resp){
                         debugger;
                         if(resp && resp.errorCode){
                             $scope.$emit('alert', {
@@ -2488,8 +2567,95 @@ function BhuModalDirective($uibModal, reportservice) {
         }
     };
 }
-module.exports = BhuModalDirective;
-},{}],33:[function(require,module,exports){
+module.exports = BhuReportModalDirective;
+},{}],34:[function(require,module,exports){
+EffortsModalController.$inject = ['$uibModalInstance', 'modal','$rootScope'];
+
+function EffortsModalController($uibModalInstance, modal, $rootScope) {
+    var ctrlEfrt = this;
+    ctrlEfrt.modal = modal;
+    ctrlEfrt.EffortsModalData = [];
+    ctrlEfrt.selBhuId = modal.selectedBhuId;
+    ctrlEfrt.EffortsModalData = modal.reportModalData.effortsDetails;
+    ctrlEfrt.gridOptions = {
+            bindType: 1,
+            data: {
+                foo: {}
+            },
+            enablePagination: true
+        };
+   
+    ctrlEfrt.modalColumns = [
+        { headerText: 'BHU / IHU', dataField: 'bhuId', thClasses: 'width5', tdClasses: 'width5', sort: true }, 
+        { headerText: 'SIZE', dataField: 'size', thClasses: 'width5',tdClasses: 'width5' },
+        { headerText: 'KICK-OFF', dataField: 'kickOff', thClasses: 'width5', tdClasses: 'width5' },
+        { headerText: 'DESIGN REVIEW', dataField: 'designReview', tdClasses: 'width5', thClasses: 'width5' },
+        { headerText: 'RT SCRIPT SHARING', dataField: 'rtScriptSharing',tdClasses: 'width5', thClasses: 'width5' },
+        { headerText: 'RT SCRIPT WALKTHROUGH',dataField: 'rtScriptWalthr', tdClasses: 'width10',thClasses: 'width10'},
+
+        { headerText: 'IT SYSTEM DEMO/ SCRIPT WALKTHROUGH',dataField: 'itSystemDemo', tdClasses: 'width10',thClasses: 'width10'},
+        { headerText: 'IT REVIEW',dataField: 'itReview', tdClasses: 'width5',thClasses: 'width5'},
+        { headerText: 'UAT REVIEW',dataField: 'uatReview', tdClasses: 'width5',thClasses: 'width5'},
+        { headerText: 'RT SCOPING',dataField: 'rtScoping', tdClasses: 'width5',thClasses: 'width5'},
+        { headerText: 'RT EXECUTION/ DEFECT',dataField: 'itExecutionDefects', tdClasses: 'width7',thClasses: 'width7', sort: true},
+        { headerText: 'WARRANTY SUPORT',dataField: 'warrantySupport', tdClasses: 'width5',thClasses: 'width5'},
+
+        { headerText: 'P2S',dataField: 'p2s', tdClasses: 'width5',thClasses: 'width5'},
+        { headerText: 'PLC FOLLOWUPS',dataField: 'plcFollowups', tdClasses: 'width5',thClasses: 'width5'},
+        { headerText: 'ESTIMETED EFFORTS',dataField: 'estimatedEfforts', tdClasses: 'width5',thClasses: 'width5'},
+        { headerText: 'TOTAL ACTUAL EFFORTS',dataField: 'actualEfforts', tdClasses: 'width7',thClasses: 'width7', sort: true},
+        { headerText: 'DEVIATION',dataField: 'deviation', tdClasses: 'width5',thClasses: 'width5', sort: true}
+    ];
+    ctrlEfrt.itemRenderers = {
+        "deviation":"highlight-cell"
+    };
+    
+    // if($rootScope.userRoles && $rootScope.userRoles.indexOf('admin') > -1){
+    //     ctrlEfrt.itemRenderers["estimatedEfforts"] = "estimatedefforts-edit";
+    //}
+
+    ctrlEfrt.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+      };
+}
+BhuEffortsDirective.$inject = ['$uibModal', 'reportservice'];
+
+function BhuEffortsDirective($uibModal, reportservice) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attr, ctrlEfrt) {
+            element.on('click', function() {
+               if(!isNaN(scope.item.bhuId)){
+                reportservice.getReportEffortsDetails(scope.item.bhuId, scope.item.size).then(function(resp){
+                        if(resp && resp.errorCode){
+                            $scope.$emit('alert', {
+                            message: resp.message,
+                            success: false
+                        });
+                        }else{
+                            scope.selectedBhuId = scope.item.bhuId;
+                            scope.reportModalData = resp;
+                        }
+                       $uibModal.open({
+                            templateUrl: 'app/reports/templates/modal-efforts-details.html',
+                            controller: EffortsModalController,
+                            controllerAs: 'ctrlEfrt',
+                            windowClass: 'center-modal',
+                            size: 'lg',
+                            resolve: {
+                                modal: function() {
+                                    return scope;
+                                }
+                            }
+                        });
+                    });
+               }
+            });
+        }
+    };
+}
+module.exports = BhuEffortsDirective;
+},{}],35:[function(require,module,exports){
 getReportsList.$inject = ['reportservice','$q', '$http', '$stateParams', 'spinnerService'];
 
 function getReportsList(reportservice, $q, $http, $stateParams, spinnerService) {
@@ -2509,7 +2675,181 @@ function getReportsList(reportservice, $q, $http, $stateParams, spinnerService) 
 
 module.exports = getReportsList;
 
-},{}],34:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
+CurrentStatusModalController.$inject = ['$uibModalInstance', 'modal'];
+
+function CurrentStatusModalController($uibModalInstance, modal) {
+    var ctrlSts = this;
+    ctrlSts.modal = modal;
+    ctrlSts.currentStatusModalData = [];
+    ctrlSts.selStatus = modal.selectedStatus;
+    ctrlSts.selctedBhu = modal.selctedBhu;
+    ctrlSts.currentStatusModalData = modal.reportModalData.bhuStatusDetails;
+    ctrlSts.gridOptions = {
+            bindType: 1,
+            data: {
+                foo: {}
+            },
+            enablePagination: true
+        };
+   
+    ctrlSts.modalColumns = [{
+                            headerText: 'BHU/IHU',
+                            dataField: 'bhuId',
+                            thClasses: 'width10',
+                            tdClasses: 'width10'
+                        },{
+                            headerText: 'RT PLC MILESTONE',
+                            dataField: 'rtPlcMilestone',
+                            thClasses: 'width20',
+                            tdClasses: 'width20'
+                        },{
+                            headerText: 'DATE',
+                            dataField: 'meetingDate',
+                            thClasses: 'width15',
+                            tdClasses: 'width15',
+                            sort: true,
+                            initSort: true
+                        },{
+                            headerText: 'RT SPOC',
+                            dataField: 'rtSpoc',
+                            sort: true,
+                            thClasses: 'width20',
+                            tdClasses: 'width20'
+                        },{
+                            headerText: 'MINUTES OF MEEING',
+                            dataField: 'minutesOfMeeting',
+                            thClasses: 'width20',
+                            tdClasses: 'width20',
+                            sort: true
+                        }];
+                        // ctrlSts.itemRenderers = {
+                        //     'meetingDate': 'date-format'
+                        // };
+    ctrlSts.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+      };
+}
+BhuCurrentStatusModalDirective.$inject = ['$uibModal', 'reportservice'];
+
+function BhuCurrentStatusModalDirective($uibModal, reportservice) {
+    return {
+        restrict: 'A',
+        
+        link: function(scope, element, attr, ctrlSts) {
+            element.on('click', function() {
+               if(!isNaN(scope.item.bhuId)){
+                reportservice.getReportCurrentStatusDetails(scope.item.bhuId).then(function(resp){
+                        if(resp && resp.errorCode){
+                            $scope.$emit('alert', {
+                            message: resp.message,
+                            success: false
+                        });
+                        }else{
+                            scope.selectedStatus = scope.item.currentStatus;
+                            scope.selctedBhu = scope.item.bhuId;
+                            scope.reportModalData = resp;
+                        }
+                       $uibModal.open({
+                            templateUrl: 'app/reports/templates/modal-currentstatus-details.html',
+                            controller: CurrentStatusModalController,
+                            controllerAs: 'ctrlSts',
+                            windowClass: 'center-modal',
+                            size: 'lg',
+                            resolve: {
+                                modal: function() {
+                                    return scope;
+                                }
+                            }
+                        });
+                    });
+               }
+            });
+        }
+    };
+}
+module.exports = BhuCurrentStatusModalDirective;
+},{}],37:[function(require,module,exports){
+WarrantyModalController.$inject = ['$uibModalInstance', 'modal'];
+
+function WarrantyModalController($uibModalInstance, modal) {
+    debugger;
+    var ctrlWar = this;
+    ctrlWar.modal = modal;
+    ctrlWar.bhuWarrantyModalData = [];
+    ctrlWar.selBhu = modal.selectedBhuId;
+    ctrlWar.bhuWarrantyModalData = modal.reportModalData.bhuWarrantyDetails;
+    ctrlWar.gridOptions = {
+            bindType: 1,
+            data: {
+                foo: {}
+            },
+            enablePagination: true
+        };
+   
+    ctrlWar.modalColumns = [{
+                            headerText: 'TICKET',
+                            dataField: 'ticketNo',
+                            sort: true,
+                            thClasses: 'width30',
+                            tdClasses: 'width30',
+                        },{
+                            headerText: 'ROOT COUSE',
+                            dataField: 'rootCause',
+                            sort: true, 
+                            thClasses: 'width30',
+                            tdClasses: 'width30',
+                        },{
+                            headerText: 'JUSTIFICATION',
+                            dataField: 'justification',
+                            thClasses: 'width30',
+                            tdClasses: 'width40'
+                        }];
+                       
+    ctrlWar.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+      };
+}
+WarrantyModalDirective.$inject = ['$uibModal', 'reportservice'];
+
+function WarrantyModalDirective($uibModal, reportservice) {
+    return {
+        restrict: 'A',
+        
+        link: function(scope, element, attr, ctrlWar) {
+            element.on('click', function() {
+               if(!isNaN(scope.item.bhuId)){
+                reportservice.getReportWarrantyDetails(scope.item.bhuId).then(function(resp){
+                        debugger;
+                        if(resp && resp.errorCode){
+                            $scope.$emit('alert', {
+                            message: resp.message,
+                            success: false
+                        });
+                        }else{
+                            scope.selectedBhuId = scope.item.bhuId;
+                            scope.reportModalData = resp;
+                        }
+                       $uibModal.open({
+                            templateUrl: 'app/reports/templates/modal-warrentyissues-details.html',
+                            controller: WarrantyModalController,
+                            controllerAs: 'ctrlWar',
+                            windowClass: 'center-modal',
+                            size: 'lg',
+                            resolve: {
+                                modal: function() {
+                                    return scope;
+                                }
+                            }
+                        });
+                    });
+               }
+            });
+        }
+    };
+}
+module.exports = WarrantyModalDirective;
+},{}],38:[function(require,module,exports){
 ReportsController.$inject = ['$state', '$scope', '$log', 'reportsList', 'reportservice'];
 
 function ReportsController($state, $scope, $log, reportsList, reportservice) {
@@ -2542,7 +2882,7 @@ function ReportsController($state, $scope, $log, reportsList, reportservice) {
 }
 
 module.exports = ReportsController;
-},{}],35:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -2551,11 +2891,12 @@ module.exports = angular
     .controller('ReportsController', require('./reports.controller'))
     .controller('BhuReportsController', require('./reports-bhu-controller'))
     .factory('reportservice', require('./reports.service'))
-    .directive('bhuLink', require('./reports-bhu-directive'))
-    .directive('effortsutilizedLink', require('./reports-bhu-directive'))
-    .directive('warrantyissueLink', require('./reports-bhu-directive'))
-    .directive('currentstatusLink', require('./reports-bhu-directive'));
-},{"./reports-bhu-controller":31,"./reports-bhu-directive":32,"./reports.controller":34,"./reports.route":36,"./reports.service":37,"angular":105}],36:[function(require,module,exports){
+    .directive('bhuLink', require('./reports-bhu.directive'))
+    .directive('effortsutilizedLink', require('./reports-efforts.directive'))
+    .directive('warrantyissueLink', require('./reports-warrentyissues.directive'))
+    .directive('currentstatusLink', require('./reports-status.directive'))
+    .directive('estimatedeffortsEdit',require("./report-admin-effort-edit.directive"));
+},{"./report-admin-effort-edit.directive":31,"./reports-bhu-controller":32,"./reports-bhu.directive":33,"./reports-efforts.directive":34,"./reports-status.directive":36,"./reports-warrentyissues.directive":37,"./reports.controller":38,"./reports.route":40,"./reports.service":41,"angular":109}],40:[function(require,module,exports){
 ReportsRoute.$inject = ['$stateProvider'];
 
 function ReportsRoute($stateProvider) {
@@ -2623,10 +2964,10 @@ function ReportsRoute($stateProvider) {
     })
 }
 module.exports = ReportsRoute;
-},{"./reports-list.resolve":33}],37:[function(require,module,exports){
-ReportsService.$inject = ['$http', '$q', 'spinnerService'];
+},{"./reports-list.resolve":35}],41:[function(require,module,exports){
+ReportsService.$inject = ['$http', '$q', '$sce','spinnerService','sharedService'];
 
-function ReportsService($http, $q,spinnerService){
+function ReportsService($http, $q, $sce, spinnerService, sharedService){
 	var reportsService = {
 		getReportsList: getReportsList,
         getReportsUrl: getReportsUrl,
@@ -2635,9 +2976,12 @@ function ReportsService($http, $q,spinnerService){
         getBhuReportData: getBhuReportData,
         getBhuReportFilterDetailsByYear: getBhuReportFilterDetailsByYear,
         getBhuReportFilterDetailsByQuarter: getBhuReportFilterDetailsByQuarter,
-        exportToExcelByYear: exportToExcelByYear,
-        exportToExcelByQuarter: exportToExcelByQuarter,
-        exportToExcelCurrentQuarter: exportToExcelCurrentQuarter
+        //exportToExcelByYear: exportToExcelByYear,
+        //exportToExcelByQuarter: exportToExcelByQuarter,
+        //exportToExcelCurrentQuarter: exportToExcelCurrentQuarter,
+        getReportCurrentStatusDetails:getReportCurrentStatusDetails,
+        getReportWarrantyDetails:getReportWarrantyDetails,
+        getReportEffortsDetails:getReportEffortsDetails
 	};
 
 	return reportsService;
@@ -2645,7 +2989,7 @@ function ReportsService($http, $q,spinnerService){
 	function getReportsList() {
         var def = $q.defer();
          spinnerService.show();
-            $http.get("https://rtdashboardp.rno.apple.com:9012/reports/list?callback=angular.callbacks._0")
+            $http.get("reports/list")
                 .success(function(data) {
                     def.resolve(data);
                     spinnerService.hide();
@@ -2657,62 +3001,71 @@ function ReportsService($http, $q,spinnerService){
     }
 
     function getReportsUrl(rId) {
-        return ("https://rtdashboardp.rno.apple.com:9012/reports/download/" + rId+"?callback=angular.callbacks._0");
+        return ("https://rtdashboardp.rno.apple.com:9012/reports/download/" + rId +"?callback=angular.callbacks._0");
     }
     
     // BHU Report services **************************************************/
     function getBhuReportData() {
         var def = $q.defer();
         spinnerService.show();
-        //{"totalCount":"40","ticketDetails":[
+        // $http.get("report/BHUReport").success(function(data) {
+        //     def.resolve(data);
+        //     spinnerService.hide();
+        // }).error(function() {
+        //     def.reject("Failed to get data");
+        // });
+        // return def.promise;
+
+        //please remove this mock data before deployment
+        //please remove the below code and uncomment above code
         var _responseData = {"totalCount":"3","bhurptDetails":[{
             //"itemId":"5411","itemName":"RITM000172292",
             "bhuId" : "17819",
-            "currentStatus":"Go live date (Refer next page for details)",
+            "currentStatus":"Design review start date",
             "size":"small",
             "noOfObjects":"4",
-            "projectManager":"Venu",
-            "rtsSpoc":"Amudha",
-            "extteammembers":"6",
-            "scriptshared":"4",
-            "scriptutilized":"3",
-            "scriptexecuted":"2",
-            "rtdefects":"4",
-            "rtmiss":"0",
-            "warrantyissue":"5",
+            "projectManager":"Mohankumar jangam",
+            "rtsSpoc":"alagappan_saravanan",
+            "extteammembers":"9",
+            "scriptshared":"2",
+            "scriptutilized":"8",
+            "scriptexecuted":"5",
+            "rtdefects":"3",
+            "rtmiss":"1",
+            "warrantyissue":"2",
             "scriptExcpartOfwarranty":"5",
-            "newscriptreceived":"3",
-            "scriptsmodified":"2",
-            "efortsutilized":"90"
+            "newscriptreceived":"4",
+            "scriptsmodified":"3",
+            "efortsutilized":"145"
            },
            {
             //"itemId":"5411","itemName":"RITM000172292",
             "bhuId" : "20170",
-            "currentStatus":"Go live date (Refer next page for details)",
-            "size":"small",
-            "noOfObjects":"4",
-            "projectManager":"Venu",
-            "rtsSpoc":"Amudha",
-            "extteammembers":"6",
-            "scriptshared":"4",
+            "currentStatus":"Go live date",
+            "size":"medium",
+            "noOfObjects":"9",
+            "projectManager":"Venugopal Boya",
+            "rtsSpoc":" satya_s",
+            "extteammembers":"4",
+            "scriptshared":"2",
             "scriptutilized":"3",
-            "scriptexecuted":"2",
-            "rtdefects":"4",
-            "rtmiss":"0",
-            "warrantyissue":"5",
+            "scriptexecuted":"1",
+            "rtdefects":"2",
+            "rtmiss":"3",
+            "warrantyissue":"6",
             "scriptExcpartOfwarranty":"5",
             "newscriptreceived":"3",
-            "scriptsmodified":"2",
-            "efortsutilized":"90"
+            "scriptsmodified":"4",
+            "efortsutilized":"119"
            },
            {
             //"itemId":"5411","itemName":"RITM000172292",
             "bhuId" : "18679",
-            "currentStatus":"Go live date (Refer next page for details)",
+            "currentStatus":"UAT Start date",
             "size":"small",
-            "noOfObjects":"4",
-            "projectManager":"Venu",
-            "rtsSpoc":"Amudha",
+            "noOfObjects":"3",
+            "projectManager":"Ramesh Perumala Raja",
+            "rtsSpoc":"pavel_g",
             "extteammembers":"6",
             "scriptshared":"4",
             "scriptutilized":"3",
@@ -2726,12 +3079,7 @@ function ReportsService($http, $q,spinnerService){
             "efortsutilized":"90"
            }
            ]};
-        // $http.get("https://rtdashboardp.rno.apple.com:9012/bhureports/details?start-index=1&callback=angular.callbacks._0").success(function(data) {
-        //     def.resolve(data);
-        //     spinnerService.hide();
-        // }).error(function() {
-        //     def.reject("Failed to get data");
-        // });
+      
         var responseMockData= _responseData;
         def.resolve(responseMockData);
         return def.promise;
@@ -2765,59 +3113,285 @@ function ReportsService($http, $q,spinnerService){
             return def.promise;
     }
 
-    function getReportBhuDetails(bhuId){
+    function getReportBhuDetails(bhuId, requestFor){
         var def = $q.defer();
          spinnerService.show();
-         var _responseData = {
-            "totalCount": "6",
-            "ticketDetails": [{
-                "itemId": "4380",
-                "itemName": "RITM000092681",
-                "status": null,
-                "creationDate": "2017-04-19",
-                "rtSpoc": "satya_s",
-                "bhuId": "17819",
-                "ticketType": "Project Warranty",
-                "description": "Details"
-            }, {
-                "itemId": "4274",
-                "itemName": "RITM000094421",
-                "status": null,
-                "creationDate": "2017-04-04",
-                "rtSpoc": "alagappan_saravanan",
-                "bhuId": "17819",
-                "ticketType": "Project Warranty",
-                "description": "Details"
-            }]
-        };
-        def.resolve(_responseData);
-        spinnerService.hide();
-            // $http.get("https://rtdashboardp.rno.apple.com:9012/tickets/bhudetails/"+bhuId+"&callback=angular.callbacks._0")
+       
+            // $http.get("tickets/bhudetails/"+bhuId)
             //     .success(function(data) {
             //         def.resolve(data);
             //         spinnerService.hide();
             //     })
             //     .error(function(err) {
-            //         debugger;
             //         def.reject("Failed to get data");
             //     });
+            //      return def.promise;
+
+            //please remove this mock data before deployment
+            //please remove the below code and uncomment above code
+            var  _responseData = {
+                "totalCount": "1",
+                "ticketDetails": [
+                    {"itemId": "4380", "itemName": "RITM000094421", "status": "","creationDate": "2017-01-12", "rtSpoc": "satya_s", "bhuId": "17819", "ticketType": "Project Warranty",
+                    "description": "RT For ZZKM1 changes for Warranty Issue"},
+                    {"itemId": "4381", "itemName": "RITM000082364", "status": "","creationDate": "2017-06-17", "rtSpoc": "satya_s", "bhuId": "17819", "ticketType": "Project Warranty",
+                    "description": 'The ZZKM1 transaction runs the Block order report.  Via BHU 17819 the field "Pending Info" was changed to "Status" and a drop down was added. '}
+                ]};
+            def.resolve(_responseData);
+            spinnerService.hide();
             return def.promise;
     }
 
-    function exportToExcelByYear(y){
-            return "bhureports/download/"+y;
+    function getReportCurrentStatusDetails(bhuId){
+        var def = $q.defer();
+         spinnerService.show();
+         // $http.get("Reports/BHUReport/status/"+bhuId)
+         //     .success(function(data) {
+         //         def.resolve(data);
+         //         spinnerService.hide();
+         //     })
+         //     .error(function(err) {
+         //         def.reject("Failed to get data");
+         //     });
+         //      return def.promise;
+
+         //please remove this mock data before deployment
+         //please remove the below code and uncomment above code
+
+         var _responseData = {
+             "totalCount": "1",
+             "bhuStatusDetails": [{
+                 "meetingDate": "2017-04-19",
+                 "bhuId": "17819",
+                 "rtSpoc": "satya_s",
+                 "rtPlcMilestone": "RT Script sharing",
+                 "minutesOfMeeting": "Script sharing",
+                 "efforts": 34
+             },
+             {
+                "meetingDate": "2017-06-23",
+                "bhuId": "17819",
+                "rtSpoc": "srikrishna_r",
+                "rtPlcMilestone": "Design Review",
+                "minutesOfMeeting": "Script walkthrugh",
+                "efforts": 79
+            },
+            {
+                "meetingDate": "2017-04-19",
+                "bhuId": "17819",
+                "rtSpoc": "alagappan_saravanan",
+                "rtPlcMilestone": "IT Review",
+                "minutesOfMeeting": "Design Demo",
+                "efforts": 17
+            }]
+         };
+         def.resolve(_responseData);
+         spinnerService.hide();
+
+         return def.promise;
     }
-    function exportToExcelByQuarter(y, q){
-        return "bhureports/download/"+y+"/"+q;        
+
+    function getReportWarrantyDetails(bhuId){
+        var def = $q.defer();
+         spinnerService.show();
+
+         // $http.get("Reports/BHUReport/warranty/"+bhuId)
+         //     .success(function(data) {
+         //         def.resolve(data);
+         //         spinnerService.hide();
+         //     })
+         //     .error(function(err) {
+         //         def.reject("Failed to get data");
+         //     });
+         //     return def.promise;
+
+         //please remove this mock data before deployment
+         //please remove the below code and uncomment above code
+
+         var _responseData = {
+             "totalCount": "1",
+             "bhuWarrantyDetails": [{
+                 "ticketNo": "RITM003240546",
+                 "rootCause": "New requirement",
+                 "justification": "Not given as a part of the BRD",
+                 "bhuId": bhuId
+             },
+             {
+                "ticketNo": "RITM000094421",
+                "rootCause": "New requirement",
+                "justification": "Required some more input from clients",
+                "bhuId": bhuId
+            }]
+         };
+         def.resolve(_responseData);
+         spinnerService.hide();
+         return def.promise;
     }
-    function exportToExcelCurrentQuarter(){
-            return "bhureports/download/";
+
+    function getReportEffortsDetails(bhuId, size){
+        var def = $q.defer();
+         spinnerService.show();
+        //  $http.get("Reports/BHUReport/Efforts/"+bhuId)
+        //      .success(function(data) {
+        //         var cusmizedData = {
+        //             "totalCount": "1",
+        //             "effortsDetails": []
+        //         }
+        //         if(data.length > 0){
+        //             cusmizedData.totalCount = data.length;
+        //             angular.forEach(data, function(element, key) {
+        //             var estimatedEfforts = 0;//it may come from database from java service with response, pending for clarification
+    
+        //                 if(!element.totalActualEff || element.totalActualEff == null){
+        //                     element.totalActualEff = 0;
+        //                 }
+        //                 var deviation = estimatedEfforts - element.totalActualEff;
+    
+        //                 var myjson = {
+        //                     "bhuId":bhuId,
+        //                     "size":size,
+        //                     "kickOff": element.kickOffEff,
+        //                     "designReview":element.designEff,
+        //                     "rtScriptSharing":element.rtScriptsShareEff,
+        //                     "rtScriptWalthr":element.rtScriptsWalkEff,
+        //                     "itSystemDemo":element.itDemoEff,
+        //                     "itReview":element.itReviewEff,
+        //                     "uatReview":element.uatReviewEff,
+        //                     "rtScoping":element.rtScopingEff,
+        //                     "itExecutionDefects":element.rtExecEff,
+        //                     "warrantySupport":element.warrantyEff,
+        //                     "p2s":element.p2sEff,
+        //                     "plcFollowups":element.plcFollowupEff,
+        //                     "estimatedEfforts":estimatedEfforts,
+        //                     "actualEfforts":element.totalActualEff,
+        //                     "deviation": deviation
+        //                 }
+        //                 cusmizedData.effortsDetails.push(myjson);
+        //             }); 
+        //         }
+                
+        //          def.resolve(cusmizedData);
+        //          spinnerService.hide();
+        //      })
+        //      .error(function(err) {
+        //          def.reject("Failed to get data");
+        //      });
+        //      return def.promise;
+
+
+
+         //please remove this mock data before deployment
+         //please remove the below code and uncomment above code
+        //please remove this mock data before deployment, mock data as per java service given by swamy     
+         var _responseData = [{
+                "bhuID":17819,
+                "size":"medium",
+                "kickOffEff":2,
+                "designEff":1,
+                "rtScriptsShareEff":1,
+                "rtScriptsWalkEff":1,
+                "itDemoEff":2,
+                "itReviewEff":1,
+                "uatReviewEff":1,
+                "rtScopingEff":46,
+                "rtExecEff":50,
+                "warrantyEff":42,
+                "p2sEff":2,
+                "plcFollowupEff":3,
+                "estimatedEfforts":144,
+                "totalActualEff":158,
+                //"deviation":null
+             },{
+                "bhuID":17819,
+                "size":"medium",
+                "kickOffEff":2,
+                "designEff":1,
+                "rtScriptsShareEff":1,
+                "rtScriptsWalkEff":1,
+                "itDemoEff":2,
+                "itReviewEff":1,
+                "uatReviewEff":1,
+                "rtScopingEff":46,
+                "rtExecEff":50,
+                "warrantyEff":42,
+                "p2sEff":2,
+                "plcFollowupEff":3,
+                "estimatedEfforts":109,
+                "totalActualEff":98,
+                //"deviation":null
+             }
+            ];
+         
+
+         var cusmizedData = {
+            "totalCount": "1",
+            "effortsDetails": []
+         }
+
+         if(_responseData.length > 0)
+            {
+                cusmizedData.totalCount = _responseData.length;
+                angular.forEach(_responseData, function(element, key) {
+                var estimatedEfforts = element.estimatedEfforts;// 0;//it may come from database from java service with response, pending for clarification
+
+                    if(!element.totalActualEff || element.totalActualEff == null){
+                        element.totalActualEff = 0;
+                    }
+                    var deviation = estimatedEfforts - element.totalActualEff;
+
+                    var myjson = {
+                        "bhuId":bhuId,
+                        "size":size,
+                        "kickOff": element.kickOffEff,
+                        "designReview":element.designEff,
+                        "rtScriptSharing":element.rtScriptsShareEff,
+                        "rtScriptWalthr":element.rtScriptsWalkEff,
+                        "itSystemDemo":element.itDemoEff,
+                        "itReview":element.itReviewEff,
+                        "uatReview":element.uatReviewEff,
+                        "rtScoping":element.rtScopingEff,
+                        "itExecutionDefects":element.rtExecEff,
+                        "warrantySupport":element.warrantyEff,
+                        "p2s":element.p2sEff,
+                        "plcFollowups":element.plcFollowupEff,
+                        "estimatedEfforts":estimatedEfforts,
+                        "actualEfforts":element.totalActualEff,
+                        "deviation": deviation
+                    }
+                    cusmizedData.effortsDetails.push(myjson);
+               }); 
+            }
+
+         def.resolve(cusmizedData);
+         spinnerService.hide();
+         return def.promise;
     }
+
+    //this is the common function to export excel
+    function exportExcel(p,y,q,m){
+        return "bhureports/download/"+ p +"/"+ y +"/"+ q +"/"+ m;
+    }
+
+    // function exportToExcelByPhase(p){
+    //     return "bhureports/download/"+p;
+    // }
+    // function exportToExcelByPhaseAndYear (p,y){
+    //     "bhureports/download/"+p+"/"+y;
+    // }
+    // function exportToExcelByYear(y){
+    //         return "bhureports/download/"+y;
+    // }
+    // function exportToExcelByQuarter(y, q){
+    //     return "bhureports/download/"+y+"/"+q;        
+    // }
+    // function exportToExcelCurrentQuarter(){
+    //         return "bhureports/download/";
+    // }
 
 }
 
 module.exports = ReportsService;
-},{}],38:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 RepositoryModulesController.$inject = ['$state', '$scope','$rootScope', '$log', 'repositoryservice'];
 
 function RepositoryModulesController($state, $scope,$rootScope, $log, repositoryservice) {
@@ -2895,7 +3469,7 @@ function RepositoryModulesController($state, $scope,$rootScope, $log, repository
 
 }
 module.exports = RepositoryModulesController;
-},{}],39:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 RepositoryTestScriptListController.$inject = ['$state', '$stateParams', '$scope', '$rootScope', '$log', '$filter', '$timeout', 'repositoryservice'];
 
 function RepositoryTestScriptListController($state, $stateParams, $scope, $rootScope, $log, $filter, $timeout, repositoryservice) {
@@ -3160,7 +3734,7 @@ function RepositoryTestScriptListController($state, $stateParams, $scope, $rootS
 
 }
 module.exports = RepositoryTestScriptListController;
-},{}],40:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 RepositoryController.$inject = ['$state', '$scope', '$log', 'repositoryservice', 'testFolders'];
 
 function RepositoryController($state, $scope, $log, repositoryservice, testFolders) {
@@ -3207,7 +3781,7 @@ function RepositoryController($state, $scope, $log, repositoryservice, testFolde
     }
 }
 module.exports = RepositoryController;
-},{}],41:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 RepositoryFilter.$inject = ['$sce'];
 
 function RepositoryFilter($sce) {
@@ -3216,7 +3790,7 @@ function RepositoryFilter($sce) {
     }
 }
 module.exports = RepositoryFilter;
-},{}],42:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -3229,7 +3803,7 @@ module.exports = angular
     .filter('sanitize', require('./repository.filter'));
 
 
-},{"./repository-modules.controller":38,"./repository-testscripts-list.controller":39,"./repository.controller":40,"./repository.filter":41,"./repository.route":43,"./repository.service":44,"angular":105}],43:[function(require,module,exports){
+},{"./repository-modules.controller":42,"./repository-testscripts-list.controller":43,"./repository.controller":44,"./repository.filter":45,"./repository.route":47,"./repository.service":48,"angular":109}],47:[function(require,module,exports){
 RepositoryRoute.$inject = ['$stateProvider', '$breadcrumbProvider'];
 
 function RepositoryRoute($stateProvider, $breadcrumbProvider) {
@@ -3312,7 +3886,7 @@ function RepositoryRoute($stateProvider, $breadcrumbProvider) {
     });
 }
 module.exports = RepositoryRoute;
-},{"./test-folders.resolve":45}],44:[function(require,module,exports){
+},{"./test-folders.resolve":49}],48:[function(require,module,exports){
 RepositoryService.$inject = ['$http', '$q', 'spinnerService'];
 
 function RepositoryService($http, $q, spinnerService) {
@@ -3441,7 +4015,7 @@ function RepositoryService($http, $q, spinnerService) {
     }
 }
 module.exports = RepositoryService;
-},{}],45:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 getTestFolders.$inject = ['repositoryservice', '$http', '$stateParams', '$q', 'spinnerService'];
 
 function getTestFolders(repositoryservice, $http, $stateParams, $q, spinnerService) { //To fetch root level test folders which are defined in RT Dashboard database
@@ -3457,7 +4031,7 @@ function getTestFolders(repositoryservice, $http, $stateParams, $q, spinnerServi
         return def.promise;
 }
 module.exports = getTestFolders;
-},{}],46:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 SearchController.$inject = [    
     '$state',
     '$scope',
@@ -3746,7 +4320,7 @@ function SearchController($state, $scope,$rootScope, $http,$filter,$timeout, rep
 }
 
 module.exports = SearchController;
-},{}],47:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -3756,7 +4330,7 @@ module.exports = angular
     
 
 
-},{"./search.controller":46,"./search.route":48,"angular":105}],48:[function(require,module,exports){
+},{"./search.controller":50,"./search.route":52,"angular":109}],52:[function(require,module,exports){
 SearchRoute.$inject = ['$stateProvider'];
 
 function SearchRoute($stateProvider) {
@@ -3790,7 +4364,7 @@ function SearchRoute($stateProvider) {
     });
 }
 module.exports = SearchRoute;
-},{}],49:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 /*! angular-breadcrumb - v0.5.0
 * http://ncuillery.github.io/angular-breadcrumb
 * Copyright (c) 2016 Nicolas Cuillery; Licensed MIT */
@@ -4196,7 +4770,7 @@ angular.module('ncy-angular-breadcrumb', ['ui.router.state'])
     .directive('ncyBreadcrumbLast', BreadcrumbLastDirective)
     .directive('ncyBreadcrumbText', BreadcrumbTextDirective);
 })(window, window.angular);
-},{}],50:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 BreadCrumbController.$inject = ['$rootScope','$state','repositoryservice'];
 
 function BreadCrumbController($rootScope, $state, repositoryservice) {
@@ -4209,7 +4783,7 @@ var breadcrumbComponent = {
 };
 
 module.exports = breadcrumbComponent;
-},{}],51:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 function checkRepository() {
     return function($scope, element, attrs) {
         $scope.$on("show_repository_breadcrumb", function() {
@@ -4224,7 +4798,7 @@ function checkRepository() {
     };
 }
 module.exports = checkRepository;
-},{}],52:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 checkRepositoryService.$inject = ['$rootScope'];
 
 function checkRepositoryService($rootScope) {
@@ -4238,7 +4812,7 @@ function checkRepositoryService($rootScope) {
     };
 }
 module.exports = checkRepositoryService;
-},{}],53:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
     rtAlert.$inject = [];
     /* @ngInject */
     function rtAlert() {
@@ -4270,7 +4844,7 @@ module.exports = checkRepositoryService;
         return alertDirective;
     }
     module.exports = rtAlert;
-},{}],54:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 ConfirmModalController.$inject = ['$uibModalInstance', 'modal'];
 
 function ConfirmModalController($uibModalInstance, modal) {
@@ -4329,7 +4903,7 @@ function ConfirmModalDirective($uibModal) {
     };
 }
 module.exports = ConfirmModalDirective;
-},{}],55:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 rtRepoChain.$inject = [];
 /* @ngInject */
 function rtRepoChain() {
@@ -4396,7 +4970,7 @@ function rtRepoChain() {
     return rtRepoDirective;
 }
 module.exports = rtRepoChain;
-},{}],56:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 
 function delItemRenderer(){
 
@@ -4418,7 +4992,7 @@ function delItemRenderer(){
 }
 
 module.exports = delItemRenderer;
-},{}],57:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 
 function formValidation($parse){
 
@@ -4484,7 +5058,7 @@ function formValidation($parse){
 }
 
 module.exports = formValidation;
-},{}],58:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 
 function bhuIdLinkRenderer(){
 
@@ -4507,7 +5081,7 @@ function bhuIdLinkRenderer(){
 }
 
 module.exports = bhuIdLinkRenderer;
-},{}],59:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 
 function editItemRenderer(){
 
@@ -4527,7 +5101,7 @@ function editItemRenderer(){
 }
 
 module.exports = editItemRenderer;
-},{}],60:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 
 function dateFormat($filter){
 
@@ -4547,7 +5121,7 @@ function dateFormat($filter){
 }
 
 module.exports = dateFormat;
-},{}],61:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 
 function descItemRenderer(){
 
@@ -4577,7 +5151,7 @@ function descItemRenderer(){
 }
 
 module.exports = descItemRenderer;
-},{}],62:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 
 function defectsSummaryItemRenderer(){
 
@@ -4594,7 +5168,7 @@ function defectsSummaryItemRenderer(){
 }
 
 module.exports = defectsSummaryItemRenderer;
-},{}],63:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 
 function itemnameLinkRenderer(){
 
@@ -4635,7 +5209,7 @@ function itemnameLinkRenderer(){
 }
 
 module.exports = itemnameLinkRenderer;
-},{}],64:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 
 function efortsutilizedlinkrenderer(){
 
@@ -4658,7 +5232,7 @@ function efortsutilizedlinkrenderer(){
     }
     
     module.exports = efortsutilizedlinkrenderer;
-},{}],65:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 
 function currentStatuslinkrenderer(){
     return {
@@ -4679,7 +5253,7 @@ function currentStatuslinkrenderer(){
     }
     
     module.exports = currentStatuslinkrenderer;
-},{}],66:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 
 function warrantyIssuelinkrenderer(){
     return {
@@ -4700,7 +5274,7 @@ function warrantyIssuelinkrenderer(){
     }
     
     module.exports = warrantyIssuelinkrenderer;
-},{}],67:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 
 function repoDescItemRenderer(){
 
@@ -4717,7 +5291,7 @@ function repoDescItemRenderer(){
 }
 
 module.exports = repoDescItemRenderer;
-},{}],68:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 
 function expectedItemRenderer(){
 
@@ -4734,7 +5308,7 @@ function expectedItemRenderer(){
 }
 
 module.exports = expectedItemRenderer;
-},{}],69:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 
 function inputItemRenderer(){
 
@@ -4751,7 +5325,7 @@ function inputItemRenderer(){
 }
 
 module.exports = inputItemRenderer;
-},{}],70:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 function tcodeItemRenderer(){
 
     return {
@@ -4767,7 +5341,7 @@ function tcodeItemRenderer(){
 }
 
 module.exports = tcodeItemRenderer;
-},{}],71:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 
 function rtSpocDesc(sharedService){
 
@@ -4796,7 +5370,7 @@ function rtSpocDesc(sharedService){
 }
 
 module.exports = rtSpocDesc;
-},{}],72:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 
 function moduleItemRenderer(){
 
@@ -4814,7 +5388,7 @@ function moduleItemRenderer(){
 }
 
 module.exports = moduleItemRenderer;
-},{}],73:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 module.exports = function(app) {
 
     app.directive('rtGridA11y', function($compile, $timeout) {
@@ -4858,7 +5432,7 @@ module.exports = function(app) {
         }
     });
 };
-},{}],74:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 module.exports = function(app) {
 
     app.directive('rtAccordion', function($parse) {
@@ -4875,7 +5449,7 @@ module.exports = function(app) {
         }
     });
 };
-},{}],75:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 module.exports = function(app) {
 
     'use strict';
@@ -5420,7 +5994,7 @@ module.exports = function(app) {
             };
         });
 }
-},{}],76:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 module.exports = function(app) {
     'use strict';
 
@@ -5468,7 +6042,7 @@ module.exports = function(app) {
         }
     }
 }
-},{}],77:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 var rtGrid = angular.module('rtGrid', [ ]);
 
 require('./grid.directive.js')(rtGrid);
@@ -5482,7 +6056,7 @@ require('./grid.a11y.directive.js')(rtGrid);
 
 module.exports = rtGrid;
 
-},{"./grid.a11y.directive.js":73,"./grid.accordion.directive.js":74,"./grid.directive.js":75,"./grid.filter.js":76,"./grid.pagination.directive.js":78,"./grid.reorder.directive.js":79,"./grid.sort.directive.js":80,"./grid.sort.service.js":81}],78:[function(require,module,exports){
+},{"./grid.a11y.directive.js":77,"./grid.accordion.directive.js":78,"./grid.directive.js":79,"./grid.filter.js":80,"./grid.pagination.directive.js":82,"./grid.reorder.directive.js":83,"./grid.sort.directive.js":84,"./grid.sort.service.js":85}],82:[function(require,module,exports){
 module.exports = function(app) {
 
     app.directive('rtPagination', function() {
@@ -5492,7 +6066,7 @@ module.exports = function(app) {
         }
     });
 };
-},{}],79:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 module.exports = function(app) {
 
     app.directive('rtReorder', function($parse, $compile) {
@@ -5523,7 +6097,7 @@ module.exports = function(app) {
         }
     });
 };
-},{}],80:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 module.exports = function(app) {
     'use strict';
 
@@ -5564,7 +6138,7 @@ module.exports = function(app) {
         }
     }
 };
-},{}],81:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('gridSortComparator', function() {
         return {
@@ -5581,7 +6155,7 @@ module.exports = function(app) {
         };
     });
 }
-},{}],82:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -5618,7 +6192,7 @@ module.exports = angular
     .factory('sharedService', require('./shared.service'));
     
 
-},{"./breadcrumb/breadcrumb.component":50,"./check-repository/check-repository.directive":51,"./check-repository/check-repository.service":52,"./directives/alert-banner/alert-banner.directive":53,"./directives/confirm-modal/confirm-modal.directive":54,"./directives/generate-repository-breadcrumb.directive":55,"./directives/grid-admin-delete.directive":56,"./directives/grid-admin-validation.directive":57,"./directives/grid-bhu-id-link.directive":58,"./directives/grid-custom-template.directives":59,"./directives/grid-date-format.directive":60,"./directives/grid-defects-desc.directive":61,"./directives/grid-defects-summary.directive":62,"./directives/grid-item-link.directive":63,"./directives/grid-report-efortsutilize.directive":64,"./directives/grid-report-status.directive":65,"./directives/grid-report-warrantyIssue.directive":66,"./directives/grid-repository-design-desc.directive":67,"./directives/grid-repository-design-expected.directive":68,"./directives/grid-repository-design-inputdata.directive":69,"./directives/grid-repository-design-tcode.directive":70,"./directives/grid-spoc-details.directive":71,"./directives/grid-spotlight-modules.directive":72,"./shared.service":83,"./spinner.directive":84,"./spinner/spinner.service":85,"./user-photo/user-photo.component":86,"angular":105}],83:[function(require,module,exports){
+},{"./breadcrumb/breadcrumb.component":54,"./check-repository/check-repository.directive":55,"./check-repository/check-repository.service":56,"./directives/alert-banner/alert-banner.directive":57,"./directives/confirm-modal/confirm-modal.directive":58,"./directives/generate-repository-breadcrumb.directive":59,"./directives/grid-admin-delete.directive":60,"./directives/grid-admin-validation.directive":61,"./directives/grid-bhu-id-link.directive":62,"./directives/grid-custom-template.directives":63,"./directives/grid-date-format.directive":64,"./directives/grid-defects-desc.directive":65,"./directives/grid-defects-summary.directive":66,"./directives/grid-item-link.directive":67,"./directives/grid-report-efortsutilize.directive":68,"./directives/grid-report-status.directive":69,"./directives/grid-report-warrantyIssue.directive":70,"./directives/grid-repository-design-desc.directive":71,"./directives/grid-repository-design-expected.directive":72,"./directives/grid-repository-design-inputdata.directive":73,"./directives/grid-repository-design-tcode.directive":74,"./directives/grid-spoc-details.directive":75,"./directives/grid-spotlight-modules.directive":76,"./shared.service":87,"./spinner.directive":88,"./spinner/spinner.service":89,"./user-photo/user-photo.component":90,"angular":109}],87:[function(require,module,exports){
 SharedService.$inject = ['$http', '$q', 'spinnerService'];
 
 function SharedService($http, $q, spinnerService) {
@@ -5698,7 +6272,7 @@ function SharedService($http, $q, spinnerService) {
     }
 }
 module.exports = SharedService;
-},{}],84:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 function spinner() {
     return function($scope, element, attrs) {
         $scope.$on("spinner_show", function() {
@@ -5710,7 +6284,7 @@ function spinner() {
     };
 }
 module.exports = spinner;
-},{}],85:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 spinnerService.$inject = ['$rootScope'];
 
 function spinnerService($rootScope) {
@@ -5724,7 +6298,7 @@ function spinnerService($rootScope) {
     };
 }
 module.exports = spinnerService;
-},{}],86:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 PhotoController.$inject = [
     'photoservice'
 ];
@@ -5749,7 +6323,7 @@ var userPhotoComponent = {
 };
 
 module.exports = userPhotoComponent;
-},{}],87:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 TeamController.$inject = ['$state', '$scope', '$log', '$http', 'teamService', 'adminservice', '$location', '$anchorScroll'];
 
 function TeamController($state, $scope, $log, $http, teamService, adminservice, $location, $anchorScroll) {
@@ -5872,7 +6446,7 @@ function TeamController($state, $scope, $log, $http, teamService, adminservice, 
   }
 }
 module.exports = TeamController;
-},{}],88:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -5881,7 +6455,7 @@ module.exports = angular
     .controller('TeamController', require('./team.controller'))
     .factory('teamService', require('./team.service'));
 
-},{"./team.controller":87,"./team.route":89,"./team.service":90,"angular":105}],89:[function(require,module,exports){
+},{"./team.controller":91,"./team.route":93,"./team.service":94,"angular":109}],93:[function(require,module,exports){
 TeamRoute.$inject = ['$stateProvider'];
 
 function TeamRoute($stateProvider) {
@@ -5900,7 +6474,7 @@ function TeamRoute($stateProvider) {
     });
 }
 module.exports = TeamRoute;
-},{}],90:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 TeamService.$inject = [
      '$http',
     '$q',
@@ -5948,7 +6522,7 @@ function TeamService($http, $q,spinnerService) {
 
 module.exports = TeamService;
 
-},{}],91:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 BhuModalController.$inject = ['$uibModalInstance', 'modal'];
 
 function BhuModalController($uibModalInstance, modal) {
@@ -6040,7 +6614,7 @@ function BhuModalDirective($uibModal, ticketservice) {
     };
 }
 module.exports = BhuModalDirective;
-},{}],92:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 getTicketsFolders.$inject = ['ticketservice','$q', '$http', '$stateParams', 'spinnerService'];
 
 function getTicketsFolders(ticketservice, $q, $http, $stateParams, spinnerService) {
@@ -6059,7 +6633,7 @@ function getTicketsFolders(ticketservice, $q, $http, $stateParams, spinnerServic
 }
 module.exports = getTicketsFolders;
 
-},{}],93:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 TicketsController.$inject = [    
     '$state',
     '$scope',
@@ -6398,7 +6972,7 @@ function resetFilter(){
 
 module.exports = TicketsController;
 
-},{}],94:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -6409,7 +6983,7 @@ module.exports = angular
     .factory('ticketservice', require('./tickets.service'));
 
 
-},{"./bhu-modal.directive":91,"./tickets.controller":93,"./tickets.route":95,"./tickets.service":96,"angular":105}],95:[function(require,module,exports){
+},{"./bhu-modal.directive":95,"./tickets.controller":97,"./tickets.route":99,"./tickets.service":100,"angular":109}],99:[function(require,module,exports){
 TicketsRoute.$inject = [
     '$stateProvider'
 ];
@@ -6457,7 +7031,7 @@ function TicketsRoute(
 }
 
 module.exports = TicketsRoute;
-},{"./tickets-folders.resolve":92}],96:[function(require,module,exports){
+},{"./tickets-folders.resolve":96}],100:[function(require,module,exports){
 TicketsService.$inject = [
     '$http',
     '$q',
@@ -6563,7 +7137,7 @@ function TicketsService($http, $q,spinnerService) {
 
 module.exports = TicketsService;
 
-},{}],97:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.6
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -7289,14 +7863,14 @@ function ngMessageDirectiveFactory() {
 
 })(window, window.angular);
 
-},{}],98:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 require('./angular-messages');
 module.exports = 'ngMessages';
 
-},{"./angular-messages":97}],99:[function(require,module,exports){
+},{"./angular-messages":101}],103:[function(require,module,exports){
 /**
- * @license AngularJS v1.6.6
- * (c) 2010-2017 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.5.6
+ * (c) 2010-2016 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function(window, angular) {'use strict';
@@ -7313,15 +7887,6 @@ module.exports = 'ngMessages';
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 var $sanitizeMinErr = angular.$$minErr('$sanitize');
-var bind;
-var extend;
-var forEach;
-var isDefined;
-var lowercase;
-var noop;
-var nodeContains;
-var htmlParser;
-var htmlSanitizeWriter;
 
 /**
  * @ngdoc module
@@ -7360,7 +7925,7 @@ var htmlSanitizeWriter;
  * @returns {string} Sanitized HTML.
  *
  * @example
-   <example module="sanitizeExample" deps="angular-sanitize.js" name="sanitize-service">
+   <example module="sanitizeExample" deps="angular-sanitize.js">
    <file name="index.html">
      <script>
          angular.module('sanitizeExample', ['ngSanitize'])
@@ -7409,19 +7974,19 @@ var htmlSanitizeWriter;
    </file>
    <file name="protractor.js" type="protractor">
      it('should sanitize the html snippet by default', function() {
-       expect(element(by.css('#bind-html-with-sanitize div')).getAttribute('innerHTML')).
+       expect(element(by.css('#bind-html-with-sanitize div')).getInnerHtml()).
          toBe('<p>an html\n<em>click here</em>\nsnippet</p>');
      });
 
      it('should inline raw snippet if bound to a trusted value', function() {
-       expect(element(by.css('#bind-html-with-trust div')).getAttribute('innerHTML')).
+       expect(element(by.css('#bind-html-with-trust div')).getInnerHtml()).
          toBe("<p style=\"color:blue\">an html\n" +
               "<em onmouseover=\"this.textContent='PWN3D!'\">click here</em>\n" +
               "snippet</p>");
      });
 
      it('should escape snippet without any filter', function() {
-       expect(element(by.css('#bind-default div')).getAttribute('innerHTML')).
+       expect(element(by.css('#bind-default div')).getInnerHtml()).
          toBe("&lt;p style=\"color:blue\"&gt;an html\n" +
               "&lt;em onmouseover=\"this.textContent='PWN3D!'\"&gt;click here&lt;/em&gt;\n" +
               "snippet&lt;/p&gt;");
@@ -7430,11 +7995,11 @@ var htmlSanitizeWriter;
      it('should update', function() {
        element(by.model('snippet')).clear();
        element(by.model('snippet')).sendKeys('new <b onclick="alert(1)">text</b>');
-       expect(element(by.css('#bind-html-with-sanitize div')).getAttribute('innerHTML')).
+       expect(element(by.css('#bind-html-with-sanitize div')).getInnerHtml()).
          toBe('new <b>text</b>');
-       expect(element(by.css('#bind-html-with-trust div')).getAttribute('innerHTML')).toBe(
+       expect(element(by.css('#bind-html-with-trust div')).getInnerHtml()).toBe(
          'new <b onclick="alert(1)">text</b>');
-       expect(element(by.css('#bind-default div')).getAttribute('innerHTML')).toBe(
+       expect(element(by.css('#bind-default div')).getInnerHtml()).toBe(
          "new &lt;b onclick=\"alert(1)\"&gt;text&lt;/b&gt;");
      });
    </file>
@@ -7445,7 +8010,6 @@ var htmlSanitizeWriter;
 /**
  * @ngdoc provider
  * @name $sanitizeProvider
- * @this
  *
  * @description
  * Creates and configures {@link $sanitize} instance.
@@ -7455,7 +8019,7 @@ function $SanitizeProvider() {
 
   this.$get = ['$$sanitizeUri', function($$sanitizeUri) {
     if (svgEnabled) {
-      extend(validElements, svgElements);
+      angular.extend(validElements, svgElements);
     }
     return function(html) {
       var buf = [];
@@ -7498,409 +8062,333 @@ function $SanitizeProvider() {
    *    without an argument or self for chaining otherwise.
    */
   this.enableSvg = function(enableSvg) {
-    if (isDefined(enableSvg)) {
+    if (angular.isDefined(enableSvg)) {
       svgEnabled = enableSvg;
       return this;
     } else {
       return svgEnabled;
     }
   };
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  // Private stuff
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-  bind = angular.bind;
-  extend = angular.extend;
-  forEach = angular.forEach;
-  isDefined = angular.isDefined;
-  lowercase = angular.lowercase;
-  noop = angular.noop;
-
-  htmlParser = htmlParserImpl;
-  htmlSanitizeWriter = htmlSanitizeWriterImpl;
-
-  nodeContains = window.Node.prototype.contains || /** @this */ function(arg) {
-    // eslint-disable-next-line no-bitwise
-    return !!(this.compareDocumentPosition(arg) & 16);
-  };
-
-  // Regular Expressions for parsing tags and attributes
-  var SURROGATE_PAIR_REGEXP = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g,
-    // Match everything outside of normal chars and " (quote character)
-    NON_ALPHANUMERIC_REGEXP = /([^#-~ |!])/g;
-
-
-  // Good source of info about elements and attributes
-  // http://dev.w3.org/html5/spec/Overview.html#semantics
-  // http://simon.html5.org/html-elements
-
-  // Safe Void Elements - HTML5
-  // http://dev.w3.org/html5/spec/Overview.html#void-elements
-  var voidElements = toMap('area,br,col,hr,img,wbr');
-
-  // Elements that you can, intentionally, leave open (and which close themselves)
-  // http://dev.w3.org/html5/spec/Overview.html#optional-tags
-  var optionalEndTagBlockElements = toMap('colgroup,dd,dt,li,p,tbody,td,tfoot,th,thead,tr'),
-      optionalEndTagInlineElements = toMap('rp,rt'),
-      optionalEndTagElements = extend({},
-                                              optionalEndTagInlineElements,
-                                              optionalEndTagBlockElements);
-
-  // Safe Block Elements - HTML5
-  var blockElements = extend({}, optionalEndTagBlockElements, toMap('address,article,' +
-          'aside,blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5,' +
-          'h6,header,hgroup,hr,ins,map,menu,nav,ol,pre,section,table,ul'));
-
-  // Inline Elements - HTML5
-  var inlineElements = extend({}, optionalEndTagInlineElements, toMap('a,abbr,acronym,b,' +
-          'bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s,' +
-          'samp,small,span,strike,strong,sub,sup,time,tt,u,var'));
-
-  // SVG Elements
-  // https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Elements
-  // Note: the elements animate,animateColor,animateMotion,animateTransform,set are intentionally omitted.
-  // They can potentially allow for arbitrary javascript to be executed. See #11290
-  var svgElements = toMap('circle,defs,desc,ellipse,font-face,font-face-name,font-face-src,g,glyph,' +
-          'hkern,image,linearGradient,line,marker,metadata,missing-glyph,mpath,path,polygon,polyline,' +
-          'radialGradient,rect,stop,svg,switch,text,title,tspan');
-
-  // Blocked Elements (will be stripped)
-  var blockedElements = toMap('script,style');
-
-  var validElements = extend({},
-                                     voidElements,
-                                     blockElements,
-                                     inlineElements,
-                                     optionalEndTagElements);
-
-  //Attributes that have href and hence need to be sanitized
-  var uriAttrs = toMap('background,cite,href,longdesc,src,xlink:href');
-
-  var htmlAttrs = toMap('abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,class,clear,' +
-      'color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,' +
-      'ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,' +
-      'scope,scrolling,shape,size,span,start,summary,tabindex,target,title,type,' +
-      'valign,value,vspace,width');
-
-  // SVG attributes (without "id" and "name" attributes)
-  // https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Attributes
-  var svgAttrs = toMap('accent-height,accumulate,additive,alphabetic,arabic-form,ascent,' +
-      'baseProfile,bbox,begin,by,calcMode,cap-height,class,color,color-rendering,content,' +
-      'cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,font-size,font-stretch,' +
-      'font-style,font-variant,font-weight,from,fx,fy,g1,g2,glyph-name,gradientUnits,hanging,' +
-      'height,horiz-adv-x,horiz-origin-x,ideographic,k,keyPoints,keySplines,keyTimes,lang,' +
-      'marker-end,marker-mid,marker-start,markerHeight,markerUnits,markerWidth,mathematical,' +
-      'max,min,offset,opacity,orient,origin,overline-position,overline-thickness,panose-1,' +
-      'path,pathLength,points,preserveAspectRatio,r,refX,refY,repeatCount,repeatDur,' +
-      'requiredExtensions,requiredFeatures,restart,rotate,rx,ry,slope,stemh,stemv,stop-color,' +
-      'stop-opacity,strikethrough-position,strikethrough-thickness,stroke,stroke-dasharray,' +
-      'stroke-dashoffset,stroke-linecap,stroke-linejoin,stroke-miterlimit,stroke-opacity,' +
-      'stroke-width,systemLanguage,target,text-anchor,to,transform,type,u1,u2,underline-position,' +
-      'underline-thickness,unicode,unicode-range,units-per-em,values,version,viewBox,visibility,' +
-      'width,widths,x,x-height,x1,x2,xlink:actuate,xlink:arcrole,xlink:role,xlink:show,xlink:title,' +
-      'xlink:type,xml:base,xml:lang,xml:space,xmlns,xmlns:xlink,y,y1,y2,zoomAndPan', true);
-
-  var validAttrs = extend({},
-                                  uriAttrs,
-                                  svgAttrs,
-                                  htmlAttrs);
-
-  function toMap(str, lowercaseKeys) {
-    var obj = {}, items = str.split(','), i;
-    for (i = 0; i < items.length; i++) {
-      obj[lowercaseKeys ? lowercase(items[i]) : items[i]] = true;
-    }
-    return obj;
-  }
-
-  /**
-   * Create an inert document that contains the dirty HTML that needs sanitizing
-   * Depending upon browser support we use one of three strategies for doing this.
-   * Support: Safari 10.x -> XHR strategy
-   * Support: Firefox -> DomParser strategy
-   */
-  var getInertBodyElement /* function(html: string): HTMLBodyElement */ = (function(window, document) {
-    var inertDocument;
-    if (document && document.implementation) {
-      inertDocument = document.implementation.createHTMLDocument('inert');
-    } else {
-      throw $sanitizeMinErr('noinert', 'Can\'t create an inert html document');
-    }
-    var inertBodyElement = (inertDocument.documentElement || inertDocument.getDocumentElement()).querySelector('body');
-
-    // Check for the Safari 10.1 bug - which allows JS to run inside the SVG G element
-    inertBodyElement.innerHTML = '<svg><g onload="this.parentNode.remove()"></g></svg>';
-    if (!inertBodyElement.querySelector('svg')) {
-      return getInertBodyElement_XHR;
-    } else {
-      // Check for the Firefox bug - which prevents the inner img JS from being sanitized
-      inertBodyElement.innerHTML = '<svg><p><style><img src="</style><img src=x onerror=alert(1)//">';
-      if (inertBodyElement.querySelector('svg img')) {
-        return getInertBodyElement_DOMParser;
-      } else {
-        return getInertBodyElement_InertDocument;
-      }
-    }
-
-    function getInertBodyElement_XHR(html) {
-      // We add this dummy element to ensure that the rest of the content is parsed as expected
-      // e.g. leading whitespace is maintained and tags like `<meta>` do not get hoisted to the `<head>` tag.
-      html = '<remove></remove>' + html;
-      try {
-        html = encodeURI(html);
-      } catch (e) {
-        return undefined;
-      }
-      var xhr = new window.XMLHttpRequest();
-      xhr.responseType = 'document';
-      xhr.open('GET', 'data:text/html;charset=utf-8,' + html, false);
-      xhr.send(null);
-      var body = xhr.response.body;
-      body.firstChild.remove();
-      return body;
-    }
-
-    function getInertBodyElement_DOMParser(html) {
-      // We add this dummy element to ensure that the rest of the content is parsed as expected
-      // e.g. leading whitespace is maintained and tags like `<meta>` do not get hoisted to the `<head>` tag.
-      html = '<remove></remove>' + html;
-      try {
-        var body = new window.DOMParser().parseFromString(html, 'text/html').body;
-        body.firstChild.remove();
-        return body;
-      } catch (e) {
-        return undefined;
-      }
-    }
-
-    function getInertBodyElement_InertDocument(html) {
-      inertBodyElement.innerHTML = html;
-
-      // Support: IE 9-11 only
-      // strip custom-namespaced attributes on IE<=11
-      if (document.documentMode) {
-        stripCustomNsAttrs(inertBodyElement);
-      }
-
-      return inertBodyElement;
-    }
-  })(window, window.document);
-
-  /**
-   * @example
-   * htmlParser(htmlString, {
-   *     start: function(tag, attrs) {},
-   *     end: function(tag) {},
-   *     chars: function(text) {},
-   *     comment: function(text) {}
-   * });
-   *
-   * @param {string} html string
-   * @param {object} handler
-   */
-  function htmlParserImpl(html, handler) {
-    if (html === null || html === undefined) {
-      html = '';
-    } else if (typeof html !== 'string') {
-      html = '' + html;
-    }
-
-    var inertBodyElement = getInertBodyElement(html);
-    if (!inertBodyElement) return '';
-
-    //mXSS protection
-    var mXSSAttempts = 5;
-    do {
-      if (mXSSAttempts === 0) {
-        throw $sanitizeMinErr('uinput', 'Failed to sanitize html because the input is unstable');
-      }
-      mXSSAttempts--;
-
-      // trigger mXSS if it is going to happen by reading and writing the innerHTML
-      html = inertBodyElement.innerHTML;
-      inertBodyElement = getInertBodyElement(html);
-    } while (html !== inertBodyElement.innerHTML);
-
-    var node = inertBodyElement.firstChild;
-    while (node) {
-      switch (node.nodeType) {
-        case 1: // ELEMENT_NODE
-          handler.start(node.nodeName.toLowerCase(), attrToMap(node.attributes));
-          break;
-        case 3: // TEXT NODE
-          handler.chars(node.textContent);
-          break;
-      }
-
-      var nextNode;
-      if (!(nextNode = node.firstChild)) {
-        if (node.nodeType === 1) {
-          handler.end(node.nodeName.toLowerCase());
-        }
-        nextNode = getNonDescendant('nextSibling', node);
-        if (!nextNode) {
-          while (nextNode == null) {
-            node = getNonDescendant('parentNode', node);
-            if (node === inertBodyElement) break;
-            nextNode = getNonDescendant('nextSibling', node);
-            if (node.nodeType === 1) {
-              handler.end(node.nodeName.toLowerCase());
-            }
-          }
-        }
-      }
-      node = nextNode;
-    }
-
-    while ((node = inertBodyElement.firstChild)) {
-      inertBodyElement.removeChild(node);
-    }
-  }
-
-  function attrToMap(attrs) {
-    var map = {};
-    for (var i = 0, ii = attrs.length; i < ii; i++) {
-      var attr = attrs[i];
-      map[attr.name] = attr.value;
-    }
-    return map;
-  }
-
-
-  /**
-   * Escapes all potentially dangerous characters, so that the
-   * resulting string can be safely inserted into attribute or
-   * element text.
-   * @param value
-   * @returns {string} escaped text
-   */
-  function encodeEntities(value) {
-    return value.
-      replace(/&/g, '&amp;').
-      replace(SURROGATE_PAIR_REGEXP, function(value) {
-        var hi = value.charCodeAt(0);
-        var low = value.charCodeAt(1);
-        return '&#' + (((hi - 0xD800) * 0x400) + (low - 0xDC00) + 0x10000) + ';';
-      }).
-      replace(NON_ALPHANUMERIC_REGEXP, function(value) {
-        return '&#' + value.charCodeAt(0) + ';';
-      }).
-      replace(/</g, '&lt;').
-      replace(/>/g, '&gt;');
-  }
-
-  /**
-   * create an HTML/XML writer which writes to buffer
-   * @param {Array} buf use buf.join('') to get out sanitized html string
-   * @returns {object} in the form of {
-   *     start: function(tag, attrs) {},
-   *     end: function(tag) {},
-   *     chars: function(text) {},
-   *     comment: function(text) {}
-   * }
-   */
-  function htmlSanitizeWriterImpl(buf, uriValidator) {
-    var ignoreCurrentElement = false;
-    var out = bind(buf, buf.push);
-    return {
-      start: function(tag, attrs) {
-        tag = lowercase(tag);
-        if (!ignoreCurrentElement && blockedElements[tag]) {
-          ignoreCurrentElement = tag;
-        }
-        if (!ignoreCurrentElement && validElements[tag] === true) {
-          out('<');
-          out(tag);
-          forEach(attrs, function(value, key) {
-            var lkey = lowercase(key);
-            var isImage = (tag === 'img' && lkey === 'src') || (lkey === 'background');
-            if (validAttrs[lkey] === true &&
-              (uriAttrs[lkey] !== true || uriValidator(value, isImage))) {
-              out(' ');
-              out(key);
-              out('="');
-              out(encodeEntities(value));
-              out('"');
-            }
-          });
-          out('>');
-        }
-      },
-      end: function(tag) {
-        tag = lowercase(tag);
-        if (!ignoreCurrentElement && validElements[tag] === true && voidElements[tag] !== true) {
-          out('</');
-          out(tag);
-          out('>');
-        }
-        // eslint-disable-next-line eqeqeq
-        if (tag == ignoreCurrentElement) {
-          ignoreCurrentElement = false;
-        }
-      },
-      chars: function(chars) {
-        if (!ignoreCurrentElement) {
-          out(encodeEntities(chars));
-        }
-      }
-    };
-  }
-
-
-  /**
-   * When IE9-11 comes across an unknown namespaced attribute e.g. 'xlink:foo' it adds 'xmlns:ns1' attribute to declare
-   * ns1 namespace and prefixes the attribute with 'ns1' (e.g. 'ns1:xlink:foo'). This is undesirable since we don't want
-   * to allow any of these custom attributes. This method strips them all.
-   *
-   * @param node Root element to process
-   */
-  function stripCustomNsAttrs(node) {
-    while (node) {
-      if (node.nodeType === window.Node.ELEMENT_NODE) {
-        var attrs = node.attributes;
-        for (var i = 0, l = attrs.length; i < l; i++) {
-          var attrNode = attrs[i];
-          var attrName = attrNode.name.toLowerCase();
-          if (attrName === 'xmlns:ns1' || attrName.lastIndexOf('ns1:', 0) === 0) {
-            node.removeAttributeNode(attrNode);
-            i--;
-            l--;
-          }
-        }
-      }
-
-      var nextNode = node.firstChild;
-      if (nextNode) {
-        stripCustomNsAttrs(nextNode);
-      }
-
-      node = getNonDescendant('nextSibling', node);
-    }
-  }
-
-  function getNonDescendant(propName, node) {
-    // An element is clobbered if its `propName` property points to one of its descendants
-    var nextNode = node[propName];
-    if (nextNode && nodeContains.call(node, nextNode)) {
-      throw $sanitizeMinErr('elclob', 'Failed to sanitize html because the element is clobbered: {0}', node.outerHTML || node.outerText);
-    }
-    return nextNode;
-  }
 }
 
 function sanitizeText(chars) {
   var buf = [];
-  var writer = htmlSanitizeWriter(buf, noop);
+  var writer = htmlSanitizeWriter(buf, angular.noop);
   writer.chars(chars);
   return buf.join('');
 }
 
 
+// Regular Expressions for parsing tags and attributes
+var SURROGATE_PAIR_REGEXP = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g,
+  // Match everything outside of normal chars and " (quote character)
+  NON_ALPHANUMERIC_REGEXP = /([^\#-~ |!])/g;
+
+
+// Good source of info about elements and attributes
+// http://dev.w3.org/html5/spec/Overview.html#semantics
+// http://simon.html5.org/html-elements
+
+// Safe Void Elements - HTML5
+// http://dev.w3.org/html5/spec/Overview.html#void-elements
+var voidElements = toMap("area,br,col,hr,img,wbr");
+
+// Elements that you can, intentionally, leave open (and which close themselves)
+// http://dev.w3.org/html5/spec/Overview.html#optional-tags
+var optionalEndTagBlockElements = toMap("colgroup,dd,dt,li,p,tbody,td,tfoot,th,thead,tr"),
+    optionalEndTagInlineElements = toMap("rp,rt"),
+    optionalEndTagElements = angular.extend({},
+                                            optionalEndTagInlineElements,
+                                            optionalEndTagBlockElements);
+
+// Safe Block Elements - HTML5
+var blockElements = angular.extend({}, optionalEndTagBlockElements, toMap("address,article," +
+        "aside,blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5," +
+        "h6,header,hgroup,hr,ins,map,menu,nav,ol,pre,section,table,ul"));
+
+// Inline Elements - HTML5
+var inlineElements = angular.extend({}, optionalEndTagInlineElements, toMap("a,abbr,acronym,b," +
+        "bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s," +
+        "samp,small,span,strike,strong,sub,sup,time,tt,u,var"));
+
+// SVG Elements
+// https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Elements
+// Note: the elements animate,animateColor,animateMotion,animateTransform,set are intentionally omitted.
+// They can potentially allow for arbitrary javascript to be executed. See #11290
+var svgElements = toMap("circle,defs,desc,ellipse,font-face,font-face-name,font-face-src,g,glyph," +
+        "hkern,image,linearGradient,line,marker,metadata,missing-glyph,mpath,path,polygon,polyline," +
+        "radialGradient,rect,stop,svg,switch,text,title,tspan");
+
+// Blocked Elements (will be stripped)
+var blockedElements = toMap("script,style");
+
+var validElements = angular.extend({},
+                                   voidElements,
+                                   blockElements,
+                                   inlineElements,
+                                   optionalEndTagElements);
+
+//Attributes that have href and hence need to be sanitized
+var uriAttrs = toMap("background,cite,href,longdesc,src,xlink:href");
+
+var htmlAttrs = toMap('abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,class,clear,' +
+    'color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,' +
+    'ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,' +
+    'scope,scrolling,shape,size,span,start,summary,tabindex,target,title,type,' +
+    'valign,value,vspace,width');
+
+// SVG attributes (without "id" and "name" attributes)
+// https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Attributes
+var svgAttrs = toMap('accent-height,accumulate,additive,alphabetic,arabic-form,ascent,' +
+    'baseProfile,bbox,begin,by,calcMode,cap-height,class,color,color-rendering,content,' +
+    'cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,font-size,font-stretch,' +
+    'font-style,font-variant,font-weight,from,fx,fy,g1,g2,glyph-name,gradientUnits,hanging,' +
+    'height,horiz-adv-x,horiz-origin-x,ideographic,k,keyPoints,keySplines,keyTimes,lang,' +
+    'marker-end,marker-mid,marker-start,markerHeight,markerUnits,markerWidth,mathematical,' +
+    'max,min,offset,opacity,orient,origin,overline-position,overline-thickness,panose-1,' +
+    'path,pathLength,points,preserveAspectRatio,r,refX,refY,repeatCount,repeatDur,' +
+    'requiredExtensions,requiredFeatures,restart,rotate,rx,ry,slope,stemh,stemv,stop-color,' +
+    'stop-opacity,strikethrough-position,strikethrough-thickness,stroke,stroke-dasharray,' +
+    'stroke-dashoffset,stroke-linecap,stroke-linejoin,stroke-miterlimit,stroke-opacity,' +
+    'stroke-width,systemLanguage,target,text-anchor,to,transform,type,u1,u2,underline-position,' +
+    'underline-thickness,unicode,unicode-range,units-per-em,values,version,viewBox,visibility,' +
+    'width,widths,x,x-height,x1,x2,xlink:actuate,xlink:arcrole,xlink:role,xlink:show,xlink:title,' +
+    'xlink:type,xml:base,xml:lang,xml:space,xmlns,xmlns:xlink,y,y1,y2,zoomAndPan', true);
+
+var validAttrs = angular.extend({},
+                                uriAttrs,
+                                svgAttrs,
+                                htmlAttrs);
+
+function toMap(str, lowercaseKeys) {
+  var obj = {}, items = str.split(','), i;
+  for (i = 0; i < items.length; i++) {
+    obj[lowercaseKeys ? angular.lowercase(items[i]) : items[i]] = true;
+  }
+  return obj;
+}
+
+var inertBodyElement;
+(function(window) {
+  var doc;
+  if (window.document && window.document.implementation) {
+    doc = window.document.implementation.createHTMLDocument("inert");
+  } else {
+    throw $sanitizeMinErr('noinert', "Can't create an inert html document");
+  }
+  var docElement = doc.documentElement || doc.getDocumentElement();
+  var bodyElements = docElement.getElementsByTagName('body');
+
+  // usually there should be only one body element in the document, but IE doesn't have any, so we need to create one
+  if (bodyElements.length === 1) {
+    inertBodyElement = bodyElements[0];
+  } else {
+    var html = doc.createElement('html');
+    inertBodyElement = doc.createElement('body');
+    html.appendChild(inertBodyElement);
+    doc.appendChild(html);
+  }
+})(window);
+
+/**
+ * @example
+ * htmlParser(htmlString, {
+ *     start: function(tag, attrs) {},
+ *     end: function(tag) {},
+ *     chars: function(text) {},
+ *     comment: function(text) {}
+ * });
+ *
+ * @param {string} html string
+ * @param {object} handler
+ */
+function htmlParser(html, handler) {
+  if (html === null || html === undefined) {
+    html = '';
+  } else if (typeof html !== 'string') {
+    html = '' + html;
+  }
+  inertBodyElement.innerHTML = html;
+
+  //mXSS protection
+  var mXSSAttempts = 5;
+  do {
+    if (mXSSAttempts === 0) {
+      throw $sanitizeMinErr('uinput', "Failed to sanitize html because the input is unstable");
+    }
+    mXSSAttempts--;
+
+    // strip custom-namespaced attributes on IE<=11
+    if (window.document.documentMode) {
+      stripCustomNsAttrs(inertBodyElement);
+    }
+    html = inertBodyElement.innerHTML; //trigger mXSS
+    inertBodyElement.innerHTML = html;
+  } while (html !== inertBodyElement.innerHTML);
+
+  var node = inertBodyElement.firstChild;
+  while (node) {
+    switch (node.nodeType) {
+      case 1: // ELEMENT_NODE
+        handler.start(node.nodeName.toLowerCase(), attrToMap(node.attributes));
+        break;
+      case 3: // TEXT NODE
+        handler.chars(node.textContent);
+        break;
+    }
+
+    var nextNode;
+    if (!(nextNode = node.firstChild)) {
+      if (node.nodeType == 1) {
+        handler.end(node.nodeName.toLowerCase());
+      }
+      nextNode = node.nextSibling;
+      if (!nextNode) {
+        while (nextNode == null) {
+          node = node.parentNode;
+          if (node === inertBodyElement) break;
+          nextNode = node.nextSibling;
+          if (node.nodeType == 1) {
+            handler.end(node.nodeName.toLowerCase());
+          }
+        }
+      }
+    }
+    node = nextNode;
+  }
+
+  while (node = inertBodyElement.firstChild) {
+    inertBodyElement.removeChild(node);
+  }
+}
+
+function attrToMap(attrs) {
+  var map = {};
+  for (var i = 0, ii = attrs.length; i < ii; i++) {
+    var attr = attrs[i];
+    map[attr.name] = attr.value;
+  }
+  return map;
+}
+
+
+/**
+ * Escapes all potentially dangerous characters, so that the
+ * resulting string can be safely inserted into attribute or
+ * element text.
+ * @param value
+ * @returns {string} escaped text
+ */
+function encodeEntities(value) {
+  return value.
+    replace(/&/g, '&amp;').
+    replace(SURROGATE_PAIR_REGEXP, function(value) {
+      var hi = value.charCodeAt(0);
+      var low = value.charCodeAt(1);
+      return '&#' + (((hi - 0xD800) * 0x400) + (low - 0xDC00) + 0x10000) + ';';
+    }).
+    replace(NON_ALPHANUMERIC_REGEXP, function(value) {
+      return '&#' + value.charCodeAt(0) + ';';
+    }).
+    replace(/</g, '&lt;').
+    replace(/>/g, '&gt;');
+}
+
+/**
+ * create an HTML/XML writer which writes to buffer
+ * @param {Array} buf use buf.join('') to get out sanitized html string
+ * @returns {object} in the form of {
+ *     start: function(tag, attrs) {},
+ *     end: function(tag) {},
+ *     chars: function(text) {},
+ *     comment: function(text) {}
+ * }
+ */
+function htmlSanitizeWriter(buf, uriValidator) {
+  var ignoreCurrentElement = false;
+  var out = angular.bind(buf, buf.push);
+  return {
+    start: function(tag, attrs) {
+      tag = angular.lowercase(tag);
+      if (!ignoreCurrentElement && blockedElements[tag]) {
+        ignoreCurrentElement = tag;
+      }
+      if (!ignoreCurrentElement && validElements[tag] === true) {
+        out('<');
+        out(tag);
+        angular.forEach(attrs, function(value, key) {
+          var lkey=angular.lowercase(key);
+          var isImage = (tag === 'img' && lkey === 'src') || (lkey === 'background');
+          if (validAttrs[lkey] === true &&
+            (uriAttrs[lkey] !== true || uriValidator(value, isImage))) {
+            out(' ');
+            out(key);
+            out('="');
+            out(encodeEntities(value));
+            out('"');
+          }
+        });
+        out('>');
+      }
+    },
+    end: function(tag) {
+      tag = angular.lowercase(tag);
+      if (!ignoreCurrentElement && validElements[tag] === true && voidElements[tag] !== true) {
+        out('</');
+        out(tag);
+        out('>');
+      }
+      if (tag == ignoreCurrentElement) {
+        ignoreCurrentElement = false;
+      }
+    },
+    chars: function(chars) {
+      if (!ignoreCurrentElement) {
+        out(encodeEntities(chars));
+      }
+    }
+  };
+}
+
+
+/**
+ * When IE9-11 comes across an unknown namespaced attribute e.g. 'xlink:foo' it adds 'xmlns:ns1' attribute to declare
+ * ns1 namespace and prefixes the attribute with 'ns1' (e.g. 'ns1:xlink:foo'). This is undesirable since we don't want
+ * to allow any of these custom attributes. This method strips them all.
+ *
+ * @param node Root element to process
+ */
+function stripCustomNsAttrs(node) {
+  if (node.nodeType === window.Node.ELEMENT_NODE) {
+    var attrs = node.attributes;
+    for (var i = 0, l = attrs.length; i < l; i++) {
+      var attrNode = attrs[i];
+      var attrName = attrNode.name.toLowerCase();
+      if (attrName === 'xmlns:ns1' || attrName.lastIndexOf('ns1:', 0) === 0) {
+        node.removeAttributeNode(attrNode);
+        i--;
+        l--;
+      }
+    }
+  }
+
+  var nextNode = node.firstChild;
+  if (nextNode) {
+    stripCustomNsAttrs(nextNode);
+  }
+
+  nextNode = node.nextSibling;
+  if (nextNode) {
+    stripCustomNsAttrs(nextNode);
+  }
+}
+
+
+
 // define ngSanitize module and register $sanitize service
-angular.module('ngSanitize', [])
-  .provider('$sanitize', $SanitizeProvider)
-//  .info({ angularVersion: '1.6.6' });
+angular.module('ngSanitize', []).provider('$sanitize', $SanitizeProvider);
+
+/* global sanitizeText: false */
 
 /**
  * @ngdoc filter
@@ -7932,7 +8420,7 @@ angular.module('ngSanitize', [])
    <span ng-bind-html="linky_expression | linky"></span>
  *
  * @example
-   <example module="linkyExample" deps="angular-sanitize.js" name="linky-filter">
+   <example module="linkyExample" deps="angular-sanitize.js">
      <file name="index.html">
        <div ng-controller="ExampleController">
        Snippet: <textarea ng-model="snippet" cols="60" rows="3"></textarea>
@@ -7980,10 +8468,10 @@ angular.module('ngSanitize', [])
        angular.module('linkyExample', ['ngSanitize'])
          .controller('ExampleController', ['$scope', function($scope) {
            $scope.snippet =
-             'Pretty text with some links:\n' +
-             'http://angularjs.org/,\n' +
-             'mailto:us@somewhere.org,\n' +
-             'another@somewhere.org,\n' +
+             'Pretty text with some links:\n'+
+             'http://angularjs.org/,\n'+
+             'mailto:us@somewhere.org,\n'+
+             'another@somewhere.org,\n'+
              'and one more: ftp://127.0.0.1/.';
            $scope.snippetWithSingleURL = 'http://angularjs.org/';
          }]);
@@ -8035,19 +8523,11 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
       MAILTO_REGEXP = /^mailto:/i;
 
   var linkyMinErr = angular.$$minErr('linky');
-  var isDefined = angular.isDefined;
-  var isFunction = angular.isFunction;
-  var isObject = angular.isObject;
   var isString = angular.isString;
 
   return function(text, target, attributes) {
     if (text == null || text === '') return text;
     if (!isString(text)) throw linkyMinErr('notstring', 'Expected string but received: {0}', text);
-
-    var attributesFn =
-      isFunction(attributes) ? attributes :
-      isObject(attributes) ? function getAttributesObject() {return attributes;} :
-      function getEmptyAttributesObject() {return {};};
 
     var match;
     var raw = text;
@@ -8077,14 +8557,19 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
     }
 
     function addLink(url, text) {
-      var key, linkAttributes = attributesFn(url);
+      var key;
       html.push('<a ');
-
-      for (key in linkAttributes) {
-        html.push(key + '="' + linkAttributes[key] + '" ');
+      if (angular.isFunction(attributes)) {
+        attributes = attributes(url);
       }
-
-      if (isDefined(target) && !('target' in linkAttributes)) {
+      if (angular.isObject(attributes)) {
+        for (key in attributes) {
+          html.push(key + '="' + attributes[key] + '" ');
+        }
+      } else {
+        attributes = {};
+      }
+      if (angular.isDefined(target) && !('target' in attributes)) {
         html.push('target="',
                   target,
                   '" ');
@@ -8101,11 +8586,11 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
 
 })(window, window.angular);
 
-},{}],100:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 require('./angular-sanitize');
 module.exports = 'ngSanitize';
 
-},{"./angular-sanitize":99}],101:[function(require,module,exports){
+},{"./angular-sanitize":103}],105:[function(require,module,exports){
 /*
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
@@ -15642,12 +16127,12 @@ angular.module('ui.bootstrap.datepickerPopup').run(function() {!angular.$$csp().
 angular.module('ui.bootstrap.tooltip').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTooltipCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-tooltip-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-bottom > .tooltip-arrow,[uib-popover-popup].popover.top-left > .arrow,[uib-popover-popup].popover.top-right > .arrow,[uib-popover-popup].popover.bottom-left > .arrow,[uib-popover-popup].popover.bottom-right > .arrow,[uib-popover-popup].popover.left-top > .arrow,[uib-popover-popup].popover.left-bottom > .arrow,[uib-popover-popup].popover.right-top > .arrow,[uib-popover-popup].popover.right-bottom > .arrow,[uib-popover-html-popup].popover.top-left > .arrow,[uib-popover-html-popup].popover.top-right > .arrow,[uib-popover-html-popup].popover.bottom-left > .arrow,[uib-popover-html-popup].popover.bottom-right > .arrow,[uib-popover-html-popup].popover.left-top > .arrow,[uib-popover-html-popup].popover.left-bottom > .arrow,[uib-popover-html-popup].popover.right-top > .arrow,[uib-popover-html-popup].popover.right-bottom > .arrow,[uib-popover-template-popup].popover.top-left > .arrow,[uib-popover-template-popup].popover.top-right > .arrow,[uib-popover-template-popup].popover.bottom-left > .arrow,[uib-popover-template-popup].popover.bottom-right > .arrow,[uib-popover-template-popup].popover.left-top > .arrow,[uib-popover-template-popup].popover.left-bottom > .arrow,[uib-popover-template-popup].popover.right-top > .arrow,[uib-popover-template-popup].popover.right-bottom > .arrow{top:auto;bottom:auto;left:auto;right:auto;margin:0;}[uib-popover-popup].popover,[uib-popover-html-popup].popover,[uib-popover-template-popup].popover{display:block !important;}</style>'); angular.$$uibTooltipCss = true; });
 angular.module('ui.bootstrap.timepicker').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTimepickerCss && angular.element(document).find('head').prepend('<style type="text/css">.uib-time input{width:50px;}</style>'); angular.$$uibTimepickerCss = true; });
 angular.module('ui.bootstrap.typeahead').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTypeaheadCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-typeahead-popup].dropdown-menu{display:block;}</style>'); angular.$$uibTypeaheadCss = true; });
-},{}],102:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 require('./dist/ui-bootstrap-tpls');
 
 module.exports = 'ui.bootstrap';
 
-},{"./dist/ui-bootstrap-tpls":101}],103:[function(require,module,exports){
+},{"./dist/ui-bootstrap-tpls":105}],107:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.3.1
@@ -20224,7 +20709,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],104:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.6
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -51248,11 +51733,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],105:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":104}],106:[function(require,module,exports){
+},{"./angular":108}],110:[function(require,module,exports){
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -53617,7 +54102,7 @@ if (typeof jQuery === 'undefined') {
 
 }(jQuery);
 
-},{}],107:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 /*!
  * jQuery UI Widget 1.12.1
  * http://jqueryui.com
@@ -54352,7 +54837,7 @@ return $.widget;
 
 } ) );
 
-},{}],108:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v1.12.4
  * http://jquery.com/
@@ -65362,7 +65847,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}],109:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
@@ -67756,11 +68241,11 @@ $templateCache.put("selectize/match.tpl.html","<div ng-hide=\"$select.searchEnab
 $templateCache.put("selectize/no-choice.tpl.html","<div class=\"ui-select-no-choice selectize-dropdown\" ng-show=\"$select.items.length == 0\"><div class=\"selectize-dropdown-content\"><div data-selectable=\"\" ng-transclude=\"\"></div></div></div>");
 $templateCache.put("selectize/select-multiple.tpl.html","<div class=\"ui-select-container selectize-control multi plugin-remove_button\" ng-class=\"{\'open\': $select.open}\"><div class=\"selectize-input\" ng-class=\"{\'focus\': $select.open, \'disabled\': $select.disabled, \'selectize-focus\' : $select.focus}\" ng-click=\"$select.open && !$select.searchEnabled ? $select.toggle($event) : $select.activate()\"><div class=\"ui-select-match\"></div><input type=\"search\" autocomplete=\"off\" tabindex=\"-1\" class=\"ui-select-search\" ng-class=\"{\'ui-select-search-hidden\':!$select.searchEnabled}\" placeholder=\"{{$selectMultiple.getPlaceholder()}}\" ng-model=\"$select.search\" ng-disabled=\"$select.disabled\" aria-expanded=\"{{$select.open}}\" aria-label=\"{{ $select.baseTitle }}\" ondrop=\"return false;\"></div><div class=\"ui-select-choices\"></div><div class=\"ui-select-no-choice\"></div></div>");
 $templateCache.put("selectize/select.tpl.html","<div class=\"ui-select-container selectize-control single\" ng-class=\"{\'open\': $select.open}\"><div class=\"selectize-input\" ng-class=\"{\'focus\': $select.open, \'disabled\': $select.disabled, \'selectize-focus\' : $select.focus}\" ng-click=\"$select.open && !$select.searchEnabled ? $select.toggle($event) : $select.activate()\"><div class=\"ui-select-match\"></div><input type=\"search\" autocomplete=\"off\" tabindex=\"-1\" class=\"ui-select-search ui-select-toggle\" ng-class=\"{\'ui-select-search-hidden\':!$select.searchEnabled}\" ng-click=\"$select.toggle($event)\" placeholder=\"{{$select.placeholder}}\" ng-model=\"$select.search\" ng-hide=\"!$select.isEmpty() && !$select.open\" ng-disabled=\"$select.disabled\" aria-label=\"{{ $select.baseTitle }}\"></div><div class=\"ui-select-choices\"></div><div class=\"ui-select-no-choice\"></div></div>");}]);
-},{}],110:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 require('./dist/select.js');
 module.exports = 'ui.select';
 
-},{"./dist/select.js":109}]},{},[10])
+},{"./dist/select.js":113}]},{},[10])
 
 
 //# sourceMappingURL=rtdashboard.js.map
