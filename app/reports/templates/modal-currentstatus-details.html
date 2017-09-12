@@ -5,5 +5,9 @@
     </h4>
 </div>
 <div class="modal-body ticket-details-by-BHUID">
-<table rt-grid  data="ctrlSts.currentStatusModalData" columns="ctrlSts.modalColumns" grid-options="ctrlSts.gridOptions" item-renderers="ctrlSts.itemRenderers" class="table--compact table-striped table--fixed" data-nodata="No data"></table>
+    <button type="button" class="btn btn-link export-btn" ng-click="ctrlSts.exportStatusToExcel(ctrlSts.selctedBhu)" ng-disabled="!ctrlSts.currentStatusModalData || ctrlSts.currentStatusModalData.length==0">
+        <span class="glyphicon glyphicon-export"></span>&nbsp;
+        Export Current Status to excel
+    </button>
+    <table rt-grid  data="ctrlSts.currentStatusModalData" columns="ctrlSts.modalColumns" grid-options="ctrlSts.gridOptions" item-renderers="ctrlSts.itemRenderers" class="table--compact table-striped table--fixed" data-nodata="No data"></table>
 </div>

@@ -1,6 +1,6 @@
-CurrentStatusModalController.$inject = ['$uibModalInstance', 'modal'];
+CurrentStatusModalController.$inject = ['$uibModalInstance', 'modal', 'reportservice'];
 
-function CurrentStatusModalController($uibModalInstance, modal) {
+function CurrentStatusModalController($uibModalInstance, modal, reportservice) {
     var ctrlSts = this;
     ctrlSts.modal = modal;
     ctrlSts.currentStatusModalData = [];
@@ -51,6 +51,10 @@ function CurrentStatusModalController($uibModalInstance, modal) {
     ctrlSts.cancel = function () {
         $uibModalInstance.dismiss('cancel');
       };
+    
+    ctrlSts.exportStatusToExcel= function(bhuId){
+        window.location.href = reportservice.exportStatusToExcelSrv(bhuId);
+    }
 }
 BhuCurrentStatusModalDirective.$inject = ['$uibModal', 'reportservice'];
 

@@ -4,17 +4,16 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService){
 	var reportsService = {
 		getReportsList: getReportsList,
         getReportsUrl: getReportsUrl,
-
         getReportBhuDetails: getReportBhuDetails,
         getBhuReportData: getBhuReportData,
-        getBhuReportFilterDetailsByYear: getBhuReportFilterDetailsByYear,
-        getBhuReportFilterDetailsByQuarter: getBhuReportFilterDetailsByQuarter,
-        //exportToExcelByYear: exportToExcelByYear,
-        //exportToExcelByQuarter: exportToExcelByQuarter,
-        //exportToExcelCurrentQuarter: exportToExcelCurrentQuarter,
+        getBhuReportFilterDetails : getBhuReportFilterDetails,
         getReportCurrentStatusDetails:getReportCurrentStatusDetails,
         getReportWarrantyDetails:getReportWarrantyDetails,
-        getReportEffortsDetails:getReportEffortsDetails
+        getReportEffortsDetails:getReportEffortsDetails,
+        exportStatusToExcelSrv : exportStatusToExcelSrv,
+        exportWarrantyToExcelSrv : exportWarrantyToExcelSrv,
+        exportEffortsToExcelSrv : exportEffortsToExcelSrv,
+        exportBhuDtlsToExcelSrv : exportBhuDtlsToExcelSrv
 	};
 
 	return reportsService;
@@ -118,33 +117,72 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService){
         return def.promise;
     }
 
-    function getBhuReportFilterDetailsByYear(year, startIndex){
+    function getBhuReportFilterDetails(p, y, q, m, si){
         var def = $q.defer();
-         spinnerService.show();
-            $http.get("https://rtdashboardp.rno.apple.com:9012/bhureports/details/"+year+"?start-index="+startIndex+"&callback=angular.callbacks._0")
-                .success(function(data) {
-                    def.resolve(data);
-                    spinnerService.hide();
-                })
-                .error(function() {
-                    def.reject("Failed to get data");
-                });
-            return def.promise;
+        spinnerService.show();
+        var getUrl = "";
+        debugger;
+        if(m){
+            m = getMonthFromString(m);
+        }
+        if(p){
+             url = "reports/BHUReport/phase/"+ p;
+        }else if(!p && y){
+            url = "reports/BHUReport/"+ y;
+        }else if(!p && y && (q || m)){
+            url = "reports/BHUReport/"+ y +"/"+ q;
+        }
+        $http.get(getUrl, {
+            params: {
+                "filter-year": y,
+                "filter-quarter": q,
+                "filter-month": m,
+                "start-index": si
+            }
+        }).success(function(data) {
+                def.resolve(data);
+                spinnerService.hide();
+        }).error(function() {
+                def.reject("Failed to get data");
+        });
+        return def.promise;
     }
 
-    function getBhuReportFilterDetailsByQuarter(year,quar, startIndex){
-        var def = $q.defer();
-         spinnerService.show();
-            $http.get("https://rtdashboardp.rno.apple.com:9012/bhureports/details/"+year+"/"+quar+"?start-index="+startIndex+"&callback=angular.callbacks._0")
-                .success(function(data) {
-                    def.resolve(data);
-                    spinnerService.hide();
-                })
-                .error(function() {
-                    def.reject("Failed to get data");
-                });
-            return def.promise;
+    function getMonthFromString(mon){
+           var d = Date.parse(mon + "1, 2016");
+           if(!isNaN(d)){
+               var m = new Date(d).getMonth() + 1;
+              return (m > 9) ? m: "0"+m;
+           }
+           return -1;
     }
+    // function getBhuReportFilterDetailsByYear(p, y, q, m, si){
+    //     var def = $q.defer();
+    //      spinnerService.show();
+    //         $http.get("https://rtdashboardp.rno.apple.com:9012/bhureports/details/"+y+"?start-index="+si+"&callback=angular.callbacks._0")
+    //             .success(function(data) {
+    //                 def.resolve(data);
+    //                 spinnerService.hide();
+    //             })
+    //             .error(function() {
+    //                 def.reject("Failed to get data");
+    //             });
+    //         return def.promise;
+    // }
+
+    // function getBhuReportFilterDetailsByQuarter(p, y, q, m, si){
+    //     var def = $q.defer();
+    //      spinnerService.show();
+    //         $http.get("https://rtdashboardp.rno.apple.com:9012/bhureports/details/"+y+"/"+q+"?start-index="+si+"&callback=angular.callbacks._0")
+    //             .success(function(data) {
+    //                 def.resolve(data);
+    //                 spinnerService.hide();
+    //             })
+    //             .error(function() {
+    //                 def.reject("Failed to get data");
+    //             });
+    //         return def.promise;
+    // }
 
     function getReportBhuDetails(bhuId, requestFor){
         var def = $q.defer();
@@ -417,10 +455,26 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService){
     // function exportToExcelByQuarter(y, q){
     //     return "bhureports/download/"+y+"/"+q;        
     // }
-    // function exportToExcelCurrentQuarter(){
-    //         return "bhureports/download/";
-    // }
 
+    function exportStatusToExcelSrv(bhuId){
+        debugger;
+        return "bhureports/downloadStatus/"+ bhuId;
+    }
+
+    function exportWarrantyToExcelSrv(bhuId){
+        debugger;
+        return "bhureports/downloadWarranty/"+ bhuId;
+    }
+
+    function exportEffortsToExcelSrv(bhuId){
+        debugger;
+        return "bhureports/downloadEfforts/"+ bhuId;
+    }
+
+    function exportBhuDtlsToExcelSrv(bhuId){
+        debugger;
+        return "bhureports/downloadBhuDtls/"+ bhuId;
+    }
 }
 
 module.exports = ReportsService;

@@ -1,6 +1,6 @@
-EffortsModalController.$inject = ['$uibModalInstance', 'modal','$rootScope'];
+EffortsModalController.$inject = ['$uibModalInstance', 'modal','$rootScope', 'reportservice'];
 
-function EffortsModalController($uibModalInstance, modal, $rootScope) {
+function EffortsModalController($uibModalInstance, modal, $rootScope, reportservice) {
     var ctrlEfrt = this;
     ctrlEfrt.modal = modal;
     ctrlEfrt.EffortsModalData = [];
@@ -42,6 +42,10 @@ function EffortsModalController($uibModalInstance, modal, $rootScope) {
     // if($rootScope.userRoles && $rootScope.userRoles.indexOf('admin') > -1){
     //     ctrlEfrt.itemRenderers["estimatedEfforts"] = "estimatedefforts-edit";
     //}
+
+    ctrlEfrt.exportEffortsToExcel = function(bhuId){
+        window.location.href = reportservice.exportEffortsToExcelSrv(bhuId);
+    }
 
     ctrlEfrt.cancel = function () {
         $uibModalInstance.dismiss('cancel');

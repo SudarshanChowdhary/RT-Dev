@@ -1,13 +1,13 @@
 
-function currentStatuslinkrenderer(){
+function currentStatusLinkRenderer(){
     return {
         restrict: 'EA',
-        template: ['<div ng-bind-html="displayItemName(item.currentStatus)" currentstatus-link>',
+        template: ['<div ng-bind-html="displayStatusItemName(item.currentStatus)" currentstatus-link>',
             '</div>'
         ].join(''),
         link: function(scope, element, attr) {
-           scope.displayItemName = function(currentStatus) {
-              if(currentStatus == null || currentStatus){
+           scope.displayStatusItemName = function(currentStatus) {
+              if(currentStatus == null || currentStatus==undefined || currentStatus == ''){
                 return currentStatus;
               }else{
                 return "<a href='javascript:void(0)'>"+currentStatus+"</a>";
@@ -17,4 +17,4 @@ function currentStatuslinkrenderer(){
     };
     }
     
-    module.exports = currentStatuslinkrenderer;
+    module.exports = currentStatusLinkRenderer;

@@ -1,6 +1,6 @@
-BhuRptModalController.$inject = ['$uibModalInstance', 'modal', 'reportservice'];
+ProjectLifeCycleController.$inject = ['$uibModalInstance', 'modal'];
 
-function BhuRptModalController($uibModalInstance, modal, reportservice) {
+function BhuRptModalController($uibModalInstance, modal) {
     debugger;
     var ctrl = this;
     ctrl.modal = modal;
@@ -42,10 +42,6 @@ function BhuRptModalController($uibModalInstance, modal, reportservice) {
     ctrl.cancel = function () {
         $uibModalInstance.dismiss('cancel');
       };
-    
-    ctrl.exportBhuDtlsToExcel = function(bhuId){
-        window.location.href = reportservice.exportBhuDtlsToExcelSrv(bhuId);
-    }
 }
 BhuReportModalDirective.$inject = ['$uibModal', 'reportservice'];
 

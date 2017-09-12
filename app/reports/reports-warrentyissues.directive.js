@@ -1,6 +1,6 @@
-WarrantyModalController.$inject = ['$uibModalInstance', 'modal'];
+WarrantyModalController.$inject = ['$uibModalInstance', 'modal', 'reportservice'];
 
-function WarrantyModalController($uibModalInstance, modal) {
+function WarrantyModalController($uibModalInstance, modal, reportservice) {
     debugger;
     var ctrlWar = this;
     ctrlWar.modal = modal;
@@ -33,6 +33,10 @@ function WarrantyModalController($uibModalInstance, modal) {
                             thClasses: 'width30',
                             tdClasses: 'width40'
                         }];
+
+    ctrlWar.exportWarrantyToExcel = function(bhuId){
+        window.location.href = reportservice.exportWarrantyToExcelSrv(bhuId);
+    }
                        
     ctrlWar.cancel = function () {
         $uibModalInstance.dismiss('cancel');

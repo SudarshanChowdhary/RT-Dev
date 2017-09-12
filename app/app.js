@@ -17,7 +17,6 @@ var shared = require('./shared/shared.module');
 var repository = require('./repository/repository.module');
 var tickets = require('./tickets/tickets.module');
 var process = require('./process/process.module');
-var projectlifecycle = require('./projectlifecycle/projectlifecycle.module');
 var team = require('./team/team.module');
 var angGrid = require('./shared/directives/grid/grid.module');
 var defects = require('./defects/defects.module');
@@ -26,6 +25,7 @@ var angBreadCrumb = require('./shared/breadcrumb/angular-breadcrumb.js');
 var reports = require('./reports/reports.module');
 var search = require('./search/search.module');
 var error = require('./error/error.module');
+var projectlifecycle = require('./projectlifecycle/projectlifecycle.module');
 angular
 // application top level module
     .module('rt', [
@@ -37,7 +37,6 @@ angular
         repository.name,
         tickets.name,
         process.name,
-        projectlifecycle.name,
         team.name,
         shared.name,
         angGrid.name,
@@ -45,7 +44,8 @@ angular
         admin.name,
         reports.name,
         search.name,
-        error.name
+        error.name,
+        projectlifecycle.name
     ])
     // configure application routing (root state)
     .config(require('./app.route.js'))

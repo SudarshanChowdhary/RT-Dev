@@ -1,14 +1,13 @@
 
-function efortsutilizedlinkrenderer(){
+function effortsUtilizedLinkRenderer(){
 
     return {
         restrict: 'EA',
-        template: ['<div ng-bind-html="displayItemName(item.efortsutilized)" effortsutilized-link>',
+        template: ['<div ng-bind-html="displayUtilizedEfforts(item.efortsutilized)" effortsutilized-link>',
             '</div>'
         ].join(''),
         link: function(scope, element, attr) {
-           scope.displayItemName = function(efortsutilized) {
-               debugger;
+           scope.displayUtilizedEfforts = function(efortsutilized) {
               if(isNaN(efortsutilized) || efortsutilized==null){
                 return efortsutilized;
               }else{
@@ -19,4 +18,4 @@ function efortsutilizedlinkrenderer(){
     };
     }
     
-    module.exports = efortsutilizedlinkrenderer;
+    module.exports = effortsUtilizedLinkRenderer;

@@ -884,7 +884,7 @@ module.exports = angular
     .controller('AdminTeamController', require('./admin-team.controller'))
     .controller('AdminTicketController', require('./admin-ticket.controller'))
     .factory('adminservice', require('./admin.service'));
-},{"./admin-folder.controller":1,"./admin-spotlight.controller":2,"./admin-team.controller":3,"./admin-ticket.controller":4,"./admin.constants":5,"./admin.controller":6,"./admin.route":8,"./admin.service":9,"angular":109}],8:[function(require,module,exports){
+},{"./admin-folder.controller":1,"./admin-spotlight.controller":2,"./admin-team.controller":3,"./admin-ticket.controller":4,"./admin.constants":5,"./admin.controller":6,"./admin.route":8,"./admin.service":9,"angular":111}],8:[function(require,module,exports){
 AdminRoute.$inject = ['$stateProvider'];
 
 function AdminRoute($stateProvider) {
@@ -1260,7 +1260,6 @@ var shared = require('./shared/shared.module');
 var repository = require('./repository/repository.module');
 var tickets = require('./tickets/tickets.module');
 var process = require('./process/process.module');
-var projectlifecycle = require('./projectlifecycle/projectlifecycle.module');
 var team = require('./team/team.module');
 var angGrid = require('./shared/directives/grid/grid.module');
 var defects = require('./defects/defects.module');
@@ -1269,6 +1268,7 @@ var angBreadCrumb = require('./shared/breadcrumb/angular-breadcrumb.js');
 var reports = require('./reports/reports.module');
 var search = require('./search/search.module');
 var error = require('./error/error.module');
+var projectlifecycle = require('./projectlifecycle/projectlifecycle.module');
 angular
 // application top level module
     .module('rt', [
@@ -1280,7 +1280,6 @@ angular
         repository.name,
         tickets.name,
         process.name,
-        projectlifecycle.name,
         team.name,
         shared.name,
         angGrid.name,
@@ -1288,7 +1287,8 @@ angular
         admin.name,
         reports.name,
         search.name,
-        error.name
+        error.name,
+        projectlifecycle.name
     ])
     // configure application routing (root state)
     .config(require('./app.route.js'))
@@ -1301,7 +1301,7 @@ angular
       })
     .run(require('./app.run.js')); 
     
-},{"./admin/admin.module":7,"./app.route.js":11,"./app.run.js":12,"./defects/defects.module":14,"./error/error.module":18,"./home/home.module":21,"./layout/layout.module":24,"./process/process.module":26,"./projectlifecycle/projectlifecycle.module":29,"./reports/reports.module":39,"./repository/repository.module":46,"./search/search.module":51,"./shared/breadcrumb/angular-breadcrumb.js":53,"./shared/directives/grid/grid.module":81,"./shared/shared.module":86,"./team/team.module":92,"./tickets/tickets.module":98,"angular":109,"angular-messages":102,"angular-sanitize":104,"angular-ui-bootstrap":106,"angular-ui-router":107,"bootstrap-sass/assets/javascripts/bootstrap":110,"jquery":112,"jquery-ui":111,"ui-select":114}],11:[function(require,module,exports){
+},{"./admin/admin.module":7,"./app.route.js":11,"./app.run.js":12,"./defects/defects.module":14,"./error/error.module":18,"./home/home.module":21,"./layout/layout.module":24,"./process/process.module":26,"./projectlifecycle/projectlifecycle.module":30,"./reports/reports.module":40,"./repository/repository.module":47,"./search/search.module":52,"./shared/breadcrumb/angular-breadcrumb.js":54,"./shared/directives/grid/grid.module":83,"./shared/shared.module":88,"./team/team.module":94,"./tickets/tickets.module":100,"angular":111,"angular-messages":104,"angular-sanitize":106,"angular-ui-bootstrap":108,"angular-ui-router":109,"bootstrap-sass/assets/javascripts/bootstrap":112,"jquery":114,"jquery-ui":113,"ui-select":116}],11:[function(require,module,exports){
 AppRoute.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function AppRoute($stateProvider, $urlRouterProvider) {
@@ -1625,7 +1625,7 @@ module.exports = angular
     .factory('defectsservice', require('./defects.service'));
 
 
-},{"./defects.controller":13,"./defects.route":15,"./defects.service":16,"angular":109}],15:[function(require,module,exports){
+},{"./defects.controller":13,"./defects.route":15,"./defects.service":16,"angular":111}],15:[function(require,module,exports){
 DefectsRoute.$inject = ['$stateProvider'];
 
 function DefectsRoute($stateProvider) {
@@ -1728,7 +1728,7 @@ module.exports = angular
     .config(require('./error.route'))
     .controller('ErrorController', require('./error.controller'));
 
-},{"./error.controller":17,"./error.route":19,"angular":109}],19:[function(require,module,exports){
+},{"./error.controller":17,"./error.route":19,"angular":111}],19:[function(require,module,exports){
 ErrorRoute.$inject = ['$stateProvider'];
 
 function ErrorRoute($stateProvider) {
@@ -1922,7 +1922,7 @@ var angular = require('angular');
 module.exports = angular
     .module('rt.layout', [])
     .component('rtHeader', require('./header/header.component'));
-},{"./header/header.component":23,"angular":109}],25:[function(require,module,exports){
+},{"./header/header.component":23,"angular":111}],25:[function(require,module,exports){
 ProcessController.$inject = ['$state', '$scope', '$log'];
 
 function ProcessController($state, $scope, $log) {
@@ -1946,7 +1946,7 @@ module.exports = angular
     .config(require('./process.route'))
     .controller('ProcessController', require('./process.controller'));
 
-},{"./process.controller":25,"./process.route":27,"angular":109}],27:[function(require,module,exports){
+},{"./process.controller":25,"./process.route":27,"angular":111}],27:[function(require,module,exports){
 ProcessRoute.$inject = ['$stateProvider'];
 
 function ProcessRoute($stateProvider) {
@@ -1966,6 +1966,33 @@ function ProcessRoute($stateProvider) {
 }
 module.exports = ProcessRoute;
 },{}],28:[function(require,module,exports){
+RtPlcMilestoneService.$inject = ['$http', '$q', '$sce','spinnerService'];
+
+function RtPlcMilestoneService($http, $q, $sce, spinnerService){
+	var rtplcmilestoneservice = {
+		rtPlcMilestoneAdd : rtPlcMilestoneAdd
+	};
+    return rtplcmilestoneservice;
+
+    function rtPlcMilestoneAdd(reqData){
+        var def = $q.defer();
+        spinnerService.show();
+        $http({
+            url:"milestone/add",
+            data: reqData,
+            method:"PUT"
+        }).success(function(data) {
+            def.resolve(data);
+            spinnerService.hide();
+        }).error(function() {
+            def.reject("Failed to save data");
+        });
+        return def.promise;
+    }
+}
+
+module.exports = RtPlcMilestoneService;
+},{}],29:[function(require,module,exports){
 ProjectLifeCycleController.$inject = ['$state', '$scope', '$uibModal', '$log'];
 
 function ProjectLifeCycleController($state, $scope, $uibModal, $log) {
@@ -2048,15 +2075,16 @@ function ModalNotificationController ($scope, $uibModalInstance, userForm) {
 
 module.exports = ProjectLifeCycleController;
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
     .module('rt.projectlifecycle', [])
     .config(require('./projectlifecycle.route'))
     .controller('ProjectLifeCycleController', require('./projectlifecycle.controller'))
+    .service("rtplcmilestoneservice", require("./plclifecycle.service"))
 
-},{"./projectlifecycle.controller":28,"./projectlifecycle.route":30,"angular":109}],30:[function(require,module,exports){
+},{"./plclifecycle.service":28,"./projectlifecycle.controller":29,"./projectlifecycle.route":31,"angular":111}],31:[function(require,module,exports){
 ProjectLifeCycleRoute.$inject = ['$stateProvider'];
 
 function ProjectLifeCycleRoute($stateProvider) {
@@ -2075,7 +2103,7 @@ function ProjectLifeCycleRoute($stateProvider) {
     });
 }
 module.exports = ProjectLifeCycleRoute;
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 
 function estimatedeffortsEdit($sce){
     return {
@@ -2097,7 +2125,7 @@ function estimatedeffortsEdit($sce){
 }
 
 module.exports = estimatedeffortsEdit;
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 BhuReportsController.$inject = ['$state', '$scope', '$http','$filter','$sce', 'reportservice', 'sharedService'];
 
 function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice, sharedService) {
@@ -2157,7 +2185,9 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             });
               bhureport.bhuReportError = true;  
            }else{
-              bhureport.populateBhuReportDetailsData(bhuReportData.bhurptDetails, bhuReportData.totalCount);
+               if(bhuReportData.bhurptDetails){
+                    bhureport.populateBhuReportDetailsData(bhuReportData.bhurptDetails, bhuReportData.totalCount);
+               }
            }
         });
 
@@ -2266,11 +2296,11 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             'currentStatus': 'current-status-link-renderer',
             'warrantyissue': 'warranty-issue-link-renderer',
             'efortsutilized': 'efforts-utilized-link-renderer'
-            //other formatted columns
         };
-        bhureport.data = bhuReportList;
+        bhureport.data = bhuReportList ? bhuReportList : [];
         bhureport.dataCopy = angular.copy(bhureport.data);
-        bhureport.bhuReportCount = bhuReportList.length;
+        debugger;
+        bhureport.bhuReportCount = bhuReportList ? bhuReportList.length : 0;
 
         if(bhureport.selectedYear && bhureport.selectedQuarter && bhureport.selectedMonth){
             bhureport.gridOptions.dataOptions.nodata = $sce.trustAsHtml('No data found for the selected year - &quot;<b>'+bhureport.selectedYear+ '</b>&quot; and Quarter - &quot;<b>'+bhureport.selectedQuarter
@@ -2343,35 +2373,54 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
     }
 
     function populateBhuReportFilterData(filter, startIndex){
-        bhureport.selectedQuarter = filter.bhurptQuarter;
-        bhureport.selectedYear = filter.bhurptYear;
-        bhureport.selectedPhase = filter.bhurptPhase;
-        bhureport.selectedMonth = filter.bhurptMonth;
+      var q =  bhureport.selectedQuarter = filter.bhurptQuarter;
+      var y =  bhureport.selectedYear = filter.bhurptYear;
+      var p =  bhureport.selectedPhase = filter.bhurptPhase;
+      var m = bhureport.selectedMonth = filter.bhurptMonth;
+        debugger;
 
-        if(filter.bhurptYear && !filter.bhurptQuarter){
-             reportservice.getBhuReportFilterDetailsByYear(filter.bhurptYear, startIndex).then(function(resp){
-                if(resp && resp.errorCode){
-                $scope.$emit('alert', {
-                    message: resp.message,
-                    success: false
-                    });
-                }
-                else {
-                    bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
-                }
+        if(p || y ){
+            reportservice.getBhuReportFilterDetails(p, y ,q, m, startIndex).then(function(resp){
+               if(resp && resp.errorCode){
+               $scope.$emit('alert', {
+                   message: resp.message,
+                   success: false
+                   });
+               }
+               else {
+                   bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
+               }
+           });
+        } else{
+            $scope.$emit('alert', {
+                message: resp.message,
+                success: false
             });
-         }else if(filter.bhurptYear && filter.bhurptQuarter){
-                reportservice.getBhuReportFilterDetailsByQuarter(filter.bhurptYear, filter.bhurptQuarter, startIndex).then(function(resp){
-                    if(resp && resp.errorCode){
-                        $scope.$emit('alert', {
-                        message: resp.message,
-                        success: false
-                    });
-                    }else{
-                        bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
-                    }
-                });
         }
+        // else if(filter.bhurptYear && !filter.bhurptQuarter){
+        //      reportservice.getBhuReportFilterDetailsByYear(filter.bhurptYear, startIndex).then(function(resp){
+        //         if(resp && resp.errorCode){
+        //         $scope.$emit('alert', {
+        //             message: resp.message,
+        //             success: false
+        //             });
+        //         }
+        //         else {
+        //             bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
+        //         }
+        //     });
+        //  }else if(filter.bhurptYear && filter.bhurptQuarter){
+        //         reportservice.getBhuReportFilterDetailsByQuarter(filter.bhurptYear, filter.bhurptQuarter, startIndex).then(function(resp){
+        //             if(resp && resp.errorCode){
+        //                 $scope.$emit('alert', {
+        //                 message: resp.message,
+        //                 success: false
+        //             });
+        //             }else{
+        //                 bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
+        //             }
+        //         });
+        // }
          bhureport.filterBhuReport.searchKeyword = '';
     }
 
@@ -2452,21 +2501,20 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         //this is the common url which will work for any filter
         window.location.href = reportservice.exportExcel(p, y, q, m);
 
-        // if(p && !y){
-        //     window.location.href = reportservice.exportToExcelByPhase(p);
-        // }
+        
+        
         // if(p){
-        //     if(p && y && !q){
+        //  if(y && !q){
         //         window.location.href = reportservice.exportToExcelByPhaseAndYear(p, y);
-        //     }else if(p && y && q && !m){
+        //     }else if( q && !m){
         //         window.location.href = reportservice.exportToExcelByQuarter(p, y, q);
-        //     }else if(p && y && q && m){
+        //     }else if(y && q && m){
         //         window.location.href = reportservice.exportExcel(p, y, q, m);
         //     }else{
         //         window.location.href = reportservice.exportToExcelByPhase(p);
         //     }
         // }
-        // else if (!p && y){
+        // else {
         //     if(y && !q){
         //         window.location.href = reportservice.exportToExcelByYear(y);
         //     }else if(y && q && !m){
@@ -2483,10 +2531,10 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
     }
 }
 module.exports = BhuReportsController;
-},{}],33:[function(require,module,exports){
-BhuRptModalController.$inject = ['$uibModalInstance', 'modal'];
+},{}],34:[function(require,module,exports){
+BhuRptModalController.$inject = ['$uibModalInstance', 'modal', 'reportservice'];
 
-function BhuRptModalController($uibModalInstance, modal) {
+function BhuRptModalController($uibModalInstance, modal, reportservice) {
     debugger;
     var ctrl = this;
     ctrl.modal = modal;
@@ -2528,6 +2576,10 @@ function BhuRptModalController($uibModalInstance, modal) {
     ctrl.cancel = function () {
         $uibModalInstance.dismiss('cancel');
       };
+    
+    ctrl.exportBhuDtlsToExcel = function(bhuId){
+        window.location.href = reportservice.exportBhuDtlsToExcelSrv(bhuId);
+    }
 }
 BhuReportModalDirective.$inject = ['$uibModal', 'reportservice'];
 
@@ -2568,10 +2620,10 @@ function BhuReportModalDirective($uibModal, reportservice) {
     };
 }
 module.exports = BhuReportModalDirective;
-},{}],34:[function(require,module,exports){
-EffortsModalController.$inject = ['$uibModalInstance', 'modal','$rootScope'];
+},{}],35:[function(require,module,exports){
+EffortsModalController.$inject = ['$uibModalInstance', 'modal','$rootScope', 'reportservice'];
 
-function EffortsModalController($uibModalInstance, modal, $rootScope) {
+function EffortsModalController($uibModalInstance, modal, $rootScope, reportservice) {
     var ctrlEfrt = this;
     ctrlEfrt.modal = modal;
     ctrlEfrt.EffortsModalData = [];
@@ -2614,6 +2666,10 @@ function EffortsModalController($uibModalInstance, modal, $rootScope) {
     //     ctrlEfrt.itemRenderers["estimatedEfforts"] = "estimatedefforts-edit";
     //}
 
+    ctrlEfrt.exportEffortsToExcel = function(bhuId){
+        window.location.href = reportservice.exportEffortsToExcelSrv(bhuId);
+    }
+
     ctrlEfrt.cancel = function () {
         $uibModalInstance.dismiss('cancel');
       };
@@ -2655,7 +2711,7 @@ function BhuEffortsDirective($uibModal, reportservice) {
     };
 }
 module.exports = BhuEffortsDirective;
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 getReportsList.$inject = ['reportservice','$q', '$http', '$stateParams', 'spinnerService'];
 
 function getReportsList(reportservice, $q, $http, $stateParams, spinnerService) {
@@ -2675,10 +2731,10 @@ function getReportsList(reportservice, $q, $http, $stateParams, spinnerService) 
 
 module.exports = getReportsList;
 
-},{}],36:[function(require,module,exports){
-CurrentStatusModalController.$inject = ['$uibModalInstance', 'modal'];
+},{}],37:[function(require,module,exports){
+CurrentStatusModalController.$inject = ['$uibModalInstance', 'modal', 'reportservice'];
 
-function CurrentStatusModalController($uibModalInstance, modal) {
+function CurrentStatusModalController($uibModalInstance, modal, reportservice) {
     var ctrlSts = this;
     ctrlSts.modal = modal;
     ctrlSts.currentStatusModalData = [];
@@ -2729,6 +2785,10 @@ function CurrentStatusModalController($uibModalInstance, modal) {
     ctrlSts.cancel = function () {
         $uibModalInstance.dismiss('cancel');
       };
+    
+    ctrlSts.exportStatusToExcel= function(bhuId){
+        window.location.href = reportservice.exportStatusToExcelSrv(bhuId);
+    }
 }
 BhuCurrentStatusModalDirective.$inject = ['$uibModal', 'reportservice'];
 
@@ -2769,10 +2829,10 @@ function BhuCurrentStatusModalDirective($uibModal, reportservice) {
     };
 }
 module.exports = BhuCurrentStatusModalDirective;
-},{}],37:[function(require,module,exports){
-WarrantyModalController.$inject = ['$uibModalInstance', 'modal'];
+},{}],38:[function(require,module,exports){
+WarrantyModalController.$inject = ['$uibModalInstance', 'modal', 'reportservice'];
 
-function WarrantyModalController($uibModalInstance, modal) {
+function WarrantyModalController($uibModalInstance, modal, reportservice) {
     debugger;
     var ctrlWar = this;
     ctrlWar.modal = modal;
@@ -2805,6 +2865,10 @@ function WarrantyModalController($uibModalInstance, modal) {
                             thClasses: 'width30',
                             tdClasses: 'width40'
                         }];
+
+    ctrlWar.exportWarrantyToExcel = function(bhuId){
+        window.location.href = reportservice.exportWarrantyToExcelSrv(bhuId);
+    }
                        
     ctrlWar.cancel = function () {
         $uibModalInstance.dismiss('cancel');
@@ -2849,7 +2913,7 @@ function WarrantyModalDirective($uibModal, reportservice) {
     };
 }
 module.exports = WarrantyModalDirective;
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 ReportsController.$inject = ['$state', '$scope', '$log', 'reportsList', 'reportservice'];
 
 function ReportsController($state, $scope, $log, reportsList, reportservice) {
@@ -2882,7 +2946,7 @@ function ReportsController($state, $scope, $log, reportsList, reportservice) {
 }
 
 module.exports = ReportsController;
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -2896,7 +2960,7 @@ module.exports = angular
     .directive('warrantyissueLink', require('./reports-warrentyissues.directive'))
     .directive('currentstatusLink', require('./reports-status.directive'))
     .directive('estimatedeffortsEdit',require("./report-admin-effort-edit.directive"));
-},{"./report-admin-effort-edit.directive":31,"./reports-bhu-controller":32,"./reports-bhu.directive":33,"./reports-efforts.directive":34,"./reports-status.directive":36,"./reports-warrentyissues.directive":37,"./reports.controller":38,"./reports.route":40,"./reports.service":41,"angular":109}],40:[function(require,module,exports){
+},{"./report-admin-effort-edit.directive":32,"./reports-bhu-controller":33,"./reports-bhu.directive":34,"./reports-efforts.directive":35,"./reports-status.directive":37,"./reports-warrentyissues.directive":38,"./reports.controller":39,"./reports.route":41,"./reports.service":42,"angular":111}],41:[function(require,module,exports){
 ReportsRoute.$inject = ['$stateProvider'];
 
 function ReportsRoute($stateProvider) {
@@ -2964,24 +3028,23 @@ function ReportsRoute($stateProvider) {
     })
 }
 module.exports = ReportsRoute;
-},{"./reports-list.resolve":35}],41:[function(require,module,exports){
+},{"./reports-list.resolve":36}],42:[function(require,module,exports){
 ReportsService.$inject = ['$http', '$q', '$sce','spinnerService','sharedService'];
 
 function ReportsService($http, $q, $sce, spinnerService, sharedService){
 	var reportsService = {
 		getReportsList: getReportsList,
         getReportsUrl: getReportsUrl,
-
         getReportBhuDetails: getReportBhuDetails,
         getBhuReportData: getBhuReportData,
-        getBhuReportFilterDetailsByYear: getBhuReportFilterDetailsByYear,
-        getBhuReportFilterDetailsByQuarter: getBhuReportFilterDetailsByQuarter,
-        //exportToExcelByYear: exportToExcelByYear,
-        //exportToExcelByQuarter: exportToExcelByQuarter,
-        //exportToExcelCurrentQuarter: exportToExcelCurrentQuarter,
+        getBhuReportFilterDetails : getBhuReportFilterDetails,
         getReportCurrentStatusDetails:getReportCurrentStatusDetails,
         getReportWarrantyDetails:getReportWarrantyDetails,
-        getReportEffortsDetails:getReportEffortsDetails
+        getReportEffortsDetails:getReportEffortsDetails,
+        exportStatusToExcelSrv : exportStatusToExcelSrv,
+        exportWarrantyToExcelSrv : exportWarrantyToExcelSrv,
+        exportEffortsToExcelSrv : exportEffortsToExcelSrv,
+        exportBhuDtlsToExcelSrv : exportBhuDtlsToExcelSrv
 	};
 
 	return reportsService;
@@ -3085,33 +3148,72 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService){
         return def.promise;
     }
 
-    function getBhuReportFilterDetailsByYear(year, startIndex){
+    function getBhuReportFilterDetails(p, y, q, m, si){
         var def = $q.defer();
-         spinnerService.show();
-            $http.get("https://rtdashboardp.rno.apple.com:9012/bhureports/details/"+year+"?start-index="+startIndex+"&callback=angular.callbacks._0")
-                .success(function(data) {
-                    def.resolve(data);
-                    spinnerService.hide();
-                })
-                .error(function() {
-                    def.reject("Failed to get data");
-                });
-            return def.promise;
+        spinnerService.show();
+        var getUrl = "";
+        debugger;
+        if(m){
+            m = getMonthFromString(m);
+        }
+        if(p){
+             url = "reports/BHUReport/phase/"+ p;
+        }else if(!p && y){
+            url = "reports/BHUReport/"+ y;
+        }else if(!p && y && (q || m)){
+            url = "reports/BHUReport/"+ y +"/"+ q;
+        }
+        $http.get(getUrl, {
+            params: {
+                "filter-year": y,
+                "filter-quarter": q,
+                "filter-month": m,
+                "start-index": si
+            }
+        }).success(function(data) {
+                def.resolve(data);
+                spinnerService.hide();
+        }).error(function() {
+                def.reject("Failed to get data");
+        });
+        return def.promise;
     }
 
-    function getBhuReportFilterDetailsByQuarter(year,quar, startIndex){
-        var def = $q.defer();
-         spinnerService.show();
-            $http.get("https://rtdashboardp.rno.apple.com:9012/bhureports/details/"+year+"/"+quar+"?start-index="+startIndex+"&callback=angular.callbacks._0")
-                .success(function(data) {
-                    def.resolve(data);
-                    spinnerService.hide();
-                })
-                .error(function() {
-                    def.reject("Failed to get data");
-                });
-            return def.promise;
+    function getMonthFromString(mon){
+           var d = Date.parse(mon + "1, 2016");
+           if(!isNaN(d)){
+               var m = new Date(d).getMonth() + 1;
+              return (m > 9) ? m: "0"+m;
+           }
+           return -1;
     }
+    // function getBhuReportFilterDetailsByYear(p, y, q, m, si){
+    //     var def = $q.defer();
+    //      spinnerService.show();
+    //         $http.get("https://rtdashboardp.rno.apple.com:9012/bhureports/details/"+y+"?start-index="+si+"&callback=angular.callbacks._0")
+    //             .success(function(data) {
+    //                 def.resolve(data);
+    //                 spinnerService.hide();
+    //             })
+    //             .error(function() {
+    //                 def.reject("Failed to get data");
+    //             });
+    //         return def.promise;
+    // }
+
+    // function getBhuReportFilterDetailsByQuarter(p, y, q, m, si){
+    //     var def = $q.defer();
+    //      spinnerService.show();
+    //         $http.get("https://rtdashboardp.rno.apple.com:9012/bhureports/details/"+y+"/"+q+"?start-index="+si+"&callback=angular.callbacks._0")
+    //             .success(function(data) {
+    //                 def.resolve(data);
+    //                 spinnerService.hide();
+    //             })
+    //             .error(function() {
+    //                 def.reject("Failed to get data");
+    //             });
+    //         return def.promise;
+    // }
 
     function getReportBhuDetails(bhuId, requestFor){
         var def = $q.defer();
@@ -3384,14 +3486,30 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService){
     // function exportToExcelByQuarter(y, q){
     //     return "bhureports/download/"+y+"/"+q;        
     // }
-    // function exportToExcelCurrentQuarter(){
-    //         return "bhureports/download/";
-    // }
 
+    function exportStatusToExcelSrv(bhuId){
+        debugger;
+        return "bhureports/downloadStatus/"+ bhuId;
+    }
+
+    function exportWarrantyToExcelSrv(bhuId){
+        debugger;
+        return "bhureports/downloadWarranty/"+ bhuId;
+    }
+
+    function exportEffortsToExcelSrv(bhuId){
+        debugger;
+        return "bhureports/downloadEfforts/"+ bhuId;
+    }
+
+    function exportBhuDtlsToExcelSrv(bhuId){
+        debugger;
+        return "bhureports/downloadBhuDtls/"+ bhuId;
+    }
 }
 
 module.exports = ReportsService;
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 RepositoryModulesController.$inject = ['$state', '$scope','$rootScope', '$log', 'repositoryservice'];
 
 function RepositoryModulesController($state, $scope,$rootScope, $log, repositoryservice) {
@@ -3469,7 +3587,7 @@ function RepositoryModulesController($state, $scope,$rootScope, $log, repository
 
 }
 module.exports = RepositoryModulesController;
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 RepositoryTestScriptListController.$inject = ['$state', '$stateParams', '$scope', '$rootScope', '$log', '$filter', '$timeout', 'repositoryservice'];
 
 function RepositoryTestScriptListController($state, $stateParams, $scope, $rootScope, $log, $filter, $timeout, repositoryservice) {
@@ -3734,7 +3852,7 @@ function RepositoryTestScriptListController($state, $stateParams, $scope, $rootS
 
 }
 module.exports = RepositoryTestScriptListController;
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 RepositoryController.$inject = ['$state', '$scope', '$log', 'repositoryservice', 'testFolders'];
 
 function RepositoryController($state, $scope, $log, repositoryservice, testFolders) {
@@ -3781,7 +3899,7 @@ function RepositoryController($state, $scope, $log, repositoryservice, testFolde
     }
 }
 module.exports = RepositoryController;
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 RepositoryFilter.$inject = ['$sce'];
 
 function RepositoryFilter($sce) {
@@ -3790,7 +3908,7 @@ function RepositoryFilter($sce) {
     }
 }
 module.exports = RepositoryFilter;
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -3803,7 +3921,7 @@ module.exports = angular
     .filter('sanitize', require('./repository.filter'));
 
 
-},{"./repository-modules.controller":42,"./repository-testscripts-list.controller":43,"./repository.controller":44,"./repository.filter":45,"./repository.route":47,"./repository.service":48,"angular":109}],47:[function(require,module,exports){
+},{"./repository-modules.controller":43,"./repository-testscripts-list.controller":44,"./repository.controller":45,"./repository.filter":46,"./repository.route":48,"./repository.service":49,"angular":111}],48:[function(require,module,exports){
 RepositoryRoute.$inject = ['$stateProvider', '$breadcrumbProvider'];
 
 function RepositoryRoute($stateProvider, $breadcrumbProvider) {
@@ -3886,7 +4004,7 @@ function RepositoryRoute($stateProvider, $breadcrumbProvider) {
     });
 }
 module.exports = RepositoryRoute;
-},{"./test-folders.resolve":49}],48:[function(require,module,exports){
+},{"./test-folders.resolve":50}],49:[function(require,module,exports){
 RepositoryService.$inject = ['$http', '$q', 'spinnerService'];
 
 function RepositoryService($http, $q, spinnerService) {
@@ -4015,7 +4133,7 @@ function RepositoryService($http, $q, spinnerService) {
     }
 }
 module.exports = RepositoryService;
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 getTestFolders.$inject = ['repositoryservice', '$http', '$stateParams', '$q', 'spinnerService'];
 
 function getTestFolders(repositoryservice, $http, $stateParams, $q, spinnerService) { //To fetch root level test folders which are defined in RT Dashboard database
@@ -4031,7 +4149,7 @@ function getTestFolders(repositoryservice, $http, $stateParams, $q, spinnerServi
         return def.promise;
 }
 module.exports = getTestFolders;
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 SearchController.$inject = [    
     '$state',
     '$scope',
@@ -4320,7 +4438,7 @@ function SearchController($state, $scope,$rootScope, $http,$filter,$timeout, rep
 }
 
 module.exports = SearchController;
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -4330,7 +4448,7 @@ module.exports = angular
     
 
 
-},{"./search.controller":50,"./search.route":52,"angular":109}],52:[function(require,module,exports){
+},{"./search.controller":51,"./search.route":53,"angular":111}],53:[function(require,module,exports){
 SearchRoute.$inject = ['$stateProvider'];
 
 function SearchRoute($stateProvider) {
@@ -4364,7 +4482,7 @@ function SearchRoute($stateProvider) {
     });
 }
 module.exports = SearchRoute;
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 /*! angular-breadcrumb - v0.5.0
 * http://ncuillery.github.io/angular-breadcrumb
 * Copyright (c) 2016 Nicolas Cuillery; Licensed MIT */
@@ -4770,7 +4888,7 @@ angular.module('ncy-angular-breadcrumb', ['ui.router.state'])
     .directive('ncyBreadcrumbLast', BreadcrumbLastDirective)
     .directive('ncyBreadcrumbText', BreadcrumbTextDirective);
 })(window, window.angular);
-},{}],54:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 BreadCrumbController.$inject = ['$rootScope','$state','repositoryservice'];
 
 function BreadCrumbController($rootScope, $state, repositoryservice) {
@@ -4783,7 +4901,7 @@ var breadcrumbComponent = {
 };
 
 module.exports = breadcrumbComponent;
-},{}],55:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 function checkRepository() {
     return function($scope, element, attrs) {
         $scope.$on("show_repository_breadcrumb", function() {
@@ -4798,7 +4916,7 @@ function checkRepository() {
     };
 }
 module.exports = checkRepository;
-},{}],56:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 checkRepositoryService.$inject = ['$rootScope'];
 
 function checkRepositoryService($rootScope) {
@@ -4812,7 +4930,7 @@ function checkRepositoryService($rootScope) {
     };
 }
 module.exports = checkRepositoryService;
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
     rtAlert.$inject = [];
     /* @ngInject */
     function rtAlert() {
@@ -4844,7 +4962,7 @@ module.exports = checkRepositoryService;
         return alertDirective;
     }
     module.exports = rtAlert;
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 ConfirmModalController.$inject = ['$uibModalInstance', 'modal'];
 
 function ConfirmModalController($uibModalInstance, modal) {
@@ -4903,7 +5021,7 @@ function ConfirmModalDirective($uibModal) {
     };
 }
 module.exports = ConfirmModalDirective;
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 rtRepoChain.$inject = [];
 /* @ngInject */
 function rtRepoChain() {
@@ -4970,7 +5088,7 @@ function rtRepoChain() {
     return rtRepoDirective;
 }
 module.exports = rtRepoChain;
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 
 function delItemRenderer(){
 
@@ -4992,7 +5110,7 @@ function delItemRenderer(){
 }
 
 module.exports = delItemRenderer;
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 
 function formValidation($parse){
 
@@ -5058,7 +5176,7 @@ function formValidation($parse){
 }
 
 module.exports = formValidation;
-},{}],62:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 
 function bhuIdLinkRenderer(){
 
@@ -5081,7 +5199,7 @@ function bhuIdLinkRenderer(){
 }
 
 module.exports = bhuIdLinkRenderer;
-},{}],63:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 
 function editItemRenderer(){
 
@@ -5101,7 +5219,7 @@ function editItemRenderer(){
 }
 
 module.exports = editItemRenderer;
-},{}],64:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 
 function dateFormat($filter){
 
@@ -5121,7 +5239,7 @@ function dateFormat($filter){
 }
 
 module.exports = dateFormat;
-},{}],65:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 
 function descItemRenderer(){
 
@@ -5151,7 +5269,7 @@ function descItemRenderer(){
 }
 
 module.exports = descItemRenderer;
-},{}],66:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 
 function defectsSummaryItemRenderer(){
 
@@ -5168,7 +5286,29 @@ function defectsSummaryItemRenderer(){
 }
 
 module.exports = defectsSummaryItemRenderer;
-},{}],67:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
+
+function highlightCell(){
+    return {
+            restrict: 'EA',
+            template: ['<style parse-style>.css_class {color: red;font-weight:bold;}</style><div ng-bind-html="formatCell(item.deviation)">',
+                '</div>'
+            ].join(''),
+            link: function(scope, element, attr) {
+            scope.formatCell = function(deviation) {
+                debugger;
+                if(deviation && deviation < 0){
+                    return '<div class="css_class">'+deviation+'</div>';
+                }else{
+                    return deviation;
+                }
+            }
+        }
+    };
+}
+    
+    module.exports = highlightCell;
+},{}],69:[function(require,module,exports){
 
 function itemnameLinkRenderer(){
 
@@ -5209,18 +5349,17 @@ function itemnameLinkRenderer(){
 }
 
 module.exports = itemnameLinkRenderer;
-},{}],68:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 
-function efortsutilizedlinkrenderer(){
+function effortsUtilizedLinkRenderer(){
 
     return {
         restrict: 'EA',
-        template: ['<div ng-bind-html="displayItemName(item.efortsutilized)" effortsutilized-link>',
+        template: ['<div ng-bind-html="displayUtilizedEfforts(item.efortsutilized)" effortsutilized-link>',
             '</div>'
         ].join(''),
         link: function(scope, element, attr) {
-           scope.displayItemName = function(efortsutilized) {
-               debugger;
+           scope.displayUtilizedEfforts = function(efortsutilized) {
               if(isNaN(efortsutilized) || efortsutilized==null){
                 return efortsutilized;
               }else{
@@ -5231,18 +5370,18 @@ function efortsutilizedlinkrenderer(){
     };
     }
     
-    module.exports = efortsutilizedlinkrenderer;
-},{}],69:[function(require,module,exports){
+    module.exports = effortsUtilizedLinkRenderer;
+},{}],71:[function(require,module,exports){
 
-function currentStatuslinkrenderer(){
+function currentStatusLinkRenderer(){
     return {
         restrict: 'EA',
-        template: ['<div ng-bind-html="displayItemName(item.currentStatus)" currentstatus-link>',
+        template: ['<div ng-bind-html="displayStatusItemName(item.currentStatus)" currentstatus-link>',
             '</div>'
         ].join(''),
         link: function(scope, element, attr) {
-           scope.displayItemName = function(currentStatus) {
-              if(currentStatus == null || currentStatus){
+           scope.displayStatusItemName = function(currentStatus) {
+              if(currentStatus == null || currentStatus==undefined || currentStatus == ''){
                 return currentStatus;
               }else{
                 return "<a href='javascript:void(0)'>"+currentStatus+"</a>";
@@ -5252,29 +5391,29 @@ function currentStatuslinkrenderer(){
     };
     }
     
-    module.exports = currentStatuslinkrenderer;
-},{}],70:[function(require,module,exports){
+    module.exports = currentStatusLinkRenderer;
+},{}],72:[function(require,module,exports){
 
-function warrantyIssuelinkrenderer(){
+function warrantyIssueLinkRenderer(){
     return {
         restrict: 'EA',
-        template: ['<div ng-bind-html="displayItemName(item.warrantyIssue)" warrantyissue-link>',
+        template: ['<div ng-bind-html="displayWarrantyissueItemName(item.warrantyissue)" warrantyissue-link>',
             '</div>'
         ].join(''),
         link: function(scope, element, attr) {
-           scope.displayItemName = function(warrantyIssue) {
-              if(isNaN(warrantyIssue) || warrantyIssue==null){
-                return warrantyIssue;
+           scope.displayWarrantyissueItemName = function(warrantyissue) {
+              if(isNaN(warrantyissue) || warrantyissue==null){
+                return warrantyissue;
               }else{
-                return "<a href='javascript:void(0)'>"+warrantyIssue+"</a>";
+                return "<a href='javascript:void(0)'>"+warrantyissue+"</a>";
               }
             }
         }
     };
     }
     
-    module.exports = warrantyIssuelinkrenderer;
-},{}],71:[function(require,module,exports){
+    module.exports = warrantyIssueLinkRenderer;
+},{}],73:[function(require,module,exports){
 
 function repoDescItemRenderer(){
 
@@ -5291,7 +5430,7 @@ function repoDescItemRenderer(){
 }
 
 module.exports = repoDescItemRenderer;
-},{}],72:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 
 function expectedItemRenderer(){
 
@@ -5308,7 +5447,7 @@ function expectedItemRenderer(){
 }
 
 module.exports = expectedItemRenderer;
-},{}],73:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 
 function inputItemRenderer(){
 
@@ -5325,7 +5464,7 @@ function inputItemRenderer(){
 }
 
 module.exports = inputItemRenderer;
-},{}],74:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 function tcodeItemRenderer(){
 
     return {
@@ -5341,7 +5480,7 @@ function tcodeItemRenderer(){
 }
 
 module.exports = tcodeItemRenderer;
-},{}],75:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 
 function rtSpocDesc(sharedService){
 
@@ -5370,7 +5509,7 @@ function rtSpocDesc(sharedService){
 }
 
 module.exports = rtSpocDesc;
-},{}],76:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 
 function moduleItemRenderer(){
 
@@ -5388,7 +5527,7 @@ function moduleItemRenderer(){
 }
 
 module.exports = moduleItemRenderer;
-},{}],77:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 module.exports = function(app) {
 
     app.directive('rtGridA11y', function($compile, $timeout) {
@@ -5432,7 +5571,7 @@ module.exports = function(app) {
         }
     });
 };
-},{}],78:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 module.exports = function(app) {
 
     app.directive('rtAccordion', function($parse) {
@@ -5449,7 +5588,7 @@ module.exports = function(app) {
         }
     });
 };
-},{}],79:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 module.exports = function(app) {
 
     'use strict';
@@ -5994,7 +6133,7 @@ module.exports = function(app) {
             };
         });
 }
-},{}],80:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 module.exports = function(app) {
     'use strict';
 
@@ -6042,7 +6181,7 @@ module.exports = function(app) {
         }
     }
 }
-},{}],81:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 var rtGrid = angular.module('rtGrid', [ ]);
 
 require('./grid.directive.js')(rtGrid);
@@ -6056,7 +6195,7 @@ require('./grid.a11y.directive.js')(rtGrid);
 
 module.exports = rtGrid;
 
-},{"./grid.a11y.directive.js":77,"./grid.accordion.directive.js":78,"./grid.directive.js":79,"./grid.filter.js":80,"./grid.pagination.directive.js":82,"./grid.reorder.directive.js":83,"./grid.sort.directive.js":84,"./grid.sort.service.js":85}],82:[function(require,module,exports){
+},{"./grid.a11y.directive.js":79,"./grid.accordion.directive.js":80,"./grid.directive.js":81,"./grid.filter.js":82,"./grid.pagination.directive.js":84,"./grid.reorder.directive.js":85,"./grid.sort.directive.js":86,"./grid.sort.service.js":87}],84:[function(require,module,exports){
 module.exports = function(app) {
 
     app.directive('rtPagination', function() {
@@ -6066,7 +6205,7 @@ module.exports = function(app) {
         }
     });
 };
-},{}],83:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 module.exports = function(app) {
 
     app.directive('rtReorder', function($parse, $compile) {
@@ -6097,7 +6236,7 @@ module.exports = function(app) {
         }
     });
 };
-},{}],84:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 module.exports = function(app) {
     'use strict';
 
@@ -6138,7 +6277,7 @@ module.exports = function(app) {
         }
     }
 };
-},{}],85:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 module.exports = function(app) {
     app.factory('gridSortComparator', function() {
         return {
@@ -6155,7 +6294,7 @@ module.exports = function(app) {
         };
     });
 }
-},{}],86:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -6181,28 +6320,28 @@ module.exports = angular
     .directive('validateForm', require('./directives/grid-admin-validation.directive'))
     .directive('checkRepository', require('./check-repository/check-repository.directive'))
     .directive('rtRepoBreadcrumb', require('./directives/generate-repository-breadcrumb.directive'))
-    //2nd enhancment in report
-    .directive('currentStatuslinkrenderer',require('./directives/grid-report-status.directive'))
-    .directive('warrantyIssuelinkrenderer',require('./directives/grid-report-warrantyIssue.directive'))
-    .directive('efortsutilizedlinkrenderer',require('./directives/grid-report-efortsutilize.directive'))
-    
-
+    .directive('currentStatusLinkRenderer',require('./directives/grid-report-status.directive'))
+    .directive('warrantyIssueLinkRenderer',require('./directives/grid-report-warrantyIssue.directive'))
+    .directive('effortsUtilizedLinkRenderer',require('./directives/grid-report-efortsutilize.directive'))
+    .directive('highlightCell', require('./directives/grid-deviation-format.directive'))
     .factory('spinnerService', require('./spinner/spinner.service'))
     .factory('checkRepositoryService', require('./check-repository/check-repository.service'))
     .factory('sharedService', require('./shared.service'));
     
 
-},{"./breadcrumb/breadcrumb.component":54,"./check-repository/check-repository.directive":55,"./check-repository/check-repository.service":56,"./directives/alert-banner/alert-banner.directive":57,"./directives/confirm-modal/confirm-modal.directive":58,"./directives/generate-repository-breadcrumb.directive":59,"./directives/grid-admin-delete.directive":60,"./directives/grid-admin-validation.directive":61,"./directives/grid-bhu-id-link.directive":62,"./directives/grid-custom-template.directives":63,"./directives/grid-date-format.directive":64,"./directives/grid-defects-desc.directive":65,"./directives/grid-defects-summary.directive":66,"./directives/grid-item-link.directive":67,"./directives/grid-report-efortsutilize.directive":68,"./directives/grid-report-status.directive":69,"./directives/grid-report-warrantyIssue.directive":70,"./directives/grid-repository-design-desc.directive":71,"./directives/grid-repository-design-expected.directive":72,"./directives/grid-repository-design-inputdata.directive":73,"./directives/grid-repository-design-tcode.directive":74,"./directives/grid-spoc-details.directive":75,"./directives/grid-spotlight-modules.directive":76,"./shared.service":87,"./spinner.directive":88,"./spinner/spinner.service":89,"./user-photo/user-photo.component":90,"angular":109}],87:[function(require,module,exports){
-SharedService.$inject = ['$http', '$q', 'spinnerService'];
+},{"./breadcrumb/breadcrumb.component":55,"./check-repository/check-repository.directive":56,"./check-repository/check-repository.service":57,"./directives/alert-banner/alert-banner.directive":58,"./directives/confirm-modal/confirm-modal.directive":59,"./directives/generate-repository-breadcrumb.directive":60,"./directives/grid-admin-delete.directive":61,"./directives/grid-admin-validation.directive":62,"./directives/grid-bhu-id-link.directive":63,"./directives/grid-custom-template.directives":64,"./directives/grid-date-format.directive":65,"./directives/grid-defects-desc.directive":66,"./directives/grid-defects-summary.directive":67,"./directives/grid-deviation-format.directive":68,"./directives/grid-item-link.directive":69,"./directives/grid-report-efortsutilize.directive":70,"./directives/grid-report-status.directive":71,"./directives/grid-report-warrantyIssue.directive":72,"./directives/grid-repository-design-desc.directive":73,"./directives/grid-repository-design-expected.directive":74,"./directives/grid-repository-design-inputdata.directive":75,"./directives/grid-repository-design-tcode.directive":76,"./directives/grid-spoc-details.directive":77,"./directives/grid-spotlight-modules.directive":78,"./shared.service":89,"./spinner.directive":90,"./spinner/spinner.service":91,"./user-photo/user-photo.component":92,"angular":111}],89:[function(require,module,exports){
+SharedService.$inject = ['$http', '$q', '$rootScope', 'spinnerService'];
 
-function SharedService($http, $q, spinnerService) {
+function SharedService($http, $q, $rootScope, spinnerService) {
     var sharedService = {
         getYears: getYears,
         getQuarter: getQuarter,
+        getPhase: getPhase,
         getSearchTestScripts: getSearchTestScripts,
         getUser: getUser,
         getSpocDetails: getSpocDetails,
-        getSearchTestScriptsByBhuid: getSearchTestScriptsByBhuid
+        getSearchTestScriptsByBhuid: getSearchTestScriptsByBhuid,
+        getQuarterMonths: getQuarterMonths
     };
     return sharedService;
 
@@ -6223,6 +6362,36 @@ function SharedService($http, $q, spinnerService) {
         return quar;
     }
 
+    function getPhase() {
+        // var phase = [{ "value":"kick", "text":"Kick off (Source from BHU Req in ALM)"}, { "value":"design", "text":"Design / Dev"},{ "value":"it", "text":"IT"},
+        // { "value":"uat", "text":"UAT"},{ "value":"rt", "text":"RT"},{ "value":"warranty", "text":"Warranty Phase"},{ "value":"p2s", "text":"P2S Handover"}];
+        var phase = ["Kick off (Source from BHU Req in ALM)", "Design / Dev","IT","UAT","RT","Warranty Phase","P2S Handover"];
+        return phase;
+    }
+
+    function getQuarterMonths(quarter)
+    {
+        switch(quarter)
+        {
+            case "Q1": {
+                return ["OCT","NOV","DEC"];
+                break;
+            }
+            case "Q2": {
+                return ["JAN","FEB","MAR"];
+                break;
+            }
+            case "Q3": {
+                return ["APR","MAY","JUN"];
+                break;
+            }
+            case "Q4": {
+                return ["JUL","AUG","SEP"];
+                break;
+            }
+        }
+    }
+
     function getSearchTestScripts(keyword){
         var def = $q.defer();
         spinnerService.show();
@@ -6241,6 +6410,7 @@ function SharedService($http, $q, spinnerService) {
         $http.get("https://rtdashboardp.rno.apple.com:9012/homepage/userProfile?callback=angular.callbacks._0").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
+            $rootScope.userRoles = ["admin"];// data.roles;
         }).error(function() {
             def.reject("Failed to get data");
         });
@@ -6272,7 +6442,7 @@ function SharedService($http, $q, spinnerService) {
     }
 }
 module.exports = SharedService;
-},{}],88:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 function spinner() {
     return function($scope, element, attrs) {
         $scope.$on("spinner_show", function() {
@@ -6284,7 +6454,7 @@ function spinner() {
     };
 }
 module.exports = spinner;
-},{}],89:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 spinnerService.$inject = ['$rootScope'];
 
 function spinnerService($rootScope) {
@@ -6298,7 +6468,7 @@ function spinnerService($rootScope) {
     };
 }
 module.exports = spinnerService;
-},{}],90:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 PhotoController.$inject = [
     'photoservice'
 ];
@@ -6323,7 +6493,7 @@ var userPhotoComponent = {
 };
 
 module.exports = userPhotoComponent;
-},{}],91:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 TeamController.$inject = ['$state', '$scope', '$log', '$http', 'teamService', 'adminservice', '$location', '$anchorScroll'];
 
 function TeamController($state, $scope, $log, $http, teamService, adminservice, $location, $anchorScroll) {
@@ -6446,7 +6616,7 @@ function TeamController($state, $scope, $log, $http, teamService, adminservice, 
   }
 }
 module.exports = TeamController;
-},{}],92:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -6455,7 +6625,7 @@ module.exports = angular
     .controller('TeamController', require('./team.controller'))
     .factory('teamService', require('./team.service'));
 
-},{"./team.controller":91,"./team.route":93,"./team.service":94,"angular":109}],93:[function(require,module,exports){
+},{"./team.controller":93,"./team.route":95,"./team.service":96,"angular":111}],95:[function(require,module,exports){
 TeamRoute.$inject = ['$stateProvider'];
 
 function TeamRoute($stateProvider) {
@@ -6474,7 +6644,7 @@ function TeamRoute($stateProvider) {
     });
 }
 module.exports = TeamRoute;
-},{}],94:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 TeamService.$inject = [
      '$http',
     '$q',
@@ -6522,7 +6692,7 @@ function TeamService($http, $q,spinnerService) {
 
 module.exports = TeamService;
 
-},{}],95:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 BhuModalController.$inject = ['$uibModalInstance', 'modal'];
 
 function BhuModalController($uibModalInstance, modal) {
@@ -6614,7 +6784,7 @@ function BhuModalDirective($uibModal, ticketservice) {
     };
 }
 module.exports = BhuModalDirective;
-},{}],96:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 getTicketsFolders.$inject = ['ticketservice','$q', '$http', '$stateParams', 'spinnerService'];
 
 function getTicketsFolders(ticketservice, $q, $http, $stateParams, spinnerService) {
@@ -6633,7 +6803,7 @@ function getTicketsFolders(ticketservice, $q, $http, $stateParams, spinnerServic
 }
 module.exports = getTicketsFolders;
 
-},{}],97:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 TicketsController.$inject = [    
     '$state',
     '$scope',
@@ -6972,7 +7142,7 @@ function resetFilter(){
 
 module.exports = TicketsController;
 
-},{}],98:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 var angular = require('angular');
 
 module.exports = angular
@@ -6983,7 +7153,7 @@ module.exports = angular
     .factory('ticketservice', require('./tickets.service'));
 
 
-},{"./bhu-modal.directive":95,"./tickets.controller":97,"./tickets.route":99,"./tickets.service":100,"angular":109}],99:[function(require,module,exports){
+},{"./bhu-modal.directive":97,"./tickets.controller":99,"./tickets.route":101,"./tickets.service":102,"angular":111}],101:[function(require,module,exports){
 TicketsRoute.$inject = [
     '$stateProvider'
 ];
@@ -7031,7 +7201,7 @@ function TicketsRoute(
 }
 
 module.exports = TicketsRoute;
-},{"./tickets-folders.resolve":96}],100:[function(require,module,exports){
+},{"./tickets-folders.resolve":98}],102:[function(require,module,exports){
 TicketsService.$inject = [
     '$http',
     '$q',
@@ -7137,7 +7307,7 @@ function TicketsService($http, $q,spinnerService) {
 
 module.exports = TicketsService;
 
-},{}],101:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.6
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -7863,11 +8033,11 @@ function ngMessageDirectiveFactory() {
 
 })(window, window.angular);
 
-},{}],102:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 require('./angular-messages');
 module.exports = 'ngMessages';
 
-},{"./angular-messages":101}],103:[function(require,module,exports){
+},{"./angular-messages":103}],105:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.6
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -8586,11 +8756,11 @@ angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
 
 })(window, window.angular);
 
-},{}],104:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 require('./angular-sanitize');
 module.exports = 'ngSanitize';
 
-},{"./angular-sanitize":103}],105:[function(require,module,exports){
+},{"./angular-sanitize":105}],107:[function(require,module,exports){
 /*
  * angular-ui-bootstrap
  * http://angular-ui.github.io/bootstrap/
@@ -16127,12 +16297,12 @@ angular.module('ui.bootstrap.datepickerPopup').run(function() {!angular.$$csp().
 angular.module('ui.bootstrap.tooltip').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTooltipCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-tooltip-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-bottom > .tooltip-arrow,[uib-popover-popup].popover.top-left > .arrow,[uib-popover-popup].popover.top-right > .arrow,[uib-popover-popup].popover.bottom-left > .arrow,[uib-popover-popup].popover.bottom-right > .arrow,[uib-popover-popup].popover.left-top > .arrow,[uib-popover-popup].popover.left-bottom > .arrow,[uib-popover-popup].popover.right-top > .arrow,[uib-popover-popup].popover.right-bottom > .arrow,[uib-popover-html-popup].popover.top-left > .arrow,[uib-popover-html-popup].popover.top-right > .arrow,[uib-popover-html-popup].popover.bottom-left > .arrow,[uib-popover-html-popup].popover.bottom-right > .arrow,[uib-popover-html-popup].popover.left-top > .arrow,[uib-popover-html-popup].popover.left-bottom > .arrow,[uib-popover-html-popup].popover.right-top > .arrow,[uib-popover-html-popup].popover.right-bottom > .arrow,[uib-popover-template-popup].popover.top-left > .arrow,[uib-popover-template-popup].popover.top-right > .arrow,[uib-popover-template-popup].popover.bottom-left > .arrow,[uib-popover-template-popup].popover.bottom-right > .arrow,[uib-popover-template-popup].popover.left-top > .arrow,[uib-popover-template-popup].popover.left-bottom > .arrow,[uib-popover-template-popup].popover.right-top > .arrow,[uib-popover-template-popup].popover.right-bottom > .arrow{top:auto;bottom:auto;left:auto;right:auto;margin:0;}[uib-popover-popup].popover,[uib-popover-html-popup].popover,[uib-popover-template-popup].popover{display:block !important;}</style>'); angular.$$uibTooltipCss = true; });
 angular.module('ui.bootstrap.timepicker').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTimepickerCss && angular.element(document).find('head').prepend('<style type="text/css">.uib-time input{width:50px;}</style>'); angular.$$uibTimepickerCss = true; });
 angular.module('ui.bootstrap.typeahead').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTypeaheadCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-typeahead-popup].dropdown-menu{display:block;}</style>'); angular.$$uibTypeaheadCss = true; });
-},{}],106:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 require('./dist/ui-bootstrap-tpls');
 
 module.exports = 'ui.bootstrap';
 
-},{"./dist/ui-bootstrap-tpls":105}],107:[function(require,module,exports){
+},{"./dist/ui-bootstrap-tpls":107}],109:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.3.1
@@ -20709,7 +20879,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],108:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.6
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -51733,11 +51903,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],109:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":108}],110:[function(require,module,exports){
+},{"./angular":110}],112:[function(require,module,exports){
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -54102,7 +54272,7 @@ if (typeof jQuery === 'undefined') {
 
 }(jQuery);
 
-},{}],111:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 /*!
  * jQuery UI Widget 1.12.1
  * http://jqueryui.com
@@ -54837,7 +55007,7 @@ return $.widget;
 
 } ) );
 
-},{}],112:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v1.12.4
  * http://jquery.com/
@@ -65847,7 +66017,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}],113:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
@@ -68241,11 +68411,11 @@ $templateCache.put("selectize/match.tpl.html","<div ng-hide=\"$select.searchEnab
 $templateCache.put("selectize/no-choice.tpl.html","<div class=\"ui-select-no-choice selectize-dropdown\" ng-show=\"$select.items.length == 0\"><div class=\"selectize-dropdown-content\"><div data-selectable=\"\" ng-transclude=\"\"></div></div></div>");
 $templateCache.put("selectize/select-multiple.tpl.html","<div class=\"ui-select-container selectize-control multi plugin-remove_button\" ng-class=\"{\'open\': $select.open}\"><div class=\"selectize-input\" ng-class=\"{\'focus\': $select.open, \'disabled\': $select.disabled, \'selectize-focus\' : $select.focus}\" ng-click=\"$select.open && !$select.searchEnabled ? $select.toggle($event) : $select.activate()\"><div class=\"ui-select-match\"></div><input type=\"search\" autocomplete=\"off\" tabindex=\"-1\" class=\"ui-select-search\" ng-class=\"{\'ui-select-search-hidden\':!$select.searchEnabled}\" placeholder=\"{{$selectMultiple.getPlaceholder()}}\" ng-model=\"$select.search\" ng-disabled=\"$select.disabled\" aria-expanded=\"{{$select.open}}\" aria-label=\"{{ $select.baseTitle }}\" ondrop=\"return false;\"></div><div class=\"ui-select-choices\"></div><div class=\"ui-select-no-choice\"></div></div>");
 $templateCache.put("selectize/select.tpl.html","<div class=\"ui-select-container selectize-control single\" ng-class=\"{\'open\': $select.open}\"><div class=\"selectize-input\" ng-class=\"{\'focus\': $select.open, \'disabled\': $select.disabled, \'selectize-focus\' : $select.focus}\" ng-click=\"$select.open && !$select.searchEnabled ? $select.toggle($event) : $select.activate()\"><div class=\"ui-select-match\"></div><input type=\"search\" autocomplete=\"off\" tabindex=\"-1\" class=\"ui-select-search ui-select-toggle\" ng-class=\"{\'ui-select-search-hidden\':!$select.searchEnabled}\" ng-click=\"$select.toggle($event)\" placeholder=\"{{$select.placeholder}}\" ng-model=\"$select.search\" ng-hide=\"!$select.isEmpty() && !$select.open\" ng-disabled=\"$select.disabled\" aria-label=\"{{ $select.baseTitle }}\"></div><div class=\"ui-select-choices\"></div><div class=\"ui-select-no-choice\"></div></div>");}]);
-},{}],114:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 require('./dist/select.js');
 module.exports = 'ui.select';
 
-},{"./dist/select.js":113}]},{},[10])
+},{"./dist/select.js":115}]},{},[10])
 
 
 //# sourceMappingURL=rtdashboard.js.map

@@ -5,5 +5,9 @@
     </h4>
 </div>
 <div class="modal-body ticket-details-by-BHUID">
-<table rt-grid  data="ctrlWar.bhuWarrantyModalData" columns="ctrlWar.modalColumns" grid-options="ctrlWar.gridOptions" item-renderers="ctrlWar.itemRenderers" class="table--compact table-striped table--fixed" data-nodata="No data"></table>
+    <button type="button" class="btn btn-link export-btn" ng-click="ctrlWar.exportWarrantyToExcel(ctrlWar.selBhu)" ng-disabled="!ctrlWar.bhuWarrantyModalData && ctrlWar.bhuWarrantyModalData.length==0">
+        <span class="glyphicon glyphicon-export"></span>&nbsp;
+        Export Warranty Issues to excel
+    </button>
+    <table rt-grid  data="ctrlWar.bhuWarrantyModalData" columns="ctrlWar.modalColumns" grid-options="ctrlWar.gridOptions" item-renderers="ctrlWar.itemRenderers" class="table--compact table-striped table--fixed" data-nodata="No data"></table>
 </div>

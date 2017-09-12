@@ -1,13 +1,15 @@
-SharedService.$inject = ['$http', '$q', 'spinnerService'];
+SharedService.$inject = ['$http', '$q', '$rootScope', 'spinnerService'];
 
-function SharedService($http, $q, spinnerService) {
+function SharedService($http, $q, $rootScope, spinnerService) {
     var sharedService = {
         getYears: getYears,
         getQuarter: getQuarter,
+        getPhase: getPhase,
         getSearchTestScripts: getSearchTestScripts,
         getUser: getUser,
         getSpocDetails: getSpocDetails,
-        getSearchTestScriptsByBhuid: getSearchTestScriptsByBhuid
+        getSearchTestScriptsByBhuid: getSearchTestScriptsByBhuid,
+        getQuarterMonths: getQuarterMonths
     };
     return sharedService;
 
@@ -28,6 +30,36 @@ function SharedService($http, $q, spinnerService) {
         return quar;
     }
 
+    function getPhase() {
+        // var phase = [{ "value":"kick", "text":"Kick off (Source from BHU Req in ALM)"}, { "value":"design", "text":"Design / Dev"},{ "value":"it", "text":"IT"},
+        // { "value":"uat", "text":"UAT"},{ "value":"rt", "text":"RT"},{ "value":"warranty", "text":"Warranty Phase"},{ "value":"p2s", "text":"P2S Handover"}];
+        var phase = ["Kick off (Source from BHU Req in ALM)", "Design / Dev","IT","UAT","RT","Warranty Phase","P2S Handover"];
+        return phase;
+    }
+
+    function getQuarterMonths(quarter)
+    {
+        switch(quarter)
+        {
+            case "Q1": {
+                return ["OCT","NOV","DEC"];
+                break;
+            }
+            case "Q2": {
+                return ["JAN","FEB","MAR"];
+                break;
+            }
+            case "Q3": {
+                return ["APR","MAY","JUN"];
+                break;
+            }
+            case "Q4": {
+                return ["JUL","AUG","SEP"];
+                break;
+            }
+        }
+    }
+
     function getSearchTestScripts(keyword){
         var def = $q.defer();
         spinnerService.show();
@@ -46,6 +78,7 @@ function SharedService($http, $q, spinnerService) {
         $http.get("https://rtdashboardp.rno.apple.com:9012/homepage/userProfile?callback=angular.callbacks._0").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
+            $rootScope.userRoles = ["admin"];// data.roles;
         }).error(function() {
             def.reject("Failed to get data");
         });

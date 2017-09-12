@@ -57,7 +57,9 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             });
               bhureport.bhuReportError = true;  
            }else{
-              bhureport.populateBhuReportDetailsData(bhuReportData.bhurptDetails, bhuReportData.totalCount);
+               if(bhuReportData.bhurptDetails){
+                    bhureport.populateBhuReportDetailsData(bhuReportData.bhurptDetails, bhuReportData.totalCount);
+               }
            }
         });
 
@@ -166,11 +168,11 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             'currentStatus': 'current-status-link-renderer',
             'warrantyissue': 'warranty-issue-link-renderer',
             'efortsutilized': 'efforts-utilized-link-renderer'
-            //other formatted columns
         };
-        bhureport.data = bhuReportList;
+        bhureport.data = bhuReportList ? bhuReportList : [];
         bhureport.dataCopy = angular.copy(bhureport.data);
-        bhureport.bhuReportCount = bhuReportList.length;
+        debugger;
+        bhureport.bhuReportCount = bhuReportList ? bhuReportList.length : 0;
 
         if(bhureport.selectedYear && bhureport.selectedQuarter && bhureport.selectedMonth){
             bhureport.gridOptions.dataOptions.nodata = $sce.trustAsHtml('No data found for the selected year - &quot;<b>'+bhureport.selectedYear+ '</b>&quot; and Quarter - &quot;<b>'+bhureport.selectedQuarter
@@ -243,35 +245,54 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
     }
 
     function populateBhuReportFilterData(filter, startIndex){
-        bhureport.selectedQuarter = filter.bhurptQuarter;
-        bhureport.selectedYear = filter.bhurptYear;
-        bhureport.selectedPhase = filter.bhurptPhase;
-        bhureport.selectedMonth = filter.bhurptMonth;
+      var q =  bhureport.selectedQuarter = filter.bhurptQuarter;
+      var y =  bhureport.selectedYear = filter.bhurptYear;
+      var p =  bhureport.selectedPhase = filter.bhurptPhase;
+      var m = bhureport.selectedMonth = filter.bhurptMonth;
+        debugger;
 
-        if(filter.bhurptYear && !filter.bhurptQuarter){
-             reportservice.getBhuReportFilterDetailsByYear(filter.bhurptYear, startIndex).then(function(resp){
-                if(resp && resp.errorCode){
-                $scope.$emit('alert', {
-                    message: resp.message,
-                    success: false
-                    });
-                }
-                else {
-                    bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
-                }
+        if(p || y ){
+            reportservice.getBhuReportFilterDetails(p, y ,q, m, startIndex).then(function(resp){
+               if(resp && resp.errorCode){
+               $scope.$emit('alert', {
+                   message: resp.message,
+                   success: false
+                   });
+               }
+               else {
+                   bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
+               }
+           });
+        } else{
+            $scope.$emit('alert', {
+                message: resp.message,
+                success: false
             });
-         }else if(filter.bhurptYear && filter.bhurptQuarter){
-                reportservice.getBhuReportFilterDetailsByQuarter(filter.bhurptYear, filter.bhurptQuarter, startIndex).then(function(resp){
-                    if(resp && resp.errorCode){
-                        $scope.$emit('alert', {
-                        message: resp.message,
-                        success: false
-                    });
-                    }else{
-                        bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
-                    }
-                });
         }
+        // else if(filter.bhurptYear && !filter.bhurptQuarter){
+        //      reportservice.getBhuReportFilterDetailsByYear(filter.bhurptYear, startIndex).then(function(resp){
+        //         if(resp && resp.errorCode){
+        //         $scope.$emit('alert', {
+        //             message: resp.message,
+        //             success: false
+        //             });
+        //         }
+        //         else {
+        //             bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
+        //         }
+        //     });
+        //  }else if(filter.bhurptYear && filter.bhurptQuarter){
+        //         reportservice.getBhuReportFilterDetailsByQuarter(filter.bhurptYear, filter.bhurptQuarter, startIndex).then(function(resp){
+        //             if(resp && resp.errorCode){
+        //                 $scope.$emit('alert', {
+        //                 message: resp.message,
+        //                 success: false
+        //             });
+        //             }else{
+        //                 bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
+        //             }
+        //         });
+        // }
          bhureport.filterBhuReport.searchKeyword = '';
     }
 
@@ -352,21 +373,20 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         //this is the common url which will work for any filter
         window.location.href = reportservice.exportExcel(p, y, q, m);
 
-        // if(p && !y){
-        //     window.location.href = reportservice.exportToExcelByPhase(p);
-        // }
+        
+        
         // if(p){
-        //     if(p && y && !q){
+        //  if(y && !q){
         //         window.location.href = reportservice.exportToExcelByPhaseAndYear(p, y);
-        //     }else if(p && y && q && !m){
+        //     }else if( q && !m){
         //         window.location.href = reportservice.exportToExcelByQuarter(p, y, q);
-        //     }else if(p && y && q && m){
+        //     }else if(y && q && m){
         //         window.location.href = reportservice.exportExcel(p, y, q, m);
         //     }else{
         //         window.location.href = reportservice.exportToExcelByPhase(p);
         //     }
         // }
-        // else if (!p && y){
+        // else {
         //     if(y && !q){
         //         window.location.href = reportservice.exportToExcelByYear(y);
         //     }else if(y && q && !m){
