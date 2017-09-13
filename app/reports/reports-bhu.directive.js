@@ -1,7 +1,6 @@
 BhuRptModalController.$inject = ['$uibModalInstance', 'modal', 'reportservice'];
 
 function BhuRptModalController($uibModalInstance, modal, reportservice) {
-    debugger;
     var ctrl = this;
     ctrl.modal = modal;
     ctrl.reportBhuModalData = [];
@@ -57,7 +56,6 @@ function BhuReportModalDirective($uibModal, reportservice) {
             element.on('click', function() {
                if(!isNaN(scope.item.bhuId)){
                 reportservice.getReportBhuDetails(scope.item.bhuId,"bDtl").then(function(resp){
-                        debugger;
                         if(resp && resp.errorCode){
                             $scope.$emit('alert', {
                             message: resp.message,

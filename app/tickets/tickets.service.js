@@ -34,7 +34,6 @@ function TicketsService($http, $q,spinnerService) {
 
     function getTicketTypeDetails(tType, startIndex) {
         var def = $q.defer();
-        debugger;
          spinnerService.show();
             $http.get("https://rtdashboardp.rno.apple.com:9012/tickets/details/"+tType+"?start-index="+startIndex+"&callback=angular.callbacks._0")
                 .success(function(data) {

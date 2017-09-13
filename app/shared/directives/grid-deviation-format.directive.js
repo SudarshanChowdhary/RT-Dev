@@ -7,7 +7,6 @@ function highlightCell(){
             ].join(''),
             link: function(scope, element, attr) {
             scope.formatCell = function(deviation) {
-                debugger;
                 if(deviation && deviation < 0){
                     return '<div class="css_class">'+deviation+'</div>';
                 }else{

@@ -1,6 +1,6 @@
-BhuReportsController.$inject = ['$state', '$scope', '$http','$filter','$sce', 'reportservice', 'sharedService'];
+BhuReportsController.$inject = ['$state', '$scope', '$http','$filter','$sce', 'reportservice', 'sharedService','$rootScope'];
 
-function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice, sharedService) {
+function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice, sharedService, $rootScope) {
     var bhureport = this;
     bhureport.filterBhuReport = {};
     bhureport.count = 0;
@@ -33,7 +33,6 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
     function init() {
         bhureport.bhurptFilterYear = sharedService.getYears();
         bhureport.bhuReportPhase = sharedService.getPhase();
-
          bhureport.gridOptions = {
             bindType: 1,
             data: {
@@ -49,7 +48,6 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
 
     function getBhuReportList(){
          reportservice.getBhuReportData().then(function(bhuReportData) {
-             debugger;
             if(bhuReportData && bhuReportData.errorCode){
                 $scope.$emit('alert', {
                 message: 'RT Dashboard currently down for Maintenance. We will be back soon. Thank you for your patience.',
@@ -58,7 +56,9 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
               bhureport.bhuReportError = true;  
            }else{
                if(bhuReportData.bhurptDetails){
+                sharedService.getTeamMembers().then(function(user){
                     bhureport.populateBhuReportDetailsData(bhuReportData.bhurptDetails, bhuReportData.totalCount);
+                  });
                }
            }
         });
@@ -145,23 +145,40 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             thClasses: 'width10',
             tdClasses: 'width10'
         },{
-            headerText: 'NEW SCRIPT RECEIVED',
-            dataField: 'newscriptreceived',
-            thClasses: 'width5',
-            tdClasses: 'width5'
-        },{
             headerText: 'SCRIPTS MODIFIED',
             dataField: 'scriptsmodified',
             thClasses: 'width5',
             tdClasses: 'width5'
-        },{
+        }
+    ];
+
+    if($rootScope.isTeamMember == true){
+        var colm15 = bhureport.columns[14];
+        bhureport.columns[14] = {
+            headerText: 'NEW SCRIPT RECEIVED',
+            dataField: 'newscriptreceived',
+            thClasses: 'width5',
+            tdClasses: 'width5'
+        };
+        bhureport.columns[15] = colm15;
+        bhureport.columns.push({
             headerText: 'EFFORTS UTILIZED',
             dataField: 'efortsutilized',
             thClasses: 'width5',
             tdClasses: 'width5',
             sort: true
-        }
-    ];
+        });
+    }else if($rootScope.isTeamMember==false){
+        var colm15 = bhureport.columns[14];
+        bhureport.columns[14] = {
+            headerText: 'NEW SCRIPT RECEIVED',
+            dataField: 'newscriptreceived',
+            thClasses: 'width10',
+            tdClasses: 'width10'
+        };
+        bhureport.columns[15] = colm15;
+    }
+
         bhureport.itemRenderers = {
             //link going to appear in grid
             'bhuId': 'bhu-id-link-renderer',
@@ -171,7 +188,6 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         };
         bhureport.data = bhuReportList ? bhuReportList : [];
         bhureport.dataCopy = angular.copy(bhureport.data);
-        debugger;
         bhureport.bhuReportCount = bhuReportList ? bhuReportList.length : 0;
 
         if(bhureport.selectedYear && bhureport.selectedQuarter && bhureport.selectedMonth){
@@ -249,7 +265,6 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
       var y =  bhureport.selectedYear = filter.bhurptYear;
       var p =  bhureport.selectedPhase = filter.bhurptPhase;
       var m = bhureport.selectedMonth = filter.bhurptMonth;
-        debugger;
 
         if(p || y ){
             reportservice.getBhuReportFilterDetails(p, y ,q, m, startIndex).then(function(resp){

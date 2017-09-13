@@ -1,33 +1,32 @@
 <div class="modal-header">
    <h2>RT PLC NOTIFICATION</h2>
 </div>
-<form name="form.userForm1" ng-submit="submitForm1()" novalidate>
+<form name="form.notificationForm" novalidate>
     <div class="modal-body">
 
         <div class="form-group row">
         <div class="col-md-2"></div>
-           <div class="col-md-4"  ng-class="{ 'has-error' : userForm1.name.$invalid && !userForm1.name.$pristine}"> 
-           <label for="date">BHU / IHU #* :</label></div>
+           <div class="col-md-4"> <label for="date">BHU / IHU #* :</label></div>
            <div class="col-md-4"> <input type="text" name="date" class="form-control" ng-model="date" required> </div>
            <div class="col-md-2"></div>
         </div>
 
         <div class="form-group row">
         <div class="col-md-2"></div>
-           <div class="col-md-4"  ng-class="{ 'has-error' : userForm1.name.$invalid && !userForm1.name.$pristine}"> <label for="bhu-ihu">RT SPOC* :</label></div>
-           <div class="col-md-4"> <input type="text" name="bhu-ihu" class="form-control" ng-model="bhu-ihu" required> </div>
+           <div class="col-md-4"> <label for="bhu-ihu">RT SPOC* :</label></div>
+           <div class="col-md-4"> <input type="text" name="bhu_ihu" class="form-control" ng-model="bhu_ihu" required> </div>
          <div class="col-md-2"></div>
         </div>
         <div class="form-group row">
         <div class="col-md-2"></div>
-           <div class="col-md-4"  ng-class="{ 'has-error' : userForm1.name.$invalid && !userForm1.name.$pristine}"> <label for="rt-spoc">RECIPIENTS* :</label></div>
-           <div class="col-md-4"> <input type="text" name="rt-spoc" class="form-control" ng-model="rt-spoc" required> </div>
+           <div class="col-md-4"> <label for="rt-spoc">RECIPIENTS* :</label></div>
+           <div class="col-md-4"> <input type="text" name="rt_spoc" class="form-control" ng-model="rt_spoc" required> </div>
           <div class="col-md-2"></div>
         </div>
         <div class="form-group row">
         <div class="col-md-2"></div>
-           <div class="col-md-4"  ng-class="{ 'has-error' : userForm1.name.$invalid && !userForm1.name.$pristine}"> <label for="plc-milestone">RT PLC Phase* :</label></div>
-           <div class="col-md-4"> <select type="text" name="plc-milestone" class="form-control" ng-model="" required>
+           <div class="col-md-4"> <label for="plc-milestone">RT PLC Phase* :</label></div>
+           <div class="col-md-4"> <select type="text" name="plc_milestone" class="form-control" ng-model="plc_milestone" required>
             <option value="">Kick-Off</option>
             <option value="">Design & Development</option>
             <option value="">IT </option>
@@ -39,29 +38,25 @@
            </div>
         <div class="col-md-2"></div>
         </div>
-
-		<div class="form-group row">
-        <div class="col-md-6"></div>
-           <div class="col-md-4">  
-        	<input type="file" file-model="myFile"/>
-            <button class="btn btn-info btn-sm" ng-click="uploadFile()">Upload file</button> 
-           </div>
-           <div class="col-md-2"></div>
-        </div>
         <div class="form-group row">
         <div class="col-md-2"></div>
-           <div class="col-md-4"  ng-class="{ 'has-error' : userForm1.name.$invalid && !userForm1.name.$pristine}">  <label>CONTENT* :</label></div>
-            <div class="col-md-4"><textarea name="content" class="form-control plc-form-textarea" ng-model="file-model="myFile" required placeholder="Images"></textarea></div>
+           <div class="col-md-4"> <label>Attachment :</label></div>
+           <div class="col-md-4"> <input type="file" name="fileAttachment" multiple  class="form-control " file-model="files"> </div>
+           <div class="col-md-2"></div>
+        </div>
+
+        <div class="form-group row">
+        <div class="col-md-2"></div>
+           <div class="col-md-4">  <label>CONTENT* :</label></div>
+            <div class="col-md-4"><textarea name="content" class="form-control plc-form-textarea" ng-model="content" required placeholder="Images"></textarea></div>
             <div class="col-md-2"></div>
             </div>
         </div>
-
-
-
-    </div>
+        
     <div class="modal-footer row">
-        <div class="col-md-4 text-center"><button type="submit" class="btn btn-primary" ng-disabled="form.userForm1.$invalid">SEND EMAIL</button></div>
-        <div class="col-md-4 text-center"><button type="RESET" class="btn btn-primary" ng-disabled="form.userForm1.$invalid">RESET</button></div>
+        <div class="col-md-4 text-center"><button ng-click="submitFormNotfication()" class="btn btn-primary" ng-disabled="form.userForm.$invalid">SEND EMAIL</button></div>
+
+        <div class="col-md-4 text-center"><button type="RESET" class="btn btn-primary" ng-disabled="form.userForm.$invalid">RESET</button></div>
         <div class="col-md-4 text-center"><button class="btn btn-warning" ng-click="cancel()">Cancel</button></div>
     </div>
 </form>

@@ -5,3 +5,4 @@ module.exports = angular
     .config(require('./projectlifecycle.route'))
     .controller('ProjectLifeCycleController', require('./projectlifecycle.controller'))
     .service("rtplcmilestoneservice", require("./plclifecycle.service"))
+    .directive("fileModel","./rtplcNotification.directive");

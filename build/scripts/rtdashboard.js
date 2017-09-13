@@ -1866,6 +1866,9 @@ function HeaderController($state, sharedService, $scope, $rootScope) {
                  avatar += nameStr[i].substring(0,1).toUpperCase();
             }
             ctrl.userAvatar = avatar;
+
+            //remove below line of code before deployment
+            ctrl.isAdminUser = true;
          }
          if(user.roles && user.roles.length && user.roles.indexOf('admin') > -1){
           ctrl.isAdminUser = true;
@@ -2017,24 +2020,24 @@ function ProjectLifeCycleController($state, $scope, $uibModal, $log) {
             });
         };
 
-				$scope.showNotificationForm = function () {
-	             var modalInstance = $uibModal.open({
-	                 templateUrl: 'app/projectlifecycle/templates/rtplcnotification.html',
-	                 controller: ModalNotificationController,
-	                 scope: $scope,
-	                 resolve: {
-	                     userForm: function () {
-	                         return $scope.userForm;
-	                     }
-	                 }
-	             });
+		$scope.showNotificationForm = function () {
+	        var modalInstance = $uibModal.open({
+	        templateUrl: 'app/projectlifecycle/templates/rtplcnotification.html',
+	        controller: ModalNotificationController,
+	        scope: $scope,
+	        resolve: {
+	            userForm: function () {
+	                return $scope.userForm;
+	              }
+	            }
+	        });
 
-	             modalInstance.result.then(function (selectedItem) {
-	                 $scope.selected = selectedItem;
-	             }, function () {
-	                 $log.info('Modal dismissed at: ' + new Date());
-	             });
-	         };
+	        modalInstance.result.then(function (selectedItem) {
+	            $scope.selected = selectedItem;
+	        }, function () {
+	            $log.info('Modal dismissed at: ' + new Date());
+	        });
+	    };
 }
 
 ModalMileStoneController.$inject = ['$scope', '$uibModalInstance', 'userForm'];
@@ -2055,12 +2058,46 @@ function ModalMileStoneController ($scope, $uibModalInstance, userForm) {
     };
 };
 
-ModalNotificationController.$inject = ['$scope', '$uibModalInstance', 'userForm'];
+ModalNotificationController.$inject = ['$scope', '$uibModalInstance'];
 
-function ModalNotificationController ($scope, $uibModalInstance, userForm) {
+function ModalNotificationController ($scope, $uibModalInstance) {
     $scope.form = {}
-    $scope.submitForm = function () {
-        if ($scope.form.userForm.$valid) {
+    $scope.fileAttachment = [];
+    $scope.files = [];  
+    $scope.$on("seletedFile", function (event, args) {  
+        $scope.$apply(function () {  
+            //add the file object to the scope's files collection  
+            $scope.files.push(args.file);  
+        });  
+    });  
+    $scope.submitFormNotfication = function () {
+        debugger;
+        if ($scope.form.notificationForm.$valid) {
+
+            $http({  
+                method: 'POST',  
+                url: "http://localhost:51739/PostFileWithData",  
+                headers: { 'Content-Type': undefined },  
+                 
+                transformRequest: function (data) {  
+                    var formData = new FormData();  
+                    formData.append("model", angular.toJson(data.model));  
+                    for (var i = 0; i < data.files.length; i++) {  
+                        formData.append("file" + i, data.files[i]);  
+                    }
+                    return formData;  
+                },  
+                data: { model: $scope.jsonData, files: $scope.files }  
+            }).  
+            success(function (data, status, headers, config) {  
+                alert("success!");  
+            }).  
+            error(function (data, status, headers, config) {  
+                alert("failed!");  
+            });  
+
+
+           var fl =  $scope.files.length;
             console.log('user form is in scope');
             $uibModalInstance.close('closed');
         } else {
@@ -2083,6 +2120,7 @@ module.exports = angular
     .config(require('./projectlifecycle.route'))
     .controller('ProjectLifeCycleController', require('./projectlifecycle.controller'))
     .service("rtplcmilestoneservice", require("./plclifecycle.service"))
+    .directive("fileModel","./rtplcNotification.directive");
 
 },{"./plclifecycle.service":28,"./projectlifecycle.controller":29,"./projectlifecycle.route":31,"angular":111}],31:[function(require,module,exports){
 ProjectLifeCycleRoute.$inject = ['$stateProvider'];
@@ -2126,9 +2164,9 @@ function estimatedeffortsEdit($sce){
 
 module.exports = estimatedeffortsEdit;
 },{}],33:[function(require,module,exports){
-BhuReportsController.$inject = ['$state', '$scope', '$http','$filter','$sce', 'reportservice', 'sharedService'];
+BhuReportsController.$inject = ['$state', '$scope', '$http','$filter','$sce', 'reportservice', 'sharedService','$rootScope'];
 
-function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice, sharedService) {
+function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice, sharedService, $rootScope) {
     var bhureport = this;
     bhureport.filterBhuReport = {};
     bhureport.count = 0;
@@ -2161,7 +2199,6 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
     function init() {
         bhureport.bhurptFilterYear = sharedService.getYears();
         bhureport.bhuReportPhase = sharedService.getPhase();
-
          bhureport.gridOptions = {
             bindType: 1,
             data: {
@@ -2177,7 +2214,6 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
 
     function getBhuReportList(){
          reportservice.getBhuReportData().then(function(bhuReportData) {
-             debugger;
             if(bhuReportData && bhuReportData.errorCode){
                 $scope.$emit('alert', {
                 message: 'RT Dashboard currently down for Maintenance. We will be back soon. Thank you for your patience.',
@@ -2186,7 +2222,9 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
               bhureport.bhuReportError = true;  
            }else{
                if(bhuReportData.bhurptDetails){
+                sharedService.getTeamMembers().then(function(user){
                     bhureport.populateBhuReportDetailsData(bhuReportData.bhurptDetails, bhuReportData.totalCount);
+                  });
                }
            }
         });
@@ -2273,23 +2311,40 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             thClasses: 'width10',
             tdClasses: 'width10'
         },{
-            headerText: 'NEW SCRIPT RECEIVED',
-            dataField: 'newscriptreceived',
-            thClasses: 'width5',
-            tdClasses: 'width5'
-        },{
             headerText: 'SCRIPTS MODIFIED',
             dataField: 'scriptsmodified',
             thClasses: 'width5',
             tdClasses: 'width5'
-        },{
+        }
+    ];
+
+    if($rootScope.isTeamMember == true){
+        var colm15 = bhureport.columns[14];
+        bhureport.columns[14] = {
+            headerText: 'NEW SCRIPT RECEIVED',
+            dataField: 'newscriptreceived',
+            thClasses: 'width5',
+            tdClasses: 'width5'
+        };
+        bhureport.columns[15] = colm15;
+        bhureport.columns.push({
             headerText: 'EFFORTS UTILIZED',
             dataField: 'efortsutilized',
             thClasses: 'width5',
             tdClasses: 'width5',
             sort: true
-        }
-    ];
+        });
+    }else if($rootScope.isTeamMember==false){
+        var colm15 = bhureport.columns[14];
+        bhureport.columns[14] = {
+            headerText: 'NEW SCRIPT RECEIVED',
+            dataField: 'newscriptreceived',
+            thClasses: 'width10',
+            tdClasses: 'width10'
+        };
+        bhureport.columns[15] = colm15;
+    }
+
         bhureport.itemRenderers = {
             //link going to appear in grid
             'bhuId': 'bhu-id-link-renderer',
@@ -2299,7 +2354,6 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         };
         bhureport.data = bhuReportList ? bhuReportList : [];
         bhureport.dataCopy = angular.copy(bhureport.data);
-        debugger;
         bhureport.bhuReportCount = bhuReportList ? bhuReportList.length : 0;
 
         if(bhureport.selectedYear && bhureport.selectedQuarter && bhureport.selectedMonth){
@@ -2377,7 +2431,6 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
       var y =  bhureport.selectedYear = filter.bhurptYear;
       var p =  bhureport.selectedPhase = filter.bhurptPhase;
       var m = bhureport.selectedMonth = filter.bhurptMonth;
-        debugger;
 
         if(p || y ){
             reportservice.getBhuReportFilterDetails(p, y ,q, m, startIndex).then(function(resp){
@@ -2535,7 +2588,6 @@ module.exports = BhuReportsController;
 BhuRptModalController.$inject = ['$uibModalInstance', 'modal', 'reportservice'];
 
 function BhuRptModalController($uibModalInstance, modal, reportservice) {
-    debugger;
     var ctrl = this;
     ctrl.modal = modal;
     ctrl.reportBhuModalData = [];
@@ -2591,7 +2643,6 @@ function BhuReportModalDirective($uibModal, reportservice) {
             element.on('click', function() {
                if(!isNaN(scope.item.bhuId)){
                 reportservice.getReportBhuDetails(scope.item.bhuId,"bDtl").then(function(resp){
-                        debugger;
                         if(resp && resp.errorCode){
                             $scope.$emit('alert', {
                             message: resp.message,
@@ -2833,7 +2884,6 @@ module.exports = BhuCurrentStatusModalDirective;
 WarrantyModalController.$inject = ['$uibModalInstance', 'modal', 'reportservice'];
 
 function WarrantyModalController($uibModalInstance, modal, reportservice) {
-    debugger;
     var ctrlWar = this;
     ctrlWar.modal = modal;
     ctrlWar.bhuWarrantyModalData = [];
@@ -2884,7 +2934,6 @@ function WarrantyModalDirective($uibModal, reportservice) {
             element.on('click', function() {
                if(!isNaN(scope.item.bhuId)){
                 reportservice.getReportWarrantyDetails(scope.item.bhuId).then(function(resp){
-                        debugger;
                         if(resp && resp.errorCode){
                             $scope.$emit('alert', {
                             message: resp.message,
@@ -3078,7 +3127,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService){
         //     def.reject("Failed to get data");
         // });
         // return def.promise;
-
+        
         //please remove this mock data before deployment
         //please remove the below code and uncomment above code
         var _responseData = {"totalCount":"3","bhurptDetails":[{
@@ -3152,16 +3201,15 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService){
         var def = $q.defer();
         spinnerService.show();
         var getUrl = "";
-        debugger;
         if(m){
             m = getMonthFromString(m);
         }
         if(p){
-             url = "reports/BHUReport/phase/"+ p;
+            getUrl = "reports/BHUReport/phase/"+ p;
         }else if(!p && y){
-            url = "reports/BHUReport/"+ y;
+            getUrl = "reports/BHUReport/"+ y;
         }else if(!p && y && (q || m)){
-            url = "reports/BHUReport/"+ y +"/"+ q;
+            getUrl = "reports/BHUReport/"+ y +"/"+ q;
         }
         $http.get(getUrl, {
             params: {
@@ -5296,7 +5344,6 @@ function highlightCell(){
             ].join(''),
             link: function(scope, element, attr) {
             scope.formatCell = function(deviation) {
-                debugger;
                 if(deviation && deviation < 0){
                     return '<div class="css_class">'+deviation+'</div>';
                 }else{
@@ -6341,7 +6388,8 @@ function SharedService($http, $q, $rootScope, spinnerService) {
         getUser: getUser,
         getSpocDetails: getSpocDetails,
         getSearchTestScriptsByBhuid: getSearchTestScriptsByBhuid,
-        getQuarterMonths: getQuarterMonths
+        getQuarterMonths: getQuarterMonths,
+        getTeamMembers : getTeamMembers
     };
     return sharedService;
 
@@ -6410,7 +6458,28 @@ function SharedService($http, $q, $rootScope, spinnerService) {
         $http.get("https://rtdashboardp.rno.apple.com:9012/homepage/userProfile?callback=angular.callbacks._0").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
+            $rootScope.user = data.emailAddr;
             $rootScope.userRoles = ["admin"];// data.roles;
+        }).error(function() {
+            def.reject("Failed to get data");
+        });
+        return def.promise;   
+    }
+
+    function getTeamMembers(){
+        //https://rtdashboardp.rno.apple.com:9012/admin/teamdetails
+        var def = $q.defer();
+        spinnerService.show();
+        $http.get("https://rtdashboardp.rno.apple.com:9012/admin/teamdetails?callback=angular.callbacks._0").success(function(data) {
+            def.resolve(data);
+            var user = $rootScope.user;
+            $rootScope.isTeamMember = false;
+            for(var itm =0; itm<data.length;itm++){
+                 if(user && data[itm].memberEmailId == user){
+                    $rootScope.isTeamMember = true;
+                 }
+            }
+            spinnerService.hide();
         }).error(function() {
             def.reject("Failed to get data");
         });
@@ -6419,7 +6488,6 @@ function SharedService($http, $q, $rootScope, spinnerService) {
 
     function getSpocDetails(spoc){
           var def = $q.defer();
-                
                 $http.get("utils/users/"+ spoc).success(function(data) {
                     def.resolve(data);
                     spinnerService.hide();
@@ -7238,7 +7306,6 @@ function TicketsService($http, $q,spinnerService) {
 
     function getTicketTypeDetails(tType, startIndex) {
         var def = $q.defer();
-        debugger;
          spinnerService.show();
             $http.get("https://rtdashboardp.rno.apple.com:9012/tickets/details/"+tType+"?start-index="+startIndex+"&callback=angular.callbacks._0")
                 .success(function(data) {

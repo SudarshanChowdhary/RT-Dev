@@ -47,7 +47,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService){
         //     def.reject("Failed to get data");
         // });
         // return def.promise;
-
+        
         //please remove this mock data before deployment
         //please remove the below code and uncomment above code
         var _responseData = {"totalCount":"3","bhurptDetails":[{
@@ -121,16 +121,15 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService){
         var def = $q.defer();
         spinnerService.show();
         var getUrl = "";
-        debugger;
         if(m){
             m = getMonthFromString(m);
         }
         if(p){
-             url = "reports/BHUReport/phase/"+ p;
+            getUrl = "reports/BHUReport/phase/"+ p;
         }else if(!p && y){
-            url = "reports/BHUReport/"+ y;
+            getUrl = "reports/BHUReport/"+ y;
         }else if(!p && y && (q || m)){
-            url = "reports/BHUReport/"+ y +"/"+ q;
+            getUrl = "reports/BHUReport/"+ y +"/"+ q;
         }
         $http.get(getUrl, {
             params: {

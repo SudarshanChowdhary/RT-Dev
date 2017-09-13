@@ -1,7 +1,6 @@
 WarrantyModalController.$inject = ['$uibModalInstance', 'modal', 'reportservice'];
 
 function WarrantyModalController($uibModalInstance, modal, reportservice) {
-    debugger;
     var ctrlWar = this;
     ctrlWar.modal = modal;
     ctrlWar.bhuWarrantyModalData = [];
@@ -52,7 +51,6 @@ function WarrantyModalDirective($uibModal, reportservice) {
             element.on('click', function() {
                if(!isNaN(scope.item.bhuId)){
                 reportservice.getReportWarrantyDetails(scope.item.bhuId).then(function(resp){
-                        debugger;
                         if(resp && resp.errorCode){
                             $scope.$emit('alert', {
                             message: resp.message,

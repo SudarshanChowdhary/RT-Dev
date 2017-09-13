@@ -13,7 +13,9 @@ function ModalInstanceController ($scope, $modalInstance, userForm, rtplcmilesto
                 "rtSpoc": frm.rt_Spoc,
                 "rtPlcMilestone": frm.plc_milestone,
                 "minutesOfMeeting": frm.elucidation_mom,
-                "efforts": frm.mlEfforts
+                "":"",
+                "":"",
+                "efforts": frm.mlEfforts.replace(".", ":")
             };
             var resp = rtplcmilestoneservice.rtPlcMilestoneAdd(data);
 
