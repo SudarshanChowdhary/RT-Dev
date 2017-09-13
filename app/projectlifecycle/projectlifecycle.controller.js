@@ -43,7 +43,26 @@ function ProjectLifeCycleController($state, $scope, $uibModal, $log) {
 ModalMileStoneController.$inject = ['$scope', '$uibModalInstance', 'milestoneData', 'ProjectLifeCycleService', 'spinnerService'];
 
 function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, ProjectLifeCycleService, spinnerService) {
-    $scope.milestoneRequiredData = {}
+    $scope.milestoneRequiredData = {};
+    $scope.date = new Date();
+
+    $scope.dateOptions = {
+        dateDisabled: false,
+        formatYear: 'yy',
+        minDate: new Date(),
+        startingDay: 1
+      };
+
+      $scope.open1 = function() {
+        $scope.popup1.opened = true;
+      };
+
+      $scope.format = "dd/MM/yyyy";
+      $scope.popup1 = {
+        opened: false
+      };
+
+
     $scope.submitMilestone = function () {
         spinnerService.show();
         if ($scope.form.milestone.$valid) {
@@ -53,7 +72,7 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, Pro
             "rtSpoc": $scope.rtspoc,
             "rtPlcMilestone": $scope.plcmilestone,
             "minutesOfMeeting": $scope.elucidationmom,
-            "efforts": $scope.efforts
+            "efforts": $scope.hours +"." +$scope.minutes
           };
           console.log("milestone", $scope.milestoneRequiredData);
             ProjectLifeCycleService.rtPlcMilestoneAdd($scope.milestoneRequiredData).then(function(){
