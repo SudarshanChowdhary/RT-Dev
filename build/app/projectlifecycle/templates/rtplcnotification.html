@@ -27,13 +27,13 @@
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="plc-milestone">RT PLC Phase* :</label></div>
            <div class="col-md-4"> <select type="text" name="plc_milestone" class="form-control" ng-model="plc_milestone" required>
-            <option value="">Kick-Off</option>
-            <option value="">Design & Development</option>
-            <option value="">IT </option>
-            <option value="">UAT</option>
-            <option value="">RT</option>
-            <option value="">Warranty Phase</option>
-            <option value="">P2S Handover</option>
+            <option value="Kick-Off" selected>Kick-Off</option>
+            <option value="Design & Development">Design & Development</option>
+            <option value="IT">IT</option>
+            <option value="UAT">UAT</option>
+            <option value="RT">RT</option>
+            <option value="Warranty Phase">Warranty Phase</option>
+            <option value="P2S Handover">P2S Handover</option>
            </select>
            </div>
         <div class="col-md-2"></div>
@@ -52,9 +52,9 @@
             <div class="col-md-2"></div>
             </div>
         </div>
-        
+
     <div class="modal-footer row">
-        <div class="col-md-4 text-center"><button ng-click="submitFormNotfication()" class="btn btn-primary" ng-disabled="form.userForm.$invalid">SEND EMAIL</button></div>
+        <div class="col-md-4 text-center"><button ng-click="submitFormNotfication()" class="btn btn-primary" ng-disabled="form.notificationForm.$invalid">SEND EMAIL</button></div>
 
         <div class="col-md-4 text-center"><button type="RESET" class="btn btn-primary" ng-disabled="form.userForm.$invalid">RESET</button></div>
         <div class="col-md-4 text-center"><button class="btn btn-warning" ng-click="cancel()">Cancel</button></div>

@@ -1,22 +1,21 @@
 ProjectLifeCycleController.$inject = ['$state', '$scope', '$uibModal', '$log'];
 
 function ProjectLifeCycleController($state, $scope, $uibModal, $log) {
-   // var vmplc = this;
-   // vmplc.projectlifecycleBtns = [{"Name":"RT PLC MILESTONE","link":"root.projectlifecycle"},{"Name":"RT PLC NOTIFICATION","link":"root.projectlifecycle"}];
      $scope.showMileStoneForm = function () {
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/projectlifecycle/templates/rtplcmilestone.html',
                 controller: ModalMileStoneController,
                 scope: $scope,
                 resolve: {
-                    userForm: function () {
-                        return $scope.userForm;
+                    milestoneData: function () {
+                        return $scope.milestoneData;
                     }
                 }
             });
 
             modalInstance.result.then(function (selectedItem) {
                 $scope.selected = selectedItem;
+                console.log($scope.selected);
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
             });
@@ -28,12 +27,11 @@ function ProjectLifeCycleController($state, $scope, $uibModal, $log) {
 	        controller: ModalNotificationController,
 	        scope: $scope,
 	        resolve: {
-	            userForm: function () {
-	                return $scope.userForm;
+	            notificationData: function () {
+	                return $scope.notificationData;
 	              }
 	            }
 	        });
-
 	        modalInstance.result.then(function (selectedItem) {
 	            $scope.selected = selectedItem;
 	        }, function () {
@@ -42,16 +40,26 @@ function ProjectLifeCycleController($state, $scope, $uibModal, $log) {
 	    };
 }
 
-ModalMileStoneController.$inject = ['$scope', '$uibModalInstance', 'userForm'];
+ModalMileStoneController.$inject = ['$scope', '$uibModalInstance', 'milestoneData', 'ProjectLifeCycleService', 'spinnerService'];
 
-function ModalMileStoneController ($scope, $uibModalInstance, userForm) {
-    $scope.form = {}
-    $scope.submitForm = function () {
-        if ($scope.form.userForm.$valid) {
-            console.log('user form is in scope');
-            $uibModalInstance.close('closed');
-        } else {
-            console.log('userform is not in scope');
+function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, ProjectLifeCycleService, spinnerService) {
+    $scope.milestoneRequiredData = {}
+    $scope.submitMilestone = function () {
+        spinnerService.show();
+        if ($scope.form.milestone.$valid) {
+          $scope.milestoneRequiredData = {
+            "meetingDate": $scope.date,
+            "bhuId": $scope.bhuihu,
+            "rtSpoc": $scope.rtspoc,
+            "rtPlcMilestone": $scope.plcmilestone,
+            "minutesOfMeeting": $scope.elucidationmom,
+            "efforts": $scope.efforts
+          };
+          console.log("milestone", $scope.milestoneRequiredData);
+            ProjectLifeCycleService.rtPlcMilestoneAdd($scope.milestoneRequiredData).then(function(){
+              spinnerService.hide();
+              $uibModalInstance.close(milestoneRequiredData);
+          })
         }
     };
 
@@ -60,50 +68,45 @@ function ModalMileStoneController ($scope, $uibModalInstance, userForm) {
     };
 };
 
-ModalNotificationController.$inject = ['$scope', '$uibModalInstance'];
+ModalNotificationController.$inject = ['$scope', '$uibModalInstance', '$http', 'notificationData', 'ProjectLifeCycleService', 'spinnerService'];
 
-function ModalNotificationController ($scope, $uibModalInstance) {
+function ModalNotificationController ($scope, $uibModalInstance, $http, notificationData, ProjectLifeCycleService, spinnerService) {
     $scope.form = {}
     $scope.fileAttachment = [];
-    $scope.files = [];  
-    $scope.$on("seletedFile", function (event, args) {  
-        $scope.$apply(function () {  
-            //add the file object to the scope's files collection  
-            $scope.files.push(args.file);  
-        });  
-    });  
+    $scope.files = [];
+    $scope.$on("seletedFile", function (event, args) {
+        $scope.$apply(function () {
+            //add the file object to the scope's files collection
+            $scope.files.push(args.file);
+        });
+    });
     $scope.submitFormNotfication = function () {
-        debugger;
         if ($scope.form.notificationForm.$valid) {
-
-            $http({  
-                method: 'POST',  
-                url: "http://localhost:51739/PostFileWithData",  
-                headers: { 'Content-Type': undefined },  
-                 
-                transformRequest: function (data) {  
-                    var formData = new FormData();  
-                    formData.append("model", angular.toJson(data.model));  
-                    for (var i = 0; i < data.files.length; i++) {  
-                        formData.append("file" + i, data.files[i]);  
+            $http({
+                method: 'POST',
+                url: "http://localhost:51739/PostFileWithData",
+                headers: { 'Content-Type': undefined },
+                  transformRequest: function (data) {
+                    var formData = new FormData();
+                    formData.append("model", angular.toJson(data.model));
+                    for (var i = 0; i < data.files.length; i++) {
+                        formData.append("file" + i, data.files[i]);
                     }
-                    return formData;  
-                },  
-                data: { model: $scope.jsonData, files: $scope.files }  
-            }).  
-            success(function (data, status, headers, config) {  
-                alert("success!");  
-            }).  
-            error(function (data, status, headers, config) {  
-                alert("failed!");  
-            });  
+                    return formData;
+                },
+                data: { model: $scope.jsonData, files: $scope.files }
+            }).
+            success(function (data, status, headers, config) {
+                alert("success!");
+                $uibModalInstance.close('closed');
 
-
-           var fl =  $scope.files.length;
+            }).
+            error(function (data, status, headers, config) {
+                alert("failed!");
+            });
+            var fl =  $scope.files.length;
             console.log('user form is in scope');
             $uibModalInstance.close('closed');
-        } else {
-            console.log('userform is not in scope');
         }
     };
 
@@ -111,5 +114,4 @@ function ModalNotificationController ($scope, $uibModalInstance) {
         $uibModalInstance.dismiss('cancel');
     };
 };
-
 module.exports = ProjectLifeCycleController;
