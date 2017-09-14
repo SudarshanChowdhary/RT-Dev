@@ -216,6 +216,7 @@ $table--fixed-body-height: 500px;
     }
     th.width5 {
       width: 5%;
+      white-space: normal;
     }
     th.width20 {
       width: 20%;
@@ -371,8 +372,19 @@ $table--fixed-body-height: 500px;
     border-bottom: none;
   }
 }
+
+/* ================================================================
+   Project life cycle tab css
+================================================================== */
+
 .plc-form-textarea{
 min-height: 100px !important;
 min-width: 250px !important;
 }
+.colon{
+  padding: 8px 5px !important;
+}
 
+.plc-milestone-mins, .plc-milestone-hours{
+padding:5px;
+}

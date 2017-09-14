@@ -1,13 +1,3 @@
-<style>
-
-.colon{
-  padding: 8px 0 !important;
-}
-.widthfix{
-  width: 115px !important;
-}
-</style>
-
 <div class="modal-header">
    <h2>RT PLC MILESTONE</h2>
 </div>
@@ -19,7 +9,7 @@
            <div class="col-md-4"> <label for="date">DATE* :</label></div>
            <div class="col-md-4">
              <div class="input-group">
-                      <input type="text" class="form-control widthfix" onkeydown="return false" uib-datepicker-popup="{{format}}" ng-model="date" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                      <input type="text" class="form-control" onkeydown="return false" uib-datepicker-popup="{{format | date: dd/mm/yyyy}}" ng-model="date" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                       </span>
@@ -37,20 +27,25 @@
         <div class="form-group row">
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="rt-spoc">RT SPOC* :</label></div>
-           <div class="col-md-4"> <input type="text" name="rt_spoc" class="form-control" ng-model="rtspoc" required> </div>
+           <div class="col-md-4"> <input type="text" name="rt_spoc" class="form-control" uib-typeahead="rt_spoc for rt_spoc in rt_spocs | filter:$viewValue | limitTo:8" ng-model="selected" required> </div>
           <div class="col-md-2"></div>
         </div>
         <div class="form-group row">
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="plc-milestone">RT PLC MILESTONE* :</label></div>
            <div class="col-md-4"> <select type="text" name="plc_milestone" class="form-control" ng-model="plcmilestone" required>
-            <option value="Kick-Off" selected>Kick-Off</option>
-            <option value="Design & Development">Design & Development</option>
-            <option value="IT">IT </option>
-            <option value="UAT">UAT</option>
-            <option value="RT">RT</option>
-            <option value="Warranty Phase">Warranty Phase</option>
-            <option value="P2S Handover">P2S Handover</option>
+            <option value="kick" selected>Kick-Off</option>
+            <option value="Design_review">Design Review</option>
+            <option value="rt_scripts_sharing">RT Scripts Sharing </option>
+            <option value="rt_scripts_walkthrough">RT Scripts walkthrough</option>
+            <option value="it_system_demo">IT System Demo / Scripts walkthrough</option>
+            <option value="it_review">IT Review</option>
+            <option value="uat_review">UAT Review</option>
+            <option value="rt_scoping">RT Scoping</option>
+            <option value="rt_execution / Defects">RT Execution / Defects</option>
+            <option value="warranty_support">Warranty Support</option>
+            <option value="p2s">P2S</option>
+            <option value="plc_followups">PLC Followups</option>
            </select>
            </div>
         <div class="col-md-2"></div>
@@ -68,12 +63,13 @@
             <div class="col-md-4">
               <div class="row">
                 <div class="col-md-5">
-              <input type="number" style="width:65px;" ng-model="hours" class="form-control" min="0" max="24" placeholder="HH" required />
+              <input type="number" ng-model="hours" class="form-control plc-milestone-hours" pattern="[0-24]" min="0" max="24" placeholder="HH" required />
             </div>
             <div class="col-md-1 colon">: </div>
             <div class="col-md-5">
-              <input type="number" style="width:65px; margin-left: -20px;" ng-model="minutes" class="form-control" min="0" max="59" placeholder="MM" required />
+              <input type="number" ng-model="minutes" class="form-control plc-milestone-mins" pattern="[0-59]" min="0" max="59" placeholder="MM" required />
             </div>
+            <div class="col-md-1"></div>
           </div>
             </div>
             <div class="col-md-2">

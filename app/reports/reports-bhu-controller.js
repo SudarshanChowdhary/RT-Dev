@@ -73,7 +73,7 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             dataField: 'bhuId',
             thClasses: 'width5',
             tdClasses: 'width5',
-            sort: true,
+            sort: true
         }, {
             headerText: 'CURRENT STATUS',
             dataField: 'currentStatus',
@@ -96,7 +96,7 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             dataField: 'projectManager',
             thClasses: 'width10',
             tdClasses: 'width10',
-            sort: true,
+            sort: true
         },{
             headerText: 'RT SPOC',
             dataField: 'rtsSpoc',

@@ -8050,7 +8050,8 @@ textarea {
   .table--fixed .table--generic__row--head th.width25 {
     width: 25%; }
   .table--fixed .table--generic__row--head th.width5 {
-    width: 5%; }
+    width: 5%;
+    white-space: normal; }
   .table--fixed .table--generic__row--head th.width20 {
     width: 20%; }
   .table--fixed .table--generic__row--head th.width38 {
@@ -8175,8 +8176,17 @@ textarea {
 .table--flexbox-fixed .table--generic__row--nodata {
   border-bottom: none; }
 
+/* ================================================================
+   Project life cycle tab css
+================================================================== */
 .plc-form-textarea {
   min-height: 100px !important;
   min-width: 250px !important; }
+
+.colon {
+  padding: 8px 5px !important; }
+
+.plc-milestone-mins, .plc-milestone-hours {
+  padding: 5px; }
 
 /*# sourceMappingURL=rtdashboard.css.map */

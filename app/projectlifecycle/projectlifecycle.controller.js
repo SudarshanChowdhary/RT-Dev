@@ -48,6 +48,7 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, Pro
 
     $scope.dateOptions = {
         dateDisabled: false,
+        showWeeks:false,
         formatYear: 'yy',
         minDate: new Date(),
         startingDay: 1
@@ -61,7 +62,43 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, Pro
       $scope.popup1 = {
         opened: false
       };
+	 
+	 
+	 // this is for auto complete functionality for rt_spocs inpute//
+	   var _selected;
 
+  $scope.selected = undefined;
+  $scope.rt_spocs = ['Manohar', 'Amudha', 'Nithiya', 'Siva', 'Madhavan', 'Ravi', 'Swami', 'Padhmi', 'Kavya', 'Sudarshan'];
+  // Any function returning a promise object can be used to load values asynchronously
+  // $scope.getLocation = function(val) {
+//     return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+//       params: {
+//         address: val,
+//         sensor: false
+//       }
+//     }).then(function(response){
+//       return response.data.results.map(function(item){
+//         return item.formatted_address;
+//       });
+//     });
+//   };
+
+  $scope.ngModelOptionsSelected = function(value) {
+    if (arguments.length) {
+      _selected = value;
+    } else {
+      return _selected;
+    }
+  };
+
+  $scope.modelOptions = {
+    debounce: {
+      default: 500,
+      blur: 250
+    },
+    getterSetter: true
+  };
+	 
 
     $scope.submitMilestone = function () {
         spinnerService.show();
@@ -93,6 +130,9 @@ function ModalNotificationController ($scope, $uibModalInstance, $http, notifica
     $scope.form = {}
     $scope.fileAttachment = [];
     $scope.files = [];
+     $scope.selected = undefined;
+  $scope.rt_spocs = ['Manohar', 'Amudha', 'Nithiya', 'Siva', 'Madhavan', 'Ravi', 'Swami', 'Padhmi', 'Kavya', 'Sudarshan'];
+  // Any function returning a promise object can be used to load values asynchronously
     $scope.$on("seletedFile", function (event, args) {
         $scope.$apply(function () {
             //add the file object to the scope's files collection
