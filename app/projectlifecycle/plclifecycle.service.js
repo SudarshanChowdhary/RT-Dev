@@ -2,7 +2,8 @@ ProjectLifeCycleService.$inject = ['$http'];
 
 function ProjectLifeCycleService($http){
 	var rtplcmilestoneservice = {
-		rtPlcMilestoneAdd : rtPlcMilestoneAdd
+		rtPlcMilestoneAdd : rtPlcMilestoneAdd,
+		getRTSpocs: getRTSpocs
 	};
     return rtplcmilestoneservice;
 
@@ -13,6 +14,12 @@ function ProjectLifeCycleService($http){
             method:"PUT"
         });
     }
+		function getRTSpocs(){
+			return $http({
+            url:"getspocs",
+            method:"GET"
+        });
+		}
 }
 
 module.exports = ProjectLifeCycleService;
