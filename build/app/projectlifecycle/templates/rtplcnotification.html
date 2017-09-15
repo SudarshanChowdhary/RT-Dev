@@ -26,15 +26,18 @@
         <div class="form-group row">
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="plc-milestone">RT PLC Phase* :</label></div>
-           <div class="col-md-4"> <select type="text" name="plc_milestone" class="form-control" ng-model="plc_milestone" required>
-            <option value="kick" selected>Kick-Off</option>
+           <div class="col-md-4"> 
+           <select class="col-md-12" ng-model="selectedItem" ng-options="S.value as S.label for S in selectables" ng-change="fun()">
+    </select>
+           <!-- 
+            <select type="text" name="plc_milestone" class="form-control" ng-model="plc_milestone" required>
             <option value="design_development">Design & Development</option>
             <option value="it">IT</option>
-            <option value="uat">UAT</option>
-            <option value="rt">RT</option>
+            <option value="uat">UAT</option>           
             <option value="warranty_phase">Warranty Phase</option>
             <option value="p2s Handover">P2S Handover</option>
            </select>
+ -->
            </div>
         <div class="col-md-2"></div>
         </div>
@@ -52,7 +55,13 @@
             <div class="col-md-2"></div>
             </div>
         </div>
-
+         <div class="form-group row">
+         <div class="col-md-1"></div>
+          <div class="col-md-10">
+          <img ng-src='{{selectedItem}}' width="500px" height="300px"/>
+		  </div>
+		  <div class="col-md-1"></div>
+		  </div>
     <div class="modal-footer row">
         <div class="col-md-4 text-center"><button ng-click="submitFormNotfication()" class="btn btn-primary" ng-disabled="form.notificationForm.$invalid">SEND EMAIL</button></div>
 
