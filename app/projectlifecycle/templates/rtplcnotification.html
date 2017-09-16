@@ -7,27 +7,34 @@
         <div class="form-group row">
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="date">BHU / IHU #* :</label></div>
-           <div class="col-md-4"> <input type="text" name="date" class="form-control" ng-model="date" required> </div>
+           <div class="col-md-4"> <input type="text" name="bhuId" class="form-control" ng-model="bhuId" required> </div>
            <div class="col-md-2"></div>
         </div>
 
         <div class="form-group row">
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="bhu-ihu">RT SPOC* :</label></div>
-           <div class="col-md-4"> <input type="text" name="rt_spoc" class="form-control typeahead" uib-typeahead="rt_spoc for rt_spoc in rt_spocs | filter:$viewValue | limitTo:8" ng-model="selected" required> </div>
+            <div class="col-md-4">
+               <ui-select multiple ng-model="rt_spocs_selected" theme="bootstrap" close-on-select="true" title="Choose a person" required>
+                 <ui-select-match placeholder="Select person...">{{$item.name}} &lt;{{$item.email}}&gt;</ui-select-match>
+                 <ui-select-choices repeat="person in rt_spocs | filter: {name: $select.search, email: $select.search}">
+                   <div>{{person.name}}</div>
+                 </ui-select-choices>
+               </ui-select>
+             </div>
          <div class="col-md-2"></div>
         </div>
         <div class="form-group row">
         <div class="col-md-2"></div>
-           <div class="col-md-4"> <label for="rt-spoc">RECIPIENTS* :</label></div>
-           <div class="col-md-4"> <input type="text" name="rt_spoc" class="form-control" ng-model="rt_spoc" required> </div>
+           <div class="col-md-4"> <label for="rt_recipients">RECIPIENTS* :</label></div>
+           <div class="col-md-4"> <input type="email" name="rt_recipients" class="form-control" ng-model="rt_recipients" required> </div>
           <div class="col-md-2"></div>
         </div>
         <div class="form-group row">
         <div class="col-md-2"></div>
-           <div class="col-md-4"> <label for="plc-milestone">RT PLC Phase* :</label></div>
+           <div class="col-md-4"> <label for="plc-phase">RT PLC Phase* :</label></div>
            <div class="col-md-4">
-           <select class="col-md-12" ng-model="selectedItem" ng-options="S.value as S.label for S in selectables" ng-change="fun()">
+           <select class="col-md-12" class="form-control" ng-model="plc_phase" ng-options="S.value as S.label for S in selectables">
     </select>
            <!--
             <select type="text" name="plc_milestone" class="form-control" ng-model="plc_milestone" required>
@@ -51,14 +58,14 @@
         <div class="form-group row">
         <div class="col-md-2"></div>
            <div class="col-md-4">  <label>CONTENT* :</label></div>
-            <div class="col-md-4"><textarea name="content" class="form-control plc-form-textarea" ng-model="content" required placeholder="Images"></textarea></div>
+            <div class="col-md-4"><textarea name="content" class="form-control plc-form-textarea" ng-model="content" required placeholder="Enter Content"></textarea></div>
             <div class="col-md-2"></div>
             </div>
         </div>
          <div class="form-group row">
          <div class="col-md-1"></div>
           <div class="col-md-10">
-          <img ng-src='{{selectedItem}}' width="500px" height="300px"/>
+          <img ng-src='{{plc_phase}}' width="500px" height="300px"/>
 		  </div>
 		  <div class="col-md-1"></div>
 		  </div>

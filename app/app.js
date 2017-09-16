@@ -10,6 +10,7 @@ require('angular-ui-router');
 require('angular-sanitize');
 require('ui-select');
 require('angular-messages');
+
 // application modules
 var layout = require('./layout/layout.module');
 var home = require('./home/home.module');
@@ -56,5 +57,4 @@ angular
           template: 'bootstrap3'
         });
       })
-    .run(require('./app.run.js')); 
-    
+    .run(require('./app.run.js'));

@@ -5,4 +5,4 @@ module.exports = angular
     .config(require('./projectlifecycle.route'))
     .controller('ProjectLifeCycleController', require('./projectlifecycle.controller'))
     .service("ProjectLifeCycleService", require("./plclifecycle.service"))
-    .directive("fileModel","./rtplcNotification.directive");
+    .directive("fileModel","./rtplcNotification.directive")
