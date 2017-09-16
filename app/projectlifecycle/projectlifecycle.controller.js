@@ -123,11 +123,13 @@ function ModalNotificationController ($scope, $uibModalInstance, $http, notifica
       label: 'P2S',
       value: ''
     }];
-    $scope.rt_spocs_selected=null;
+
     ProjectLifeCycleService.getRTSpocs().then(function(data){
       $scope.rt_spocs = data;
     });
 
+
+    $scope.rt_spocs_selected = { items : []};
     $scope.rt_spocs = [{name:"Sai", email:"sai@wipro.com"},
     {name:"Manohar", email:"manohar@apple.com"},
     {name:"Amudha", email:"manohar@apple.com"},
@@ -154,13 +156,13 @@ function ModalNotificationController ($scope, $uibModalInstance, $http, notifica
 
             $scope.notificationFormData={
               "bhuId": $scope.bhuId,
-              "rtSpoc": $scope.rt_spocs_selected,
+              "rtSpoc": $scope.rt_spocs_selected.items,
               "rtRecipients":$scope.rt_recipients,
               "rtPlcPhase": $scope.plc_phase,
               "content": $scope.content
             }
 
-            console.log($scope.notificationFormData);
+            console.log("notificationFormData", $scope.notificationFormData);
             $http({
                 method: 'POST',
                 url: "http://localhost:51739/PostFileWithData",

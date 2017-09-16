@@ -15,10 +15,10 @@
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="bhu-ihu">RT SPOC* :</label></div>
             <div class="col-md-4">
-               <ui-select multiple ng-model="rt_spocs_selected" theme="bootstrap" close-on-select="true" title="Choose a person" required>
+               <ui-select multiple ng-model="rt_spocs_selected.items" theme="bootstrap" close-on-select="true" title="Choose a person" required name="rt_spocs_selected">
                  <ui-select-match placeholder="Select person...">{{$item.name}} &lt;{{$item.email}}&gt;</ui-select-match>
                  <ui-select-choices repeat="person in rt_spocs | filter: {name: $select.search, email: $select.search}">
-                   <div>{{person.name}}</div>
+                   <div ng-bind-html="person.name | highlight: $select.search"></div>
                  </ui-select-choices>
                </ui-select>
              </div>
