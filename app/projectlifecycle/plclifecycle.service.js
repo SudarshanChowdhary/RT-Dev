@@ -3,7 +3,8 @@ ProjectLifeCycleService.$inject = ['$http'];
 function ProjectLifeCycleService($http){
 	var rtplcmilestoneservice = {
 		rtPlcMilestoneAdd : rtPlcMilestoneAdd,
-		getRTSpocs: getRTSpocs
+		getRTSpocs: getRTSpocs,
+        getBhuid:getBhuid
 	};
     return rtplcmilestoneservice;
 
@@ -11,7 +12,7 @@ function ProjectLifeCycleService($http){
 			return $http({
             url:"milestone/add",
             data: reqData,
-            method:"PUT"
+            method:"POST"
         });
     }
 		function getRTSpocs(){
@@ -20,6 +21,13 @@ function ProjectLifeCycleService($http){
             method:"GET"
         });
 		}
+
+        function getBhuid(id){
+            return $http({
+            url:"milestone/status/" + id,
+            method:"GET"
+        });
+        }
 }
 
 module.exports = ProjectLifeCycleService;
