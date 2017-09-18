@@ -1,21 +1,28 @@
 <div class="modal-header">
    <h2>RT PLC NOTIFICATION</h2>
 </div>
-<form name="form.notificationForm" novalidate>
+<form name="notificationForm" novalidate>
     <div class="modal-body">
 
         <div class="form-group row">
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="date">BHU / IHU #* :</label></div>
-           <div class="col-md-4"> <input type="text" name="bhuId" class="form-control" ng-model="bhuId" required> </div>
+           <div class="col-md-4"> <input type="text" name="bhuId" class="form-control" data-ng-readonly="true" ng-model="bhuId" required> </div>
            <div class="col-md-2"></div>
         </div>
 
         <div class="form-group row">
+                <div class="col-md-2"></div>
+                   <div class="col-md-4"> <label for="rt-spoc">RT SPOC* :</label></div>
+                   <div class="col-md-4"> <input type="email" autocomplete="off" name="rt_spocs_selected" class="form-control" uib-typeahead="rt_spoc.memberEmailId for rt_spoc in rt_spocs | filter:$viewValue | limitTo:10" ng-model="selected" required> </div>
+                  <div class="col-md-2"></div>
+        </div>
+        
+        <div class="form-group row">
         <div class="col-md-2"></div>
-           <div class="col-md-4"> <label for="bhu-ihu">RT SPOC* :</label></div>
+        <div class="col-md-4"> <label for="rt_recipients">RECIPIENTS* :</label></div>
             <div class="col-md-4">
-               <ui-select multiple ng-model="rt_spocs_selected.items" theme="bootstrap" close-on-select="true" title="Choose a person" required name="rt_spocs_selected">
+               <ui-select multiple ng-model="rt_recipients" theme="bootstrap" close-on-select="true" title="Choose a person" required name="rt_recipients">
                  <ui-select-match placeholder="Select person...">{{$item.name}} &lt;{{$item.email}}&gt;</ui-select-match>
                  <ui-select-choices repeat="person in rt_spocs | filter: {name: $select.search, email: $select.search}">
                    <div ng-bind-html="person.name | highlight: $select.search"></div>
@@ -24,18 +31,18 @@
              </div>
          <div class="col-md-2"></div>
         </div>
-        <div class="form-group row">
+        <!-- <div class="form-group row">
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="rt_recipients">RECIPIENTS* :</label></div>
            <div class="col-md-4"> <input type="email" name="rt_recipients" class="form-control" ng-model="rt_recipients" required> </div>
           <div class="col-md-2"></div>
-        </div>
+        </div> -->
         <div class="form-group row">
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="plc-phase">RT PLC Phase* :</label></div>
            <div class="col-md-4">
-           <select class="col-md-12" class="form-control" ng-model="plc_phase" ng-options="S.value as S.label for S in selectables">
-    </select>
+           <select class="col-md-12" class="form-control" ng-model="plc_phase" ng-change="previewPhase(plc_phase)" ng-options="S.label as S.label for S in selectables">
+            </select>
            <!--
             <select type="text" name="plc_milestone" class="form-control" ng-model="plc_milestone" required>
             <option value="design_development">Design & Development</option>
@@ -62,15 +69,16 @@
             <div class="col-md-2"></div>
             </div>
         </div>
-         <div class="form-group row">
+         <div class="form-group row" ng-if="plc_phase">
          <div class="col-md-1"></div>
           <div class="col-md-10">
-          <img ng-src='{{plc_phase}}' width="500px" height="300px"/>
+          <!-- <img ng-src='{{plc_phase}}' width="500px" height="300px"/> -->
+          <img ng-src='{{phase_preview}}' width="500px" height="300px"/>
 		  </div>
 		  <div class="col-md-1"></div>
 		  </div>
     <div class="modal-footer row">
-        <div class="col-md-4 text-center"><button ng-click="submitFormNotfication()" class="btn btn-primary" ng-disabled="form.notificationForm.$invalid">SEND EMAIL</button></div>
+        <div class="col-md-4 text-center"><button ng-click="submitFormNotfication()" class="btn btn-primary" ng-disabled="notificationForm.$invalid">SEND EMAIL</button></div>
 
         <div class="col-md-4 text-center"><button type="RESET" class="btn btn-primary" ng-disabled="form.userForm.$invalid">RESET</button></div>
         <div class="col-md-4 text-center"><button class="btn btn-warning" ng-click="cancel()">Cancel</button></div>
