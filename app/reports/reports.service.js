@@ -456,22 +456,18 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService){
     // }
 
     function exportStatusToExcelSrv(bhuId){
-        debugger;
         return "bhureports/downloadStatus/"+ bhuId;
     }
 
     function exportWarrantyToExcelSrv(bhuId){
-        debugger;
         return "bhureports/downloadWarranty/"+ bhuId;
     }
 
     function exportEffortsToExcelSrv(bhuId){
-        debugger;
         return "bhureports/downloadEfforts/"+ bhuId;
     }
 
     function exportBhuDtlsToExcelSrv(bhuId){
-        debugger;
         return "bhureports/downloadBhuDtls/"+ bhuId;
     }
 }
