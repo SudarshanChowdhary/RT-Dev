@@ -11,7 +11,7 @@ function bhuIdLinkRenderer(){
                   if(isNaN(bhuId) || bhuId==null){
                     return bhuId;
                   }else{
-                    return "<a href='javascript:void(0)'>"+bhuId+"</a>";
+                    return "<a title='Get deatils' href='javascript:void(0)'><span class='glyphicon glyphicon-new-window blue'></span>&nbsp;&nbsp;"+bhuId+"</a>";
                   }
                 }
             }

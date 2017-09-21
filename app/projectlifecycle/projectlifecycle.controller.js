@@ -1,25 +1,21 @@
 ProjectLifeCycleController.$inject = ['$state', '$scope', '$uibModal', '$log', 'ProjectLifeCycleService', 'sharedService'];
 
 function ProjectLifeCycleController($state, $scope, $uibModal, $log, ProjectLifeCycleService, sharedService) {
-
-    
      $scope.showMileStoneForm = function () {
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/projectlifecycle/templates/rtplcmilestone.html',
                 controller: ModalMileStoneController,
                 scope: $scope,
+                backdrop: "static",
+                keyboard: false,
                 resolve: {
                     milestoneData: function () {
                         return $scope.milestoneData;
                     }
                 }
             });
-            
-            // ProjectLifeCycleService.getBhuid($scope.bhuid).then(function(data){
-            //     $scope.bhuihu = data;
-            // });
 
-            sharedService.getTeamMembers().then(function(data){
+            sharedService.getrtSpocsUsers().then(function(data){
                 $scope.rt_spocs_selected = { items : []};
                 $scope.rt_spocs  = data;
             });
@@ -36,18 +32,17 @@ function ProjectLifeCycleController($state, $scope, $uibModal, $log, ProjectLife
 	        var modalInstance = $uibModal.open({
 	        templateUrl: 'app/projectlifecycle/templates/rtplcnotification.html',
 	        controller: ModalNotificationController,
-	        scope: $scope,
+            scope: $scope,
+            backdrop: "static",
+            keyboard: false,
 	        resolve: {
 	            notificationData: function () {
 	                return $scope.notificationData;
 	              }
 	            }
             });
-            // ProjectLifeCycleService.getBhuid($scope.bhuid).then(function(data){
-            //     $scope.bhuId = data;
-            // });
             
-            sharedService.getTeamMembers().then(function(data){
+            sharedService.getrtSpocsUsers().then(function(data){
                 $scope.rt_spocs_selected = { items : []};
                 $scope.rt_spocs  = data;
             });
@@ -75,11 +70,18 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, Pro
       $scope.open1 = function() {
         $scope.popup1.opened = true;
       };
-      $scope.format = "dd-MM-yyyy";
+      $scope.format = "yyyy-MM-dd";
       $scope.popup1 = {
         opened: false
       };
     
+      $scope.validateNumber =function($event){
+          debugger;
+        if(isNaN(String.fromCharCode($event.keyCode))){
+            $event.preventDefault();
+        }
+      }
+      
       $scope.plc_phase = null;
       $scope.modelOptions = {
         debounce: {
@@ -93,7 +95,7 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, Pro
             debugger;
           spinnerService.show();
           $scope.milestoneRequiredData = {
-            "meetingDate": $filter('date')($scope.date, "dd-MM-yyyy"),
+            "meetingDate": $filter('date')($scope.date, "yyyy-MM-dd"),
             "bhuId": $scope.bhuihu,
             "rtspoc": $scope.selected,
             "rtPlcMilestone": $scope.plcmilestone,
@@ -103,8 +105,8 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, Pro
           console.log("milestone", $scope.milestoneRequiredData);
             ProjectLifeCycleService.rtPlcMilestoneAdd($scope.milestoneRequiredData).then(function(){
               spinnerService.hide();
+              $uibModalInstance.close(milestoneRequiredData);
           });
-          $uibModalInstance.close('closed');
         }
     };
 
@@ -121,11 +123,11 @@ function ModalNotificationController ($scope, $uibModalInstance, $http, notifica
     $scope.files = [];
 
     $scope.selectables = [{
-      label: 'UAT'
-    },{
       label: 'Design And Development'
     },{
       label: 'Integration and Testing'
+    },{
+        label: 'UAT'
     },{
       label: 'Warranty and Phase'
     },{
@@ -135,7 +137,9 @@ function ModalNotificationController ($scope, $uibModalInstance, $http, notifica
     $scope.previewPhase = function(lable){
       $scope.phase_preview =  ProjectLifeCycleService.getPhases(lable);
     };
-
+    $scope.clearImageSource = function(){
+      $scope.phase_preview = "";
+    }
   // Any function returning a promise object can be used to load values asynchronously
     $scope.$on("seletedFile", function (event, args) {
         $scope.$apply(function () {
@@ -144,11 +148,15 @@ function ModalNotificationController ($scope, $uibModalInstance, $http, notifica
         });
     });
 
+    $scope.validateNumber =function($event){
+      if(isNaN(String.fromCharCode($event.keyCode))){
+          $event.preventDefault();
+      }
+    }
     $scope.submitFormNotfication = function () {
         if ($scope.notificationForm.$valid) {
             var attachments = $scope.myFile;
-           debugger;
-           var deffered = $q.defer();
+           
             $scope.notificationFormData = {
                 "bhuId": $scope.bhuId,
                 "rtSpoc": $scope.selected,
@@ -159,14 +167,13 @@ function ModalNotificationController ($scope, $uibModalInstance, $http, notifica
                 "from": $rootScope.user
             }
             var fmData = new FormData();
-            debugger;
-            if(attachments && attachments.length > 0){
+            if(attachments.length > 0){
                 fmData.append("files", attachments);
             }
             fmData.append("data", JSON.stringify($scope.notificationFormData));
 
-            $http.post("milestone/doEmail", $scope.notificationFormData,{
-                headers: { 'Content-Type': "undefined" },
+            $http.post("milestone/doEmail", $scope.notificationFormData ,{
+                headers: { 'Content-Type': undefined },
                 transformRequest: angular.identity
             }).
             success(function (data, status, headers, config) {

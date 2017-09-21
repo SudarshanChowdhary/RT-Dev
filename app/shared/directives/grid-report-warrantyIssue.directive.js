@@ -10,7 +10,7 @@ function warrantyIssueLinkRenderer(){
               if(isNaN(warrantyissue) || warrantyissue==null){
                 return warrantyissue;
               }else{
-                return "<a href='javascript:void(0)'>"+warrantyissue+"</a>";
+                return "<a title='Show issued warranty deatils' href='javascript:void(0)'><span class='glyphicon glyphicon-new-window blue'></span>&nbsp;&nbsp;"+warrantyissue+"</a>";
               }
             }
         }

@@ -6,6 +6,7 @@ function EffortsModalController($uibModalInstance, modal, $rootScope, reportserv
     ctrlEfrt.EffortsModalData = [];
     ctrlEfrt.selBhuId = modal.selectedBhuId;
     ctrlEfrt.EffortsModalData = modal.reportModalData.effortsDetails;
+    ctrlEfrt.rtSpoc = modal.selctedSpoc;
     ctrlEfrt.gridOptions = {
             bindType: 1,
             data: {
@@ -39,6 +40,8 @@ function EffortsModalController($uibModalInstance, modal, $rootScope, reportserv
         "deviation":"highlight-cell"
     };
     
+    //If in future estimated effort functionality need to add, then uncommet below lines
+
     // if($rootScope.userRoles && $rootScope.userRoles.indexOf('admin') > -1){
     //     ctrlEfrt.itemRenderers["estimatedEfforts"] = "estimatedefforts-edit";
     //}
@@ -59,7 +62,7 @@ function BhuEffortsDirective($uibModal, reportservice) {
         link: function(scope, element, attr, ctrlEfrt) {
             element.on('click', function() {
                if(!isNaN(scope.item.bhuId)){
-                reportservice.getReportEffortsDetails(scope.item.bhuId, scope.item.size).then(function(resp){
+                reportservice.getReportEffortsDetails(scope.item.bhuId, scope.item.size, scope.item.rtsSpoc).then(function(resp){
                         if(resp && resp.errorCode){
                             $scope.$emit('alert', {
                             message: resp.message,
@@ -68,6 +71,7 @@ function BhuEffortsDirective($uibModal, reportservice) {
                         }else{
                             scope.selectedBhuId = scope.item.bhuId;
                             scope.reportModalData = resp;
+                            scope.selctedSpoc = scope.item.rtsSpoc;
                         }
                        $uibModal.open({
                             templateUrl: 'app/reports/templates/modal-efforts-details.html',

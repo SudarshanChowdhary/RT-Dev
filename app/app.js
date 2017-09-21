@@ -2,7 +2,6 @@
 $ = jQuery = require('jquery');
 var angular = require('angular');
 require('jquery-ui');
-// require('angular-sanitize');
 // external or vendor dependencies
 require('bootstrap-sass/assets/javascripts/bootstrap');
 require('angular-ui-bootstrap');
@@ -10,7 +9,6 @@ require('angular-ui-router');
 require('angular-sanitize');
 require('ui-select');
 require('angular-messages');
-
 // application modules
 var layout = require('./layout/layout.module');
 var home = require('./home/home.module');

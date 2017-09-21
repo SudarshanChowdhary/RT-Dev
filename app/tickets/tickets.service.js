@@ -21,7 +21,7 @@ function TicketsService($http, $q,spinnerService) {
     function getTicketsFolders() {
         var def = $q.defer();
          spinnerService.show();
-            $http.get("https://rtdashboardp.rno.apple.com:9012/tickets/ticketfolders?callback=angular.callbacks._0")
+            $http.get("tickets/ticketfolders")
                 .success(function(data) {
                     def.resolve(data);
                     spinnerService.hide();
@@ -35,7 +35,7 @@ function TicketsService($http, $q,spinnerService) {
     function getTicketTypeDetails(tType, startIndex) {
         var def = $q.defer();
          spinnerService.show();
-            $http.get("https://rtdashboardp.rno.apple.com:9012/tickets/details/"+tType+"?start-index="+startIndex+"&callback=angular.callbacks._0")
+            $http.get("tickets/details/"+tType+"?start-index="+startIndex)
                 .success(function(data) {
                     def.resolve(data);
                     spinnerService.hide();
@@ -77,7 +77,7 @@ function TicketsService($http, $q,spinnerService) {
     function getTicketBhuDetails(bhuId){
         var def = $q.defer();
          spinnerService.show();
-            $http.get("https://rtdashboardp.rno.apple.com:9012/tickets/bhudetails/"+bhuId+"&callback=angular.callbacks._0")
+            $http.get("tickets/bhudetails/"+bhuId)
                 .success(function(data) {
                     def.resolve(data);
                     spinnerService.hide();

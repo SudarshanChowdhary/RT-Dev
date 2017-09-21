@@ -378,6 +378,8 @@ $table--fixed-body-height: 500px;
 ================================================================== */
 
 .plc-form-textarea{
+max-height: 100px !important;
+max-width: 250px !important;
 min-height: 100px !important;
 min-width: 250px !important;
 }

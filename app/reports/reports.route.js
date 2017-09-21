@@ -62,6 +62,6 @@ function ReportsRoute($stateProvider) {
             //skip:true
             label: 'BHU Reports'
         }
-    })
+    });
 }
 module.exports = ReportsRoute;

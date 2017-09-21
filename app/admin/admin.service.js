@@ -38,7 +38,7 @@ function AdminService($http, $q, spinnerService) {
     function getAdminSpotlightData() {
         var def = $q.defer();
         spinnerService.show();
-        $http.get("https://rtdashboardp.rno.apple.com:9012/admin/spotlights").success(function(data) {
+        $http.get("admin/spotlights").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
         }).error(function() {

@@ -10,7 +10,8 @@ function SharedService($http, $q, $rootScope, spinnerService) {
         getSpocDetails: getSpocDetails,
         getSearchTestScriptsByBhuid: getSearchTestScriptsByBhuid,
         getQuarterMonths: getQuarterMonths,
-        getTeamMembers : getTeamMembers
+        getTeamMembers : getTeamMembers,
+        getrtSpocsUsers : getrtSpocsUsers
     };
     return sharedService;
 
@@ -32,9 +33,7 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     }
 
     function getPhase() {
-        // var phase = [{ "value":"kick", "text":"Kick off (Source from BHU Req in ALM)"}, { "value":"design", "text":"Design / Dev"},{ "value":"it", "text":"IT"},
-        // { "value":"uat", "text":"UAT"},{ "value":"rt", "text":"RT"},{ "value":"warranty", "text":"Warranty Phase"},{ "value":"p2s", "text":"P2S Handover"}];
-        var phase = ["Kick off (Source from BHU Req in ALM)", "Design / Dev","IT","UAT","RT","Warranty Phase","P2S Handover"];
+        var phase = ["Kick off", "Design / Dev","IT","UAT","RT","Warranty Phase","P2S Handover"];
         return phase;
     }
 
@@ -76,11 +75,11 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     function getUser(){
       var def = $q.defer();
         spinnerService.show();
-        $http.get("https://rtdashboardp.rno.apple.com:9012/homepage/userProfile?callback=angular.callbacks._0").success(function(data) {
+        $http.get("homepage/userProfile").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
             $rootScope.user = data.emailAddr;
-            $rootScope.userRoles = ["admin"];// data.roles;
+            $rootScope.userRoles = data.roles;
         }).error(function() {
             def.reject("Failed to get data");
         });
@@ -88,10 +87,9 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     }
 
     function getTeamMembers(){
-        //https://rtdashboardp.rno.apple.com:9012/admin/teamdetails
         var def = $q.defer();
         spinnerService.show();
-        $http.get("https://rtdashboardp.rno.apple.com:9012/admin/teamdetails?callback=angular.callbacks._0").success(function(data) {
+        $http.get("admin/teamdetails").success(function(data) {
             def.resolve(data);
             var user = $rootScope.user;
             $rootScope.isTeamMember = false;
@@ -108,15 +106,26 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     }
 
     function getSpocDetails(spoc){
-          var def = $q.defer();
-                $http.get("utils/users/"+ spoc).success(function(data) {
-                    def.resolve(data);
-                    spinnerService.hide();
-                }).error(function() {
-                    def.reject("Failed to get data");
-                });
-                return def.promise;     
-            }
+        var def = $q.defer();
+        $http.get("utils/users/"+ spoc).success(function(data) {
+            def.resolve(data);
+            spinnerService.hide();
+        }).error(function() {
+            def.reject("Failed to get data");
+        });
+        return def.promise;     
+    }
+
+    function getrtSpocsUsers(){
+        var def = $q.defer();
+        spinnerService.show();
+        $http.get("utils/users").success(function(data) {
+            spinnerService.hide();
+        }).error(function() {
+            def.reject("Failed to get data");
+        });
+        return def.promise;
+    }
 
     function getSearchTestScriptsByBhuid(bhuId){
         var def = $q.defer();

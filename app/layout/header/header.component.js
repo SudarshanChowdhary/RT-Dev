@@ -24,9 +24,6 @@ function HeaderController($state, sharedService, $scope, $rootScope) {
                  avatar += nameStr[i].substring(0,1).toUpperCase();
             }
             ctrl.userAvatar = avatar;
-
-            //remove below line of code before deployment
-            ctrl.isAdminUser = true;
          }
          if(user.roles && user.roles.length && user.roles.indexOf('admin') > -1){
           ctrl.isAdminUser = true;

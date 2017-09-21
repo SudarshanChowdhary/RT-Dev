@@ -4,7 +4,7 @@ function getTicketsFolders(ticketservice, $q, $http, $stateParams, spinnerServic
     // return ticketservice.getTicketsFolders();
     var def = $q.defer();
          spinnerService.show();
-            $http.get("https://rtdashboardp.rno.apple.com:9012/tickets/ticketfolders?callback=angular.callbacks._0")
+            $http.get("tickets/ticketfolders")
                 .success(function(data) {
                     def.resolve(data);
                     spinnerService.hide();

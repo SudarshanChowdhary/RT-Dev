@@ -14,7 +14,7 @@ function DefectsService($http, $q, spinnerService) {
     function getDefectsData() {
         var def = $q.defer();
         spinnerService.show();
-        $http.get("https://rtdashboardp.rno.apple.com:9012/defects/details?start-index=1&callback=angular.callbacks._0").success(function(data) {
+        $http.get("defects/details?start-index=1").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
         }).error(function() {
@@ -26,7 +26,7 @@ function DefectsService($http, $q, spinnerService) {
     function getDefectsFilterDetailsByYear(year, startIndex){
         var def = $q.defer();
          spinnerService.show();
-            $http.get("https://rtdashboardp.rno.apple.com:9012/defects/details/"+year+"?start-index="+startIndex+"&callback=angular.callbacks._0")
+            $http.get("defects/details/"+year+"?start-index="+startIndex)
                 .success(function(data) {
                     def.resolve(data);
                     spinnerService.hide();
@@ -40,7 +40,7 @@ function DefectsService($http, $q, spinnerService) {
     function getDefectsFilterDetailsByQuarter(year,quar, startIndex){
         var def = $q.defer();
          spinnerService.show();
-            $http.get("https://rtdashboardp.rno.apple.com:9012/defects/details/"+year+"/"+quar+"?start-index="+startIndex+"&callback=angular.callbacks._0")
+            $http.get("defects/details/"+year+"/"+quar+"?start-index="+startIndex)
                 .success(function(data) {
                     def.resolve(data);
                     spinnerService.hide();

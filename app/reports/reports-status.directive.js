@@ -6,6 +6,7 @@ function CurrentStatusModalController($uibModalInstance, modal, reportservice) {
     ctrlSts.currentStatusModalData = [];
     ctrlSts.selStatus = modal.selectedStatus;
     ctrlSts.selctedBhu = modal.selctedBhu;
+    ctrlSts.rtSpoc = modal.selctedSpoc;
     ctrlSts.currentStatusModalData = modal.reportModalData.bhuStatusDetails;
     ctrlSts.gridOptions = {
             bindType: 1,
@@ -45,15 +46,12 @@ function CurrentStatusModalController($uibModalInstance, modal, reportservice) {
                             tdClasses: 'width20',
                             sort: true
                         }];
-                        // ctrlSts.itemRenderers = {
-                        //     'meetingDate': 'date-format'
-                        // };
     ctrlSts.cancel = function () {
         $uibModalInstance.dismiss('cancel');
       };
     
-    ctrlSts.exportStatusToExcel= function(bhuId){
-        window.location.href = reportservice.exportStatusToExcelSrv(bhuId);
+    ctrlSts.exportStatusToExcel= function(bhuId, rtspoc){
+        window.location.href = reportservice.exportStatusToExcelSrv(bhuId, rtspoc);
     }
 }
 BhuCurrentStatusModalDirective.$inject = ['$uibModal', 'reportservice'];
@@ -65,7 +63,7 @@ function BhuCurrentStatusModalDirective($uibModal, reportservice) {
         link: function(scope, element, attr, ctrlSts) {
             element.on('click', function() {
                if(!isNaN(scope.item.bhuId)){
-                reportservice.getReportCurrentStatusDetails(scope.item.bhuId).then(function(resp){
+                reportservice.getReportCurrentStatusDetails(scope.item.bhuId, scope.item.rtsSpoc).then(function(resp){
                         if(resp && resp.errorCode){
                             $scope.$emit('alert', {
                             message: resp.message,
@@ -75,6 +73,7 @@ function BhuCurrentStatusModalDirective($uibModal, reportservice) {
                             scope.selectedStatus = scope.item.currentStatus;
                             scope.selctedBhu = scope.item.bhuId;
                             scope.reportModalData = resp;
+                            scope.selctedSpoc = scope.item.rtsSpoc;
                         }
                        $uibModal.open({
                             templateUrl: 'app/reports/templates/modal-currentstatus-details.html',

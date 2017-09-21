@@ -9,7 +9,7 @@
            <div class="col-md-4"> <label for="date">DATE* :</label></div>
            <div class="col-md-4">
              <div class="input-group">
-                      <input type="text" class="form-control" onkeydown="return false" uib-datepicker-popup="{{format | date: dd-mm-yyyy}}" ng-model="date" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                      <input type="text" class="form-control" onkeydown="return false" uib-datepicker-popup="{{format | date: yyyy-MM-dd}}" ng-model="date" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                       </span>
@@ -21,7 +21,7 @@
         <div class="form-group row">
         <div class="col-md-2"></div>
            <div class="col-md-4"> <label for="bhu-ihu">BHU / IHU #* :</label></div>
-           <div class="col-md-4"> <input type="number"  minlength="5" min="0" name="bhu_ihu" class="form-control" ng-model="bhuihu" required> </div>
+           <div class="col-md-4"> <input data-ng-keypress="validateNumber($event)” maxlength="5" name="bhu-ihu" class="form-control" ng-model="bhuihu" required> </div>
          <div class="col-md-2"></div>
         </div>
         <div class="form-group row">
@@ -37,7 +37,7 @@
            <div class="col-md-4"> <label for="plc-milestone">RT PLC MILESTONE* :</label></div>
            <div class="col-md-4"> <select name="plc_milestone" class="form-control" ng-model="plcmilestone" required>
             <option value="kick" selected>Kick-Off</option>
-            <option value="design_review">Design Review</option>
+            <option value="Design_review">Design Review</option>
             <option value="rt_scripts_sharing">RT Scripts Sharing </option>
             <option value="rt_scripts_walkthrough">RT Scripts walkthrough</option>
             <option value="it_system_demo">IT System Demo / Scripts walkthrough</option>
@@ -65,11 +65,11 @@
             <div class="col-md-4">
               <div class="row">
                 <div class="col-md-5">
-              <input type="number" ng-model="hours" class="form-control plc-milestone-hours" onkeydown="return false" ng-pattern="/^[0-23]+$/" maxlength="2" min="0" max="23" placeholder="HH" required />
+              <input type="number" ng-model="hours" class="form-control plc-milestone-hours" data-ng-keypress="validateNumber($event)” ng-pattern="/^[0-23]+$/" maxlength="2" min="0" max="23" placeholder="HH" required />
             </div>
             <div class="col-md-1 colon">: </div>
             <div class="col-md-5">
-              <input type="number" ng-model="minutes" class="form-control plc-milestone-mins" onkeydown="return false" ng-pattern="/^[0-59]+$/" maxlength="2" min="0" max="59" placeholder="MM" required />
+              <input type="number" ng-model="minutes" class="form-control plc-milestone-mins" data-ng-keypress="validateNumber($event)”  ng-pattern="/^[0-59]+$/" maxlength="2" min="0" max="59" placeholder="MM" required />
             </div>
             <div class="col-md-1"></div>
           </div>

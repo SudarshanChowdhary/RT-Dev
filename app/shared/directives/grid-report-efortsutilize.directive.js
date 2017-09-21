@@ -11,7 +11,7 @@ function effortsUtilizedLinkRenderer(){
               if(isNaN(efortsutilized) || efortsutilized==null){
                 return efortsutilized;
               }else{
-                return "<a href='javascript:void(0)'>"+efortsutilized+"</a>";
+                return "<a title='Get deatils' href='javascript:void(0)'><span class='glyphicon glyphicon-new-window blue'></span>&nbsp;&nbsp;"+efortsutilized+"</a>";
               }
             }
         }

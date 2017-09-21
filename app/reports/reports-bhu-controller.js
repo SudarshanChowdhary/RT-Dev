@@ -4,11 +4,6 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
     var bhureport = this;
     bhureport.filterBhuReport = {};
     bhureport.count = 0;
-    // bhureport.noDataMsg = '';
-    
-    // Variable Definitions
-    // Function Definitions
-   
     bhureport.init = init;
     bhureport.showFilterOptions = showFilterOptions;
     bhureport.populateBhuReportDetailsData = populateBhuReportDetailsData;
@@ -69,100 +64,100 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         bhureport.gridOptions.dataOptions.nodata = '';
         bhureport.columns = [
         {
-            headerText: 'BHU / IHU',
+            headerText: 'Bhu / Ihu',
             dataField: 'bhuId',
             thClasses: 'width5',
             tdClasses: 'width5',
             sort: true
         }, {
-            headerText: 'CURRENT STATUS',
+            headerText: 'Current Status',
             dataField: 'currentStatus',
-            thClasses: 'width5',
-            tdClasses: 'width5',
+            thClasses: 'width10',
+            tdClasses: 'width10',
             sort: true
         }, {
-            headerText: 'SIZE',
+            headerText: 'size',
             dataField: 'size',
             //sort: true,
             thClasses: 'width5',
             tdClasses: 'width5'
         },{
-            headerText: 'NO OF OBJECTS',
+            headerText: 'No of Objects',
             dataField: 'noOfObjects',
             thClasses: 'width5',
             tdClasses: 'width5'
         },{
-            headerText: 'PROJECT MANAGER',
+            headerText: 'Project Manager',
             dataField: 'projectManager',
             thClasses: 'width10',
             tdClasses: 'width10',
             sort: true
         },{
-            headerText: 'RT SPOC',
+            headerText: 'RT Spoc',
             dataField: 'rtsSpoc',
-            thClasses: 'width10',
-            tdClasses: 'width10',
+            thClasses: 'width5',
+            tdClasses: 'width5',
             sort: true
         },{
-            headerText: 'EXTENDED TEAM MEMBERS',
+            headerText: 'Extended Team Members',
             dataField: 'extteammembers',
             thClasses: 'width5',
             tdClasses: 'width5'
         },{
-            headerText: 'SCRIPTS SHARED',
+            headerText: 'Script Shared',
             dataField: 'scriptshared',
             thClasses: 'width5',
             tdClasses: 'width5'
         },{
-            headerText: 'SCRIPTS UTILIZED',
+            headerText: 'Script Utilized',
             dataField: 'scriptutilized',
             thClasses: 'width5',
             tdClasses: 'width5'
         },{
-            headerText: 'SCRIPT EXECUTED',
+            headerText: 'Script Executed',
             dataField: 'scriptexecuted',
             thClasses: 'width5',
             tdClasses: 'width5'
         },{
-            headerText: 'RT DEFECTS',
+            headerText: 'RT Defects',
             dataField: 'rtdefects',
             thClasses: 'width5',
             tdClasses: 'width5'
         },{
-            headerText: 'RT MISS',
+            headerText: 'RT Miss',
             dataField: 'rtmiss',
             thClasses: 'width5',
             tdClasses: 'width5'
         },{
-            headerText: 'WARRANTY ISSUES',
+            headerText: 'Warranty Issue',
             dataField: 'warrantyissue',
             thClasses: 'width5',
             tdClasses: 'width5',
             sort: true
         },{
-            headerText: 'SCRIPT EXECUTED PART OF WARRANTY',
+            headerText: 'Script Excpart of Warranty',
             dataField: 'scriptExcpartOfwarranty',
             thClasses: 'width10',
             tdClasses: 'width10'
         },{
-            headerText: 'SCRIPTS MODIFIED',
+            headerText: 'Scripts Modified',
             dataField: 'scriptsmodified',
             thClasses: 'width5',
             tdClasses: 'width5'
         }
     ];
 
-    if($rootScope.isTeamMember == true){
+    if($rootScope.isTeamMember == true || ($rootScope.userRoles && $rootScope.userRoles.indexOf("admin")> -1)){
         var colm15 = bhureport.columns[14];
         bhureport.columns[14] = {
-            headerText: 'NEW SCRIPT RECEIVED',
+            headerText: 'New Script Received',
             dataField: 'newscriptreceived',
             thClasses: 'width5',
             tdClasses: 'width5'
         };
         bhureport.columns[15] = colm15;
         bhureport.columns.push({
-            headerText: 'EFFORTS UTILIZED',
+            headerText: 'Efforts Utilized',
             dataField: 'efortsutilized',
             thClasses: 'width5',
             tdClasses: 'width5',
@@ -171,7 +166,7 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
     }else if($rootScope.isTeamMember==false){
         var colm15 = bhureport.columns[14];
         bhureport.columns[14] = {
-            headerText: 'NEW SCRIPT RECEIVED',
+            headerText: 'New Script Received',
             dataField: 'newscriptreceived',
             thClasses: 'width10',
             tdClasses: 'width10'
@@ -284,30 +279,6 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
                 success: false
             });
         }
-        // else if(filter.bhurptYear && !filter.bhurptQuarter){
-        //      reportservice.getBhuReportFilterDetailsByYear(filter.bhurptYear, startIndex).then(function(resp){
-        //         if(resp && resp.errorCode){
-        //         $scope.$emit('alert', {
-        //             message: resp.message,
-        //             success: false
-        //             });
-        //         }
-        //         else {
-        //             bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
-        //         }
-        //     });
-        //  }else if(filter.bhurptYear && filter.bhurptQuarter){
-        //         reportservice.getBhuReportFilterDetailsByQuarter(filter.bhurptYear, filter.bhurptQuarter, startIndex).then(function(resp){
-        //             if(resp && resp.errorCode){
-        //                 $scope.$emit('alert', {
-        //                 message: resp.message,
-        //                 success: false
-        //             });
-        //             }else{
-        //                 bhureport.populateBhuReportDetailsData(resp.bhurptDetails, resp.totalCount);
-        //             }
-        //         });
-        // }
          bhureport.filterBhuReport.searchKeyword = '';
     }
 
@@ -361,60 +332,15 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         bhureport.count = bhureport.count  + 1;
         bhureport.nOfIndexs = (Math.round(c / 100));
     }
-
-    // function loadMore(i){   
-    //     bhureport.count = bhureport.count  + 1;
-    //     if(bhureport.selectedYear && !bhureport.selectedQuarter){
-    //         reportservice.getBhuReportFilterDetailsByYear(bhureport.selectedYear, (100*i)+1).then(function(resp){
-    //             bhureport.data =  bhureport.data.concat(resp.bhurptDetails);
-    //         });
-    //     }else if(bhureport.selectedYear && bhureport.selectedQuarter){
-    //         reportservice.getBhuReportFilterDetailsByQuarter(bhureport.selectedYear, bhureport.selectedQuarter, (100*i)+1).then(function(resp){
-    //             bhureport.data =  bhureport.data.concat(resp.bhurptDetails);
-    //         });
-    //     }else{
-    //          reportservice.getBhuReportData((100*i)+1).then(function(resp){
-    //             bhureport.data =  bhureport.data.concat(resp.bhurptDetails);
-    //        });
-    //      }
-    //  }
-
     function exportToExcel(){
-        var p = bhureport.filterBhuReport.bhurptPhase ? bhureport.filterBhuReport.bhurptPhase : "null";
+        var phase = bhureport.filterBhuReport.bhurptPhase;
+        var p = phase ? phase.substr(0, phase.indexOf(" ")) : "null";
         var y = bhureport.filterBhuReport.bhurptYear ? bhureport.filterBhuReport.bhurptYear : "null";
         var q = bhureport.filterBhuReport.bhurptQuarter ? bhureport.filterBhuReport.bhurptQuarter : "null";
         var m = bhureport.filterBhuReport.bhurptMonth ? bhureport.filterBhuReport.bhurptMonth : "null" ;
 
         //this is the common url which will work for any filter
         window.location.href = reportservice.exportExcel(p, y, q, m);
-
-        
-        
-        // if(p){
-        //  if(y && !q){
-        //         window.location.href = reportservice.exportToExcelByPhaseAndYear(p, y);
-        //     }else if( q && !m){
-        //         window.location.href = reportservice.exportToExcelByQuarter(p, y, q);
-        //     }else if(y && q && m){
-        //         window.location.href = reportservice.exportExcel(p, y, q, m);
-        //     }else{
-        //         window.location.href = reportservice.exportToExcelByPhase(p);
-        //     }
-        // }
-        // else {
-        //     if(y && !q){
-        //         window.location.href = reportservice.exportToExcelByYear(y);
-        //     }else if(y && q && !m){
-        //         window.location.href = reportservice.exportToExcelByQuarter(p, y, q);
-        //     }else if(y && q && m){
-        //         window.location.href = reportservice.exportExcel(p, y, q, m);
-        //     }else{
-        //         window.location.href = reportservice.exportToExcelCurrentQuarter();
-        //     }
-        // }
-        // else{
-        //     window.location.href = reportservice.exportToExcelCurrentQuarter();
-        // }
     }
 }
 module.exports = BhuReportsController;
