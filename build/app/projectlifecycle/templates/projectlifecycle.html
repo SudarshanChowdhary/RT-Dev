@@ -20,6 +20,7 @@
         </style>
         
 <div class="row rt-pcl-box" center>
+    <toaster-container toaster-options="{'position-class': 'toast-bottom-right'}"></toaster-container>
     <div class="sw4_notify">
         <alert ng-repeat="alert in alerts" type="alert.type" class="alert alert-{{alert.type}}">{{ alert.msg }} 
         <button type="button" class="close" ng-click="closeAlert($index)">

@@ -1,6 +1,6 @@
-ProjectLifeCycleController.$inject = ['$state', '$scope', '$uibModal', '$log', 'ProjectLifeCycleService', 'sharedService', 'alertService','$rootScope'];
+ProjectLifeCycleController.$inject = ['$state', '$scope', '$uibModal', '$log', 'toaster', 'ProjectLifeCycleService', 'sharedService', 'alertService','$rootScope'];
 
-function ProjectLifeCycleController($state, $scope, $uibModal, $log, ProjectLifeCycleService, sharedService, alertService, $rootScope) {
+function ProjectLifeCycleController($state, $scope, $uibModal, $log, toaster, ProjectLifeCycleService, sharedService, alertService, $rootScope) {
      $scope.showMileStoneForm = function () {
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/projectlifecycle/templates/rtplcmilestone.html',
@@ -23,7 +23,19 @@ function ProjectLifeCycleController($state, $scope, $uibModal, $log, ProjectLife
             modalInstance.result.then(function (selectedItem) {
                 $scope.selected = selectedItem;
                 console.log($scope.selected);
+
+    
+
             }, function () {
+
+                toaster.pop({
+                    type: 'success',
+                    body: 's8dardauaj',
+                    timeout: 5000,
+                    showCloseButton: true               
+                });
+    
+
                 $log.info('Modal dismissed at: ' + new Date());
             });
     };
@@ -67,10 +79,10 @@ function ProjectLifeCycleController($state, $scope, $uibModal, $log, ProjectLife
     }
 }
 
-ModalMileStoneController.$inject = ['$scope', '$uibModalInstance', 'milestoneData',
+ModalMileStoneController.$inject = ['$scope', '$uibModalInstance', 'milestoneData', 'toaster',
 'ProjectLifeCycleService', 'spinnerService', '$filter'];
 
-function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, ProjectLifeCycleService, spinnerService, $filter) {
+function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, toaster, ProjectLifeCycleService, spinnerService, $filter) {
     $scope.milestoneRequiredData = {};
     $scope.date = new Date();
     $scope.resetClicked = false;
@@ -106,6 +118,7 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, Pro
       $scope.submitMilestone = function () {
         if ($scope.form.milestone.$valid) {
           spinnerService.show();
+          toaster.pop('info', "title", "form valid");
 
           var shrdScript = document.getElementById("scripts_shared").value;
           var scriptsRecived = document.getElementById("scripts_recived").value;
@@ -129,7 +142,17 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, Pro
               spinnerService.hide();
               $uibModalInstance.close();
               $rootScope.success("Milestone updated..!");
-          });
+              toaster.pop({
+                type: 'success',
+                body: 's8dardauaj',
+                timeout: 5000,
+                showCloseButton: true               
+            });
+
+
+          }, function(err){
+            $uibModalInstance.close();
+           });
         }
     };
 
@@ -142,9 +165,9 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, Pro
     };
 };
 
-ModalNotificationController.$inject = ['$scope', '$uibModalInstance', '$http', 'notificationData', 'ProjectLifeCycleService', 'spinnerService','$q','$rootScope'];
+ModalNotificationController.$inject = ['$scope', '$uibModalInstance', '$http', 'toaster', 'notificationData', 'ProjectLifeCycleService', 'spinnerService','$q','$rootScope'];
 
-function ModalNotificationController ($scope, $uibModalInstance, $http, notificationData, ProjectLifeCycleService, spinnerService, $q, $rootScope) {
+function ModalNotificationController ($scope, $uibModalInstance, $http, toaster, notificationData, ProjectLifeCycleService, spinnerService, $q, $rootScope) {
     $scope.notificationFormData = {}
     $scope.fileAttachment = [];
     $scope.files = [];
@@ -212,6 +235,14 @@ function ModalNotificationController ($scope, $uibModalInstance, $http, notifica
             success(function (data, status, headers, config) {
                 $uibModalInstance.close();
                 $rootScope.success("Notification has been sent to user..!");
+                toaster.pop({
+                    type: 'success',
+                    body: 'messages',
+                    timeout: 5000,
+                    showCloseButton: true               
+                });
+    
+
             }).
             error(function (data, status, headers, config) {
                 //deffered.reject(data);
