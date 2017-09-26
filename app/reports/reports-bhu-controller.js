@@ -28,6 +28,9 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
     function init() {
         bhureport.bhurptFilterYear = sharedService.getYears();
         bhureport.bhuReportPhase = sharedService.getPhase();
+        angular.element('.table--fixed').css({
+            "width": sharedService.getWindowWidth() > 1500 ? "100%" : "1700px"
+          })
          bhureport.gridOptions = {
             bindType: 1,
             data: {
@@ -64,7 +67,7 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         bhureport.gridOptions.dataOptions.nodata = '';
         bhureport.columns = [
         {
-            headerText: 'Bhu / Ihu',
+            headerText: 'BHU / IHU',
             dataField: 'bhuId',
             thClasses: 'width5',
             tdClasses: 'width5',
@@ -76,13 +79,13 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             tdClasses: 'width10',
             sort: true
         }, {
-            headerText: 'size',
+            headerText: 'Size',
             dataField: 'size',
             //sort: true,
             thClasses: 'width5',
             tdClasses: 'width5'
         },{
-            headerText: 'No of Objects',
+            headerText: 'Impacted objects',
             dataField: 'noOfObjects',
             thClasses: 'width5',
             tdClasses: 'width5'
@@ -104,17 +107,17 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             thClasses: 'width5',
             tdClasses: 'width5'
         },{
-            headerText: 'Script Shared',
+            headerText: 'Scripts Shared',
             dataField: 'scriptshared',
             thClasses: 'width5',
             tdClasses: 'width5'
         },{
-            headerText: 'Script Utilized',
+            headerText: 'Scripts Utilized',
             dataField: 'scriptutilized',
             thClasses: 'width5',
             tdClasses: 'width5'
         },{
-            headerText: 'Script Executed',
+            headerText: 'Scripts Executed',
             dataField: 'scriptexecuted',
             thClasses: 'width5',
             tdClasses: 'width5'
@@ -135,7 +138,7 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             tdClasses: 'width5',
             sort: true
         },{
-            headerText: 'Script Excpart of Warranty',
+            headerText: 'Scripts Executed part of warranty',
             dataField: 'scriptExcpartOfwarranty',
             thClasses: 'width10',
             tdClasses: 'width10'
@@ -150,7 +153,7 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
     if($rootScope.isTeamMember == true || ($rootScope.userRoles && $rootScope.userRoles.indexOf("admin")> -1)){
         var colm15 = bhureport.columns[14];
         bhureport.columns[14] = {
-            headerText: 'New Script Received',
+            headerText: 'New Scripts Received',
             dataField: 'newscriptreceived',
             thClasses: 'width5',
             tdClasses: 'width5'
@@ -176,7 +179,7 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
 
         bhureport.itemRenderers = {
             //link going to appear in grid
-            'bhuId': 'bhu-id-link-renderer',
+            'bhuId': 'reportbhu-id-link-renderer',//reportbhu-id-link-renderer
             'currentStatus': 'current-status-link-renderer',
             'warrantyissue': 'warranty-issue-link-renderer',
             'efortsutilized': 'efforts-utilized-link-renderer'
@@ -250,11 +253,15 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
                     });
         angular.element('.rt-grid__wrapper').css({
                       "width": "80%",
-                      "float": "left"
+                      "float": "left",
+                      "overflow": "scroll"
                     });
+        angular.element('.table--fixed').css({
+            "width": sharedService.getWindowWidth() > 1500 ? "100%" : "1700px"
+        })
         angular.element('.filter-by').toggleClass('hide');
     }
-
+    
     function populateBhuReportFilterData(filter, startIndex){
       var q =  bhureport.selectedQuarter = filter.bhurptQuarter;
       var y =  bhureport.selectedYear = filter.bhurptYear;
@@ -295,7 +302,7 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
        bhureport.bhuReportFilterMonth = months;
     }
 
-    function hideSideFilterOptions(){
+    function hideSideFilterOptions( ){
         angular.element('.sidenav').toggleClass('hide');
         angular.element('.sidenav').css({
                       "width": "0"
@@ -303,6 +310,9 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         angular.element('.rt-grid__wrapper').css({
                       "width": "100%"
                     });
+         angular.element('.table--fixed').css({
+            "width": sharedService.getWindowWidth() > 1500 ? "100%" : "1700px"
+          })
         angular.element('.filter-by').toggleClass('hide');
     }
 
@@ -334,10 +344,10 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
     }
     function exportToExcel(){
         var phase = bhureport.filterBhuReport.bhurptPhase;
-        var p = phase ? phase.substr(0, phase.indexOf(" ")) : "null";
-        var y = bhureport.filterBhuReport.bhurptYear ? bhureport.filterBhuReport.bhurptYear : "null";
-        var q = bhureport.filterBhuReport.bhurptQuarter ? bhureport.filterBhuReport.bhurptQuarter : "null";
-        var m = bhureport.filterBhuReport.bhurptMonth ? bhureport.filterBhuReport.bhurptMonth : "null" ;
+        var p = phase ? (phase.split(" ").length >1 ? phase.substr(0, phase.indexOf(" ")) :phase ): "0";
+        var y = bhureport.filterBhuReport.bhurptYear ? bhureport.filterBhuReport.bhurptYear : "0";
+        var q = bhureport.filterBhuReport.bhurptQuarter ? bhureport.filterBhuReport.bhurptQuarter : "0";
+        var m = bhureport.filterBhuReport.bhurptMonth ? bhureport.filterBhuReport.bhurptMonth : "0" ;
 
         //this is the common url which will work for any filter
         window.location.href = reportservice.exportExcel(p, y, q, m);

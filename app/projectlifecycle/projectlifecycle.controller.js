@@ -1,6 +1,6 @@
-ProjectLifeCycleController.$inject = ['$state', '$scope', '$uibModal', '$log', 'ProjectLifeCycleService', 'sharedService'];
+ProjectLifeCycleController.$inject = ['$state', '$scope', '$uibModal', '$log', 'ProjectLifeCycleService', 'sharedService', 'alertService','$rootScope'];
 
-function ProjectLifeCycleController($state, $scope, $uibModal, $log, ProjectLifeCycleService, sharedService) {
+function ProjectLifeCycleController($state, $scope, $uibModal, $log, ProjectLifeCycleService, sharedService, alertService, $rootScope) {
      $scope.showMileStoneForm = function () {
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/projectlifecycle/templates/rtplcmilestone.html',
@@ -51,7 +51,20 @@ function ProjectLifeCycleController($state, $scope, $uibModal, $log, ProjectLife
 	        }, function () {
 	            $log.info('Modal dismissed at: ' + new Date());
 	        });
-	};
+    };
+    $rootScope.success = function(mesg){
+        alertService.alertSrv.showAlert("success", mesg, 3000);
+    }
+
+    $rootScope.error = function(mesg){
+        alertService.alertSrv.showAlert("danger", mesg, 3000);
+    }
+
+  
+  // root binding for alertService
+    $rootScope.closeAlert = function(indx){
+        alertService.alertSrv.closeAlert(indx);
+    }
 }
 
 ModalMileStoneController.$inject = ['$scope', '$uibModalInstance', 'milestoneData',
@@ -60,6 +73,7 @@ ModalMileStoneController.$inject = ['$scope', '$uibModalInstance', 'milestoneDat
 function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, ProjectLifeCycleService, spinnerService, $filter) {
     $scope.milestoneRequiredData = {};
     $scope.date = new Date();
+    $scope.resetClicked = false;
     $scope.dateOptions = {
         dateDisabled: false,
         showWeeks:false,
@@ -70,13 +84,12 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, Pro
       $scope.open1 = function() {
         $scope.popup1.opened = true;
       };
-      $scope.format = "yyyy-MM-dd";
+      $scope.format = "dd-MM-yyyy";
       $scope.popup1 = {
         opened: false
       };
     
       $scope.validateNumber =function($event){
-          debugger;
         if(isNaN(String.fromCharCode($event.keyCode))){
             $event.preventDefault();
         }
@@ -92,23 +105,37 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, Pro
       };
       $scope.submitMilestone = function () {
         if ($scope.form.milestone.$valid) {
-            debugger;
           spinnerService.show();
+
+          var shrdScript = document.getElementById("scripts_shared").value;
+          var scriptsRecived = document.getElementById("scripts_recived").value;
+          var scriptsModified = document.getElementById("scripts_modified").value;
+          var scriptsUtilized = document.getElementById("scripts_utilized").value;
+
           $scope.milestoneRequiredData = {
             "meetingDate": $filter('date')($scope.date, "yyyy-MM-dd"),
             "bhuId": $scope.bhuihu,
-            "rtspoc": $scope.selected,
+            "rtSpoc": $scope.selected,
             "rtPlcMilestone": $scope.plcmilestone,
             "minutesOfMeeting": $scope.elucidationmom,
-            "efforts": $scope.hours +"." +$scope.minutes
+            "efforts": ($scope.hours ? $scope.hours :00) +"."+ ($scope.minutes ? $scope.minutes : 00),
+            "newScripstRecived" : scriptsRecived ? scriptsRecived : 0,
+            "scripstModified": scriptsModified ? scriptsModified : 0,
+            "scriptsUtilised" : scriptsUtilized ? scriptsUtilized : 0,
+            "scriptsShared": shrdScript ? shrdScript : 0
           };
-          console.log("milestone", $scope.milestoneRequiredData);
+          //console.log("milestone", $scope.milestoneRequiredData);
             ProjectLifeCycleService.rtPlcMilestoneAdd($scope.milestoneRequiredData).then(function(){
               spinnerService.hide();
-              $uibModalInstance.close(milestoneRequiredData);
+              $uibModalInstance.close();
+              $rootScope.success("Milestone updated..!");
           });
         }
     };
+
+    $scope.reSetFormItems = function(){
+        $scope.resetClicked = true;
+    }
 
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
@@ -128,6 +155,8 @@ function ModalNotificationController ($scope, $uibModalInstance, $http, notifica
       label: 'Integration and Testing'
     },{
         label: 'UAT'
+    },{
+        label: 'RT'
     },{
       label: 'Warranty and Phase'
     },{
@@ -154,37 +183,39 @@ function ModalNotificationController ($scope, $uibModalInstance, $http, notifica
       }
     }
     $scope.submitFormNotfication = function () {
+        $uibModalInstance.close();
+        $rootScope.success("Notification has been sent to user..!");
+        return;
         if ($scope.notificationForm.$valid) {
-            var attachments = $scope.myFile;
-           
-            $scope.notificationFormData = {
-                "bhuId": $scope.bhuId,
-                "rtSpoc": $scope.selected,
-                "send-to":$scope.rt_recipients,
-                "status": $scope.plc_phase,
-                "content": $scope.content,
-                "file": attachments,
-                "from": $rootScope.user
-            }
-            var fmData = new FormData();
-            if(attachments.length > 0){
-                fmData.append("files", attachments);
-            }
-            fmData.append("data", JSON.stringify($scope.notificationFormData));
+            var attachment = $scope.myFile;
 
-            $http.post("milestone/doEmail", $scope.notificationFormData ,{
-                headers: { 'Content-Type': undefined },
-                transformRequest: angular.identity
+            var fmData = new FormData();
+            fmData.append('bhu-Id', $scope.bhuId);
+            fmData.append('rtSpoc', $scope.selected);
+            fmData.append('sent-to', $scope.rt_recipients);
+            fmData.append('status', $scope.plc_phase);
+            fmData.append('content', $scope.content);
+            fmData.append('from', $rootScope.user);
+            //fmData.append('file', attachments);//new Blob(attachments, { type: 'text/csv' }));
+           
+            if(attachment.length > 0){
+                fmData.append("file", attachment[0]);
+            }
+            var url = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/milestone/doEmail";
+            // var url = "milestone/doEmail";
+            $http.post(url , fmData ,{
+                //transformRequest: angular.identity,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
             }).
             success(function (data, status, headers, config) {
-                alert("success!");
-                $uibModalInstance.close('closed');
-                deffered.resolve(data);
+                $uibModalInstance.close();
+                $rootScope.success("Notification has been sent to user..!");
             }).
             error(function (data, status, headers, config) {
-                alert(data);
-                deffered.reject(data);
-                $uibModalInstance.close('closed');
+                //deffered.reject(data);
+                $uibModalInstance.close();
             });
           }
     };

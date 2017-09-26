@@ -1,7 +1,7 @@
 <div class="modal-header">
    <h2>RT PLC NOTIFICATION</h2>
 </div>
-<form name="notificationForm" novalidate role="form">
+<form name="notificationForm" novalidate role="form" enctype="multipart/form-data" data-ng-submit="submitFormNotfication(this)" method="post">
     <div class="modal-body">
     <div class="form-group row">
         <div class="col-md-2"></div>
@@ -18,14 +18,14 @@
     <div class="form-group row">
         <div class="col-md-2"></div>
         <div class="col-md-4"> <label for="rt_recipients">RECIPIENTS* :</label></div>
-        <div class="col-md-4"> <input type="text" autocomplete="off" name="rt_recipient" class="form-control"  ng-model="rt_recipients" required> </div>
+        <div class="col-md-4"> <input type="text" autocomplete="off" name="rt_recipient" class="form-control"  ng-model="rt_recipients" name="rt_recipients" required> </div>
         <div class="col-md-2"></div>
     </div>
     <div class="form-group row">
     <div class="col-md-2"></div>
         <div class="col-md-4"> <label for="plc-phase">RT PLC PHASE* :</label></div>
         <div class="col-md-4">
-           <select class="form-control" ng-model="plc_phase" ng-change="previewPhase(plc_phase)" ng-options="S.label as S.label for S in selectables">
+           <select class="form-control" ng-model="plc_phase" name="plc_phase" ng-change="previewPhase(plc_phase)" ng-options="S.label as S.label for S in selectables">
             <option value="" selected></option>
             </select>
         </div>
@@ -34,7 +34,7 @@
     <div class="form-group row">
         <div class="col-md-2"></div>
         <div class="col-md-4"> <label>ATTACHMENTS :</label></div>
-        <div class="col-md-5"><input type="file" demo-file-model="myFile"  multiple  class="form-control" id ="myFileField" /></div>
+        <div class="col-md-5"><input type="file" demo-file-model="myFile"  class="form-control" name ="myFileField" /></div>
         <div class="col-md-1"></div>
     </div>
 
@@ -48,13 +48,13 @@
     <div class="form-group row" ng-if="plc_phase">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-          <img ng-src='{{phase_preview}}' ng-show="phase_preview" width="500px" height="300px"/>
+          <img ng-src='{{phase_preview}}' ng-model="phase_preview" name="preview" width="500px" height="300px"/>
 		</div>
 		<div class="col-md-1"></div>
 	</div>
     <div class="modal-footer row">
         <div class="col-md-4 text-center">
-            <button ng-click="submitFormNotfication()" class="btn btn-primary" ng-disabled="notificationForm.$invalid">SEND EMAIL</button>
+            <button type="submit" class="btn btn-primary" ng-disabled="notificationForm.$invalid">SEND EMAIL</button>
         </div>
         <div class="col-md-4 text-center">
             <button type="reset" class="btn btn-primary" ng-click="clearImageSource()" ng-disabled="form.userForm.$invalid">RESET</button>

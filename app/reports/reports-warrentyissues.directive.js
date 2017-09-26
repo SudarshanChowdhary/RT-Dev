@@ -32,8 +32,11 @@ function WarrantyModalController($uibModalInstance, modal, reportservice) {
                             thClasses: 'width30',
                             tdClasses: 'width40'
                         }];
-
+                        ctrlWar.itemRenderers = {
+                            'justification': 'desc-item-renderer'
+                        };
     ctrlWar.exportWarrantyToExcel = function(bhuId){
+        debugger;
         window.location.href = reportservice.exportWarrantyToExcelSrv(bhuId);
     }
                        

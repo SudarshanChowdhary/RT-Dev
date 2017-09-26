@@ -1,4 +1,4 @@
-EffortsModalController.$inject = ['$uibModalInstance', 'modal','$rootScope', 'reportservice'];
+EffortsModalController.$inject = ['$uibModalInstance', 'modal','$rootScope', 'reportservice' ];
 
 function EffortsModalController($uibModalInstance, modal, $rootScope, reportservice) {
     var ctrlEfrt = this;
@@ -14,6 +14,9 @@ function EffortsModalController($uibModalInstance, modal, $rootScope, reportserv
             },
             enablePagination: true
         };
+        angular.element('.table--fixed').css({
+            "width": reportservice.getWindowsWidthPx() > 1300 ? "100%" : "1500px"
+        })
    
     ctrlEfrt.modalColumns = [
         { headerText: 'BHU / IHU', dataField: 'bhuId', thClasses: 'width5', tdClasses: 'width5', sort: true }, 
@@ -27,13 +30,13 @@ function EffortsModalController($uibModalInstance, modal, $rootScope, reportserv
         { headerText: 'IT REVIEW',dataField: 'itReview', tdClasses: 'width5',thClasses: 'width5'},
         { headerText: 'UAT REVIEW',dataField: 'uatReview', tdClasses: 'width5',thClasses: 'width5'},
         { headerText: 'RT SCOPING',dataField: 'rtScoping', tdClasses: 'width5',thClasses: 'width5'},
-        { headerText: 'RT EXECUTION/ DEFECT',dataField: 'itExecutionDefects', tdClasses: 'width7',thClasses: 'width7', sort: true},
+        { headerText: 'RT EXECUTION/ DEFECT',dataField: 'itExecutionDefects', tdClasses: 'width5',thClasses: 'width5', sort: true},
         { headerText: 'WARRANTY SUPORT',dataField: 'warrantySupport', tdClasses: 'width5',thClasses: 'width5'},
 
         { headerText: 'P2S',dataField: 'p2s', tdClasses: 'width5',thClasses: 'width5'},
         { headerText: 'PLC FOLLOWUPS',dataField: 'plcFollowups', tdClasses: 'width5',thClasses: 'width5'},
         { headerText: 'ESTIMETED EFFORTS',dataField: 'estimatedEfforts', tdClasses: 'width5',thClasses: 'width5'},
-        { headerText: 'TOTAL ACTUAL EFFORTS',dataField: 'actualEfforts', tdClasses: 'width7',thClasses: 'width7', sort: true},
+        { headerText: 'TOTAL ACTUAL EFFORTS',dataField: 'actualEfforts', tdClasses: 'width5',thClasses: 'width5', sort: true},
         { headerText: 'DEVIATION',dataField: 'deviation', tdClasses: 'width5',thClasses: 'width5', sort: true}
     ];
     ctrlEfrt.itemRenderers = {

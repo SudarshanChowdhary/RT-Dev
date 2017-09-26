@@ -8,10 +8,11 @@ function effortsUtilizedLinkRenderer(){
         ].join(''),
         link: function(scope, element, attr) {
            scope.displayUtilizedEfforts = function(efortsutilized) {
-              if(isNaN(efortsutilized) || efortsutilized==null){
+              if(isNaN(efortsutilized) || efortsutilized==null || efortsutilized == '' || efortsutilized == 0){
                 return efortsutilized;
               }else{
-                return "<a title='Get deatils' href='javascript:void(0)'><span class='glyphicon glyphicon-new-window blue'></span>&nbsp;&nbsp;"+efortsutilized+"</a>";
+                return "<a title='Get deatils' href='javascript:void(0)'>"+efortsutilized+"</a>";
+                //<span class='glyphicon glyphicon-new-window blue'></span>&nbsp;&nbsp;
               }
             }
         }

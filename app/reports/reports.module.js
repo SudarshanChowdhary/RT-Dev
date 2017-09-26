@@ -6,7 +6,7 @@ module.exports = angular
     .controller('ReportsController', require('./reports.controller'))
     .controller('BhuReportsController', require('./reports-bhu-controller'))
     .factory('reportservice', require('./reports.service'))
-    .directive('bhuLink', require('./reports-bhu.directive'))
+    .directive('reportbhuLink', require('./reports-bhu.directive'))
     .directive('effortsutilizedLink', require('./reports-efforts.directive'))
     .directive('warrantyissueLink', require('./reports-warrentyissues.directive'))
     .directive('currentstatusLink', require('./reports-status.directive'))

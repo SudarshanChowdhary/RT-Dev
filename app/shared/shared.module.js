@@ -26,8 +26,10 @@ module.exports = angular
     .directive('currentStatusLinkRenderer',require('./directives/grid-report-status.directive'))
     .directive('warrantyIssueLinkRenderer',require('./directives/grid-report-warrantyIssue.directive'))
     .directive('effortsUtilizedLinkRenderer',require('./directives/grid-report-efortsutilize.directive'))
+    .directive('reportbhuIdLinkRenderer', require('./directives/grid-report-bhuid-link.directive'))
     .directive('highlightCell', require('./directives/grid-deviation-format.directive'))
     .factory('spinnerService', require('./spinner/spinner.service'))
     .factory('checkRepositoryService', require('./check-repository/check-repository.service'))
+    .factory('alertService',require('./alert-module/alert.service'))
     .factory('sharedService', require('./shared.service'));
     

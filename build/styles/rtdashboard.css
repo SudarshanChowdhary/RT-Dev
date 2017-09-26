@@ -6730,8 +6730,8 @@ body > .ui-select-bootstrap.open {
 
 @media only screen and (min-width: 1800px) {
   .main-container {
-    height: 670px;
-    max-height: 670px;
+    height: 770px;
+    max-height: 770px;
     overflow-y: auto; } }
 
 .table--generic {
@@ -7823,6 +7823,7 @@ textarea {
     border: 1px solid #ddd;
     position: absolute;
     left: 25%;
+    width: 50%;
     top: 5%;
     padding: 0px;
     -moz-box-shadow: 1px 3px 3px #ddd;
@@ -8180,6 +8181,8 @@ textarea {
    Project life cycle tab css
 ================================================================== */
 .plc-form-textarea {
+  max-height: 100px !important;
+  max-width: 250px !important;
   min-height: 100px !important;
   min-width: 250px !important; }
 

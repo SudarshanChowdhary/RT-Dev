@@ -1,5 +1,31 @@
 
+<style>
+    
+    .sw4_notify {
+      position: fixed;
+      /* top: 20%; */
+      width: 50%;
+      float: right;
+      left: 26%;
+      z-index: 800;
+      border-radius: 0 !important;
+    }
+    
+    .sw4_notify > alert{
+      display: block;
+      border-radius: 0 !important;
+    }
+    
+    
+        </style>
+        
 <div class="row rt-pcl-box" center>
+    <div class="sw4_notify">
+        <alert ng-repeat="alert in alerts" type="alert.type" class="alert alert-{{alert.type}}">{{ alert.msg }} 
+        <button type="button" class="close" ng-click="closeAlert($index)">
+          <span aria-hidden="true">&times;</span>
+        </button></alert>
+    </div>
   <div class=col-md-3></div>
 	<button class="rt-pcl-btn-box col-md-3 text-center"  ng-click="showMileStoneForm()"> RT PLC MILESTONE</button>
     <button class="rt-pcl-btn-box col-md-3 text-center" ng-click="showNotificationForm()">RT PLC NOTIFICATION</button>

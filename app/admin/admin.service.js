@@ -1,6 +1,6 @@
-AdminService.$inject = ['$http', '$q', 'spinnerService'];
+AdminService.$inject = ['$http', '$q', 'spinnerService', "$rootScope"];
 
-function AdminService($http, $q, spinnerService) {
+function AdminService($http, $q, spinnerService, $rootScope) {
     var adminService = {
         getAdminData: getAdminData,
         getAdminSpotlightData: getAdminSpotlightData,
@@ -38,7 +38,8 @@ function AdminService($http, $q, spinnerService) {
     function getAdminSpotlightData() {
         var def = $q.defer();
         spinnerService.show();
-        $http.get("admin/spotlights").success(function(data) {
+        $http.get("https://rtdashboardd.rno.apple.com:9012/admin/spotlights").success(function(data) {
+        //$http.get( "admin/spotlights").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
         }).error(function() {
@@ -52,7 +53,8 @@ function AdminService($http, $q, spinnerService) {
         spinnerService.show();
         $http({
             method: 'POST',
-            url: 'admin/spotlights',
+            url: 'https://rtdashboardd.rno.apple.com:9012/admin/spotlights',
+            //url: 'admin/spotlights',
             data: spotLightData
         }).success(function(data) {
             def.resolve(data);
@@ -68,7 +70,8 @@ function AdminService($http, $q, spinnerService) {
         spinnerService.show();
         $http({
             method: 'PUT',
-            url: 'admin/spotlights',
+            url: 'https://rtdashboardd.rno.apple.com:9012/admin/spotlights',
+           // url: 'admin/spotlights',
             data: spotLightData
         }).success(function(data) {
             def.resolve(data);
@@ -84,7 +87,8 @@ function AdminService($http, $q, spinnerService) {
         spinnerService.show();
         $http({
             method: 'DELETE',
-            url: 'admin/spotlights/' + sId
+            url: 'https://rtdashboardd.rno.apple.com:9012/admin/spotlights/' + sId
+            // url: 'admin/spotlights/' + sId
         }).success(function(data) {
             def.resolve(data);
             spinnerService.hide();

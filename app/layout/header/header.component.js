@@ -9,6 +9,9 @@ function HeaderController($state, sharedService, $scope, $rootScope) {
     ctrl.isAdminUser = false;
     ctrl.getTestScripts = getTestScripts;
 
+  //  $rootScope.devUrl =  "https://rtdashboardd.rno.apple.com:9012/RTDashboard/";
+    //$rootScope.devUrl =  "";
+
     sharedService.getUser().then(function(user){
       if(user && user.errorCode){
                 $scope.$emit('alert', {

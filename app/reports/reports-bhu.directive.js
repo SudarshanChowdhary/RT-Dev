@@ -36,8 +36,11 @@ function BhuRptModalController($uibModalInstance, modal, reportservice) {
                             tdClasses: 'width15',
                             thClasses: 'width15',
                             sort: true
-                        }];
+                        }];//desc-item-renderer
 
+    ctrl.itemRenderers = {
+        'description': 'desc-item-renderer'
+    };
     ctrl.cancel = function () {
         $uibModalInstance.dismiss('cancel');
       };

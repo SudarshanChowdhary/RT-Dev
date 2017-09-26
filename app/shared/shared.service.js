@@ -11,7 +11,8 @@ function SharedService($http, $q, $rootScope, spinnerService) {
         getSearchTestScriptsByBhuid: getSearchTestScriptsByBhuid,
         getQuarterMonths: getQuarterMonths,
         getTeamMembers : getTeamMembers,
-        getrtSpocsUsers : getrtSpocsUsers
+        getrtSpocsUsers : getrtSpocsUsers,
+        getWindowWidth :getWindowWidth
     };
     return sharedService;
 
@@ -59,6 +60,19 @@ function SharedService($http, $q, $rootScope, spinnerService) {
             }
         }
     }
+    function getWindowWidth() {
+        if (self.innerWidth) {
+          return self.innerWidth;
+        }
+      
+        if (document.documentElement && document.documentElement.clientWidth) {
+          return document.documentElement.clientWidth;
+        }
+      
+        if (document.body) {
+          return document.body.clientWidth;
+        }
+      }
 
     function getSearchTestScripts(keyword){
         var def = $q.defer();
@@ -75,7 +89,8 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     function getUser(){
       var def = $q.defer();
         spinnerService.show();
-        $http.get("homepage/userProfile").success(function(data) {
+        $http.get("https://rtdashboardd.rno.apple.com:9012/homepage/userProfile").success(function(data) {
+        //$http.get("homepage/userProfile").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
             $rootScope.user = data.emailAddr;
@@ -89,7 +104,8 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     function getTeamMembers(){
         var def = $q.defer();
         spinnerService.show();
-        $http.get("admin/teamdetails").success(function(data) {
+        $http.get("https://rtdashboardd.rno.apple.com:9012/admin/teamdetails").success(function(data) {
+        //$http.get("admin/teamdetails").success(function(data) {
             def.resolve(data);
             var user = $rootScope.user;
             $rootScope.isTeamMember = false;
@@ -107,7 +123,8 @@ function SharedService($http, $q, $rootScope, spinnerService) {
 
     function getSpocDetails(spoc){
         var def = $q.defer();
-        $http.get("utils/users/"+ spoc).success(function(data) {
+       $http.get("https://rtdashboardd.rno.apple.com:9012/utils/users/"+ spoc).success(function(data) {
+       // $http.get("utils/users/"+ spoc).success(function(data) {
             def.resolve(data);
             spinnerService.hide();
         }).error(function() {
@@ -119,7 +136,9 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     function getrtSpocsUsers(){
         var def = $q.defer();
         spinnerService.show();
-        $http.get("utils/users").success(function(data) {
+        $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users").success(function(data) {
+        //$http.get("utils/users").success(function(data) {
+            def.resolve(data);
             spinnerService.hide();
         }).error(function() {
             def.reject("Failed to get data");
@@ -130,6 +149,7 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     function getSearchTestScriptsByBhuid(bhuId){
         var def = $q.defer();
         spinnerService.show();
+        //$http.get("https://rtdashboardd.rno.apple.com:9012/tickets/bhudetails/"+bhuId).success(function(data) {
         $http.get("tickets/bhudetails/"+bhuId).success(function(data) {
             def.resolve(data);
             spinnerService.hide();
