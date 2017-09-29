@@ -1,10 +1,14 @@
-<div class="rt-tickets-container row report-grid" style="padding-top: 0px;">
-    <a href="javascript:void(0)" class="filter-by" ng-click="bhureport.showFilterOptions()"><span class="glyphicon glyphicon-filter"></span>Filter</a>
-    <div class="rt-grid__wrapper">
-        <button type="button" style="float: right; margin-right: 50px;" class="btn btn-link export-btn" ng-click="bhureport.exportToExcel()" ng-disabled="bhureport.filterBhuReport.bhurptQuarter && !bhureport.filterBhuReport.bhurptYear">
+<div class="rt-tickets-container row report-grid" >
+    <a href="javascript:void(0)" class="filter-by grid-filter" ng-click="bhureport.showFilterOptions()"><span class="glyphicon glyphicon-filter"></span>Filter</a>
+    <a href="javascript:void(0)" class="filter-by export-excel" style="margin-right: 90px;width: 150px;"  ng-click="bhureport.exportToExcel()" ng-disabled="bhureport.filterBhuReport.bhurptQuarter && !bhureport.filterBhuReport.bhurptYear">
+        <span class="glyphicon glyphicon-export"></span>Export to excel
+    </a>
+    
+    <!-- <button type="button" style="float: right; margin-right: 50px;" class="btn btn-link export-btn" ng-click="bhureport.exportToExcel()" ng-disabled="bhureport.filterBhuReport.bhurptQuarter && !bhureport.filterBhuReport.bhurptYear">
         <span class="glyphicon glyphicon-export"></span>&nbsp;
         Export to excel
-        </button>
+    </button> -->
+    <div class="rt-grid__wrapper" style="overflow:auto; width: 100%; margin-top: 1.1%;">
         <p role="alert" aria-atomic="true" id="table-sort-alert" class="a11y">
         </p>
         <table rt-grid  data="bhureport.data" columns="bhureport.columns" item-renderers="bhureport.itemRenderers" grid-options="bhureport.gridOptions" 

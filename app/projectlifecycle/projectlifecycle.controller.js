@@ -1,6 +1,6 @@
-ProjectLifeCycleController.$inject = ['$state', '$scope', '$uibModal', '$log', 'toaster', 'ProjectLifeCycleService', 'sharedService', 'alertService','$rootScope'];
+ProjectLifeCycleController.$inject = ['$state', '$scope', '$uibModal', '$log', 'ProjectLifeCycleService', 'sharedService', 'toaster'];
 
-function ProjectLifeCycleController($state, $scope, $uibModal, $log, toaster, ProjectLifeCycleService, sharedService, alertService, $rootScope) {
+function ProjectLifeCycleController($state, $scope, $uibModal, $log, ProjectLifeCycleService, sharedService, toaster) {
      $scope.showMileStoneForm = function () {
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/projectlifecycle/templates/rtplcmilestone.html',
@@ -23,19 +23,7 @@ function ProjectLifeCycleController($state, $scope, $uibModal, $log, toaster, Pr
             modalInstance.result.then(function (selectedItem) {
                 $scope.selected = selectedItem;
                 console.log($scope.selected);
-
-    
-
             }, function () {
-
-                toaster.pop({
-                    type: 'success',
-                    body: 's8dardauaj',
-                    timeout: 5000,
-                    showCloseButton: true               
-                });
-    
-
                 $log.info('Modal dismissed at: ' + new Date());
             });
     };
@@ -64,25 +52,12 @@ function ProjectLifeCycleController($state, $scope, $uibModal, $log, toaster, Pr
 	            $log.info('Modal dismissed at: ' + new Date());
 	        });
     };
-    $rootScope.success = function(mesg){
-        alertService.alertSrv.showAlert("success", mesg, 3000);
-    }
-
-    $rootScope.error = function(mesg){
-        alertService.alertSrv.showAlert("danger", mesg, 3000);
-    }
-
-  
-  // root binding for alertService
-    $rootScope.closeAlert = function(indx){
-        alertService.alertSrv.closeAlert(indx);
-    }
 }
 
-ModalMileStoneController.$inject = ['$scope', '$uibModalInstance', 'milestoneData', 'toaster',
-'ProjectLifeCycleService', 'spinnerService', '$filter'];
+ModalMileStoneController.$inject = ['$scope', '$uibModalInstance', 'milestoneData',
+'ProjectLifeCycleService', 'spinnerService', '$filter', 'toaster'];
 
-function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, toaster, ProjectLifeCycleService, spinnerService, $filter) {
+function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, ProjectLifeCycleService, spinnerService, $filter, toaster) {
     $scope.milestoneRequiredData = {};
     $scope.date = new Date();
     $scope.resetClicked = false;
@@ -118,7 +93,6 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, toa
       $scope.submitMilestone = function () {
         if ($scope.form.milestone.$valid) {
           spinnerService.show();
-          toaster.pop('info', "title", "form valid");
 
           var shrdScript = document.getElementById("scripts_shared").value;
           var scriptsRecived = document.getElementById("scripts_recived").value;
@@ -130,29 +104,33 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, toa
             "bhuId": $scope.bhuihu,
             "rtSpoc": $scope.selected,
             "rtPlcMilestone": $scope.plcmilestone,
-            "minutesOfMeeting": $scope.elucidationmom,
+            "mom": $scope.elucidationmom,
             "efforts": ($scope.hours ? $scope.hours :00) +"."+ ($scope.minutes ? $scope.minutes : 00),
-            "newScripstRecived" : scriptsRecived ? scriptsRecived : 0,
-            "scripstModified": scriptsModified ? scriptsModified : 0,
-            "scriptsUtilised" : scriptsUtilized ? scriptsUtilized : 0,
-            "scriptsShared": shrdScript ? shrdScript : 0
+            "newScriptsReceived" : scriptsRecived ? scriptsRecived : "0",
+            "scriptsModified": scriptsModified ? scriptsModified : "0",
+            "scriptsUtilised" : scriptsUtilized ?  scriptsUtilized : "0",
+            "scriptsShared": shrdScript ?  shrdScript : "0"
           };
           //console.log("milestone", $scope.milestoneRequiredData);
-            ProjectLifeCycleService.rtPlcMilestoneAdd($scope.milestoneRequiredData).then(function(){
+            ProjectLifeCycleService.rtPlcMilestoneAdd($scope.milestoneRequiredData).then(function(res){
               spinnerService.hide();
               $uibModalInstance.close();
-              $rootScope.success("Milestone updated..!");
-              toaster.pop({
-                type: 'success',
-                body: 's8dardauaj',
-                timeout: 5000,
-                showCloseButton: true               
-            });
-
-
-          }, function(err){
-            $uibModalInstance.close();
-           });
+              if(res==true){
+                toaster.pop({
+                    type: 'success',
+                    body: 'Milestone Successfully Added..!',
+                    timeout: 3000,
+                    showCloseButton: true               
+                });
+            }else{
+                toaster.pop({
+                    type: 'error',
+                    body: 'Milestone Not Added, Please contact with admin..!',
+                    timeout: 3000,
+                    showCloseButton: true               
+                });
+            }
+          });
         }
     };
 
@@ -165,9 +143,9 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, toa
     };
 };
 
-ModalNotificationController.$inject = ['$scope', '$uibModalInstance', '$http', 'toaster', 'notificationData', 'ProjectLifeCycleService', 'spinnerService','$q','$rootScope'];
+ModalNotificationController.$inject = ['$scope', '$uibModalInstance', '$http', 'notificationData', 'ProjectLifeCycleService', 'spinnerService','$q','$rootScope', 'toaster'];
 
-function ModalNotificationController ($scope, $uibModalInstance, $http, toaster, notificationData, ProjectLifeCycleService, spinnerService, $q, $rootScope) {
+function ModalNotificationController ($scope, $uibModalInstance, $http, notificationData, ProjectLifeCycleService, spinnerService, $q, $rootScope, toaster) {
     $scope.notificationFormData = {}
     $scope.fileAttachment = [];
     $scope.files = [];
@@ -206,12 +184,8 @@ function ModalNotificationController ($scope, $uibModalInstance, $http, toaster,
       }
     }
     $scope.submitFormNotfication = function () {
-        $uibModalInstance.close();
-        $rootScope.success("Notification has been sent to user..!");
-        return;
         if ($scope.notificationForm.$valid) {
             var attachment = $scope.myFile;
-
             var fmData = new FormData();
             fmData.append('bhu-Id', $scope.bhuId);
             fmData.append('rtSpoc', $scope.selected);
@@ -220,29 +194,36 @@ function ModalNotificationController ($scope, $uibModalInstance, $http, toaster,
             fmData.append('content', $scope.content);
             fmData.append('from', $rootScope.user);
             //fmData.append('file', attachments);//new Blob(attachments, { type: 'text/csv' }));
-           
-            if(attachment.length > 0){
+           var contentType = undefined;
+            if(attachment && attachment.length > 0){
                 fmData.append("file", attachment[0]);
+                contentType = 'multipart/form-data';
             }
             var url = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/milestone/doEmail";
-            // var url = "milestone/doEmail";
+          //  var url = "milestone/doEmail";
             $http.post(url , fmData ,{
                 //transformRequest: angular.identity,
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': contentType
                 },
             }).
             success(function (data, status, headers, config) {
                 $uibModalInstance.close();
-                $rootScope.success("Notification has been sent to user..!");
-                toaster.pop({
-                    type: 'success',
-                    body: 'messages',
-                    timeout: 5000,
-                    showCloseButton: true               
-                });
-    
-
+                if(data == true){
+                    toaster.pop({
+                        type: 'success',
+                        body: 'Notification Successfully sent',
+                        timeout: 3000,
+                        showCloseButton: true               
+                    });
+                }else{
+                    toaster.pop({
+                        type: 'error',
+                        body: 'Notification sending error, Please contact with admin..!',
+                        timeout: 3000,
+                        showCloseButton: true               
+                    });
+                }
             }).
             error(function (data, status, headers, config) {
                 //deffered.reject(data);

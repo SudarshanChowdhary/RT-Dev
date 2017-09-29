@@ -7,6 +7,8 @@ function EffortsModalController($uibModalInstance, modal, $rootScope, reportserv
     ctrlEfrt.selBhuId = modal.selectedBhuId;
     ctrlEfrt.EffortsModalData = modal.reportModalData.effortsDetails;
     ctrlEfrt.rtSpoc = modal.selctedSpoc;
+    ctrlEfrt.rtSize = modal.size;
+    ctrlEfrt.gridWidth = modal.effortGridWidth;
     ctrlEfrt.gridOptions = {
             bindType: 1,
             data: {
@@ -15,9 +17,9 @@ function EffortsModalController($uibModalInstance, modal, $rootScope, reportserv
             enablePagination: true
         };
         angular.element('.table--fixed').css({
-            "width": reportservice.getWindowsWidthPx() > 1300 ? "100%" : "1500px"
-        })
-   
+            "width": modal.effortGridWidth
+          })
+
     ctrlEfrt.modalColumns = [
         { headerText: 'BHU / IHU', dataField: 'bhuId', thClasses: 'width5', tdClasses: 'width5', sort: true }, 
         { headerText: 'SIZE', dataField: 'size', thClasses: 'width5',tdClasses: 'width5' },
@@ -31,11 +33,11 @@ function EffortsModalController($uibModalInstance, modal, $rootScope, reportserv
         { headerText: 'UAT REVIEW',dataField: 'uatReview', tdClasses: 'width5',thClasses: 'width5'},
         { headerText: 'RT SCOPING',dataField: 'rtScoping', tdClasses: 'width5',thClasses: 'width5'},
         { headerText: 'RT EXECUTION/ DEFECT',dataField: 'itExecutionDefects', tdClasses: 'width5',thClasses: 'width5', sort: true},
-        { headerText: 'WARRANTY SUPORT',dataField: 'warrantySupport', tdClasses: 'width5',thClasses: 'width5'},
+        { headerText: 'WARRANTY SUPPORT',dataField: 'warrantySupport', tdClasses: 'width5',thClasses: 'width5'},
 
         { headerText: 'P2S',dataField: 'p2s', tdClasses: 'width5',thClasses: 'width5'},
         { headerText: 'PLC FOLLOWUPS',dataField: 'plcFollowups', tdClasses: 'width5',thClasses: 'width5'},
-        { headerText: 'ESTIMETED EFFORTS',dataField: 'estimatedEfforts', tdClasses: 'width5',thClasses: 'width5'},
+        { headerText: 'ESTIMATED EFFORTS',dataField: 'estimatedEfforts', tdClasses: 'width5',thClasses: 'width5'},
         { headerText: 'TOTAL ACTUAL EFFORTS',dataField: 'actualEfforts', tdClasses: 'width5',thClasses: 'width5', sort: true},
         { headerText: 'DEVIATION',dataField: 'deviation', tdClasses: 'width5',thClasses: 'width5', sort: true}
     ];
@@ -49,13 +51,12 @@ function EffortsModalController($uibModalInstance, modal, $rootScope, reportserv
     //     ctrlEfrt.itemRenderers["estimatedEfforts"] = "estimatedefforts-edit";
     //}
 
-    ctrlEfrt.exportEffortsToExcel = function(bhuId){
-        window.location.href = reportservice.exportEffortsToExcelSrv(bhuId);
+    ctrlEfrt.exportEffortsToExcel = function(bhuId, size){
+        window.location.href = reportservice.exportEffortsToExcelSrv(bhuId, size);
     }
-
     ctrlEfrt.cancel = function () {
         $uibModalInstance.dismiss('cancel');
-      };
+    };
 }
 BhuEffortsDirective.$inject = ['$uibModal', 'reportservice'];
 
@@ -64,7 +65,7 @@ function BhuEffortsDirective($uibModal, reportservice) {
         restrict: 'A',
         link: function(scope, element, attr, ctrlEfrt) {
             element.on('click', function() {
-               if(!isNaN(scope.item.bhuId)){
+               if(scope.item.bhuId){
                 reportservice.getReportEffortsDetails(scope.item.bhuId, scope.item.size, scope.item.rtsSpoc).then(function(resp){
                         if(resp && resp.errorCode){
                             $scope.$emit('alert', {
@@ -75,6 +76,11 @@ function BhuEffortsDirective($uibModal, reportservice) {
                             scope.selectedBhuId = scope.item.bhuId;
                             scope.reportModalData = resp;
                             scope.selctedSpoc = scope.item.rtsSpoc;
+                            if(reportservice.getWindowsWidthPx() > 1500){
+                                scope.effortGridWidth  ="100%";
+                             }else{
+                                scope.effortGridWidth = "1600px";
+                             }
                         }
                        $uibModal.open({
                             templateUrl: 'app/reports/templates/modal-efforts-details.html',
@@ -86,6 +92,9 @@ function BhuEffortsDirective($uibModal, reportservice) {
                                 modal: function() {
                                     return scope;
                                 }
+                            },
+                            opened : function(){
+                                
                             }
                         });
                     });

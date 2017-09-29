@@ -89,8 +89,8 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     function getUser(){
       var def = $q.defer();
         spinnerService.show();
-        $http.get("https://rtdashboardd.rno.apple.com:9012/homepage/userProfile").success(function(data) {
-        //$http.get("homepage/userProfile").success(function(data) {
+        $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/homepage/userProfile").success(function(data) {
+      //  $http.get("homepage/userProfile").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
             $rootScope.user = data.emailAddr;
@@ -104,27 +104,28 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     function getTeamMembers(){
         var def = $q.defer();
         spinnerService.show();
-        $http.get("https://rtdashboardd.rno.apple.com:9012/admin/teamdetails").success(function(data) {
-        //$http.get("admin/teamdetails").success(function(data) {
-            def.resolve(data);
-            var user = $rootScope.user;
-            $rootScope.isTeamMember = false;
-            for(var itm =0; itm<data.length;itm++){
-                 if(user && data[itm].memberEmailId == user){
-                    $rootScope.isTeamMember = true;
-                 }
-            }
-            spinnerService.hide();
-        }).error(function() {
-            def.reject("Failed to get data");
-        });
-        return def.promise;   
+            $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/admin/teamdetails").success(function(data) {
+         //    $http.get("admin/teamdetails").success(function(data) {
+                def.resolve(data);
+                var user = $rootScope.user;
+                $rootScope.isTeamMember = false;
+                for(var itm =0; itm<data.length;itm++){
+                    if(user && data[itm].memberEmailId == user){
+                        $rootScope.isTeamMember = true;
+                    }
+                }
+                $rootScope.teamMembers = data;
+                spinnerService.hide();
+            }).error(function() {
+                def.reject("Failed to get data");
+            });
+            return def.promise;
     }
 
     function getSpocDetails(spoc){
         var def = $q.defer();
-       $http.get("https://rtdashboardd.rno.apple.com:9012/utils/users/"+ spoc).success(function(data) {
-       // $http.get("utils/users/"+ spoc).success(function(data) {
+       //$http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users/"+ spoc).success(function(data) {
+       $http.get("utils/users/"+ spoc).success(function(data) {
             def.resolve(data);
             spinnerService.hide();
         }).error(function() {
@@ -136,8 +137,8 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     function getrtSpocsUsers(){
         var def = $q.defer();
         spinnerService.show();
-        $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users").success(function(data) {
-        //$http.get("utils/users").success(function(data) {
+        //$http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users").success(function(data) {
+        $http.get("utils/users").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
         }).error(function() {

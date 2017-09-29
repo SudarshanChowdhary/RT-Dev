@@ -17,7 +17,7 @@ function CurrentStatusModalController($uibModalInstance, modal, reportservice) {
         };
    
     ctrlSts.modalColumns = [{
-                            headerText: 'BHU/IHU',
+                            headerText: 'BHU/IHU#',
                             dataField: 'bhuId',
                             thClasses: 'width10',
                             tdClasses: 'width10'
@@ -40,8 +40,8 @@ function CurrentStatusModalController($uibModalInstance, modal, reportservice) {
                             thClasses: 'width20',
                             tdClasses: 'width20'
                         },{
-                            headerText: 'MINUTES OF MEEING',
-                            dataField: 'minutesOfMeeting',
+                            headerText: 'MINUTES OF MEETING',
+                            dataField: 'mom',
                             thClasses: 'width20',
                             tdClasses: 'width20',
                             sort: true
@@ -62,7 +62,7 @@ function BhuCurrentStatusModalDirective($uibModal, reportservice) {
         
         link: function(scope, element, attr, ctrlSts) {
             element.on('click', function() {
-               if(!isNaN(scope.item.bhuId)){
+               if(scope.item.bhuId){
                 reportservice.getReportCurrentStatusDetails(scope.item.bhuId, scope.item.rtsSpoc).then(function(resp){
                         if(resp && resp.errorCode){
                             $scope.$emit('alert', {

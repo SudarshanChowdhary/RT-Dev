@@ -30,6 +30,5 @@ module.exports = angular
     .directive('highlightCell', require('./directives/grid-deviation-format.directive'))
     .factory('spinnerService', require('./spinner/spinner.service'))
     .factory('checkRepositoryService', require('./check-repository/check-repository.service'))
-    .factory('alertService',require('./alert-module/alert.service'))
     .factory('sharedService', require('./shared.service'));
     

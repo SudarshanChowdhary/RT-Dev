@@ -15,13 +15,13 @@ function WarrantyModalController($uibModalInstance, modal, reportservice) {
         };
    
     ctrlWar.modalColumns = [{
-                            headerText: 'TICKET',
+                            headerText: 'TICKET#',
                             dataField: 'ticketNo',
                             sort: true,
                             thClasses: 'width30',
                             tdClasses: 'width30',
                         },{
-                            headerText: 'ROOT COUSE',
+                            headerText: 'ROOT CAUSE',
                             dataField: 'rootCause',
                             sort: true, 
                             thClasses: 'width30',
@@ -36,7 +36,6 @@ function WarrantyModalController($uibModalInstance, modal, reportservice) {
                             'justification': 'desc-item-renderer'
                         };
     ctrlWar.exportWarrantyToExcel = function(bhuId){
-        debugger;
         window.location.href = reportservice.exportWarrantyToExcelSrv(bhuId);
     }
                        
@@ -52,7 +51,7 @@ function WarrantyModalDirective($uibModal, reportservice) {
         
         link: function(scope, element, attr, ctrlWar) {
             element.on('click', function() {
-               if(!isNaN(scope.item.bhuId)){
+               if(scope.item.bhuId &&  scope.item.warrantyissue && scope.item.warrantyissue !=0){
                 reportservice.getReportWarrantyDetails(scope.item.bhuId).then(function(resp){
                         if(resp && resp.errorCode){
                             $scope.$emit('alert', {

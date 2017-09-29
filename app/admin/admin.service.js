@@ -26,7 +26,8 @@ function AdminService($http, $q, spinnerService, $rootScope) {
     function getAdminData() {
         var def = $q.defer();
         spinnerService.show();
-        $http.get("/api/admin").success(function(data) {
+        $http.get("https://rtdashboardd.rno.apple.com:9012/api/admin").success(function(data) {
+       // $http.get("/api/admin").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
         }).error(function() {
@@ -38,8 +39,8 @@ function AdminService($http, $q, spinnerService, $rootScope) {
     function getAdminSpotlightData() {
         var def = $q.defer();
         spinnerService.show();
-        $http.get("https://rtdashboardd.rno.apple.com:9012/admin/spotlights").success(function(data) {
-        //$http.get( "admin/spotlights").success(function(data) {
+        $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/admin/spotlights").success(function(data) {
+       // $http.get( "admin/spotlights").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
         }).error(function() {
@@ -54,7 +55,7 @@ function AdminService($http, $q, spinnerService, $rootScope) {
         $http({
             method: 'POST',
             url: 'https://rtdashboardd.rno.apple.com:9012/admin/spotlights',
-            //url: 'admin/spotlights',
+          //  url: 'admin/spotlights',
             data: spotLightData
         }).success(function(data) {
             def.resolve(data);
@@ -71,7 +72,7 @@ function AdminService($http, $q, spinnerService, $rootScope) {
         $http({
             method: 'PUT',
             url: 'https://rtdashboardd.rno.apple.com:9012/admin/spotlights',
-           // url: 'admin/spotlights',
+          //  url: 'admin/spotlights',
             data: spotLightData
         }).success(function(data) {
             def.resolve(data);
@@ -88,7 +89,7 @@ function AdminService($http, $q, spinnerService, $rootScope) {
         $http({
             method: 'DELETE',
             url: 'https://rtdashboardd.rno.apple.com:9012/admin/spotlights/' + sId
-            // url: 'admin/spotlights/' + sId
+           // url: 'admin/spotlights/' + sId
         }).success(function(data) {
             def.resolve(data);
             spinnerService.hide();

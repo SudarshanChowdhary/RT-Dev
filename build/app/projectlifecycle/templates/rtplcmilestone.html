@@ -20,7 +20,7 @@
         <div class="form-group row">
           <div class="col-md-2"></div>
           <div class="col-md-4"> <label for="bhu-ihu">BHU / IHU #* :</label></div>
-          <div class="col-md-4"> <input minlength="1" min="1" name="bhu-ihu" class="form-control" ng-model="bhuihu" required> </div>
+          <div class="col-md-4"> <input minlength="1" min="1" autocomplete="off" name="bhu-ihu" class="form-control" ng-model="bhuihu" required> </div>
           <div class="col-md-2"></div>
         </div>
 
@@ -103,11 +103,11 @@
             <div class="col-md-4">
               <div class="row">
                 <div class="col-md-5">
-              <input type="text" ng-model="hours" class="form-control plc-milestone-hours" data-ng-keypress="validateNumber($event)" ng-pattern="/^[0-23]+$/" maxlength="2" min="0" max="23" placeholder="HH"  ng-required="!minutes" />
+              <input type="text" ng-model="hours" class="form-control plc-milestone-hours" data-ng-keypress="validateNumber($event)" ng-pattern="/^[0-23]+$/" maxlength="2" min="0" max="23" placeholder="HH"  ng-required="!minutes || minutes==''" ng-cloak/>
             </div>
             <div class="col-md-1 colon">: </div>
             <div class="col-md-5">
-              <input type="text" ng-model="minutes" class="form-control plc-milestone-mins" data-ng-keypress="validateNumber($event)"  ng-pattern="/^[0-59]+$/" maxlength="2" min="0" max="59" placeholder="MM" ng-required="!hours" />
+              <input type="text" ng-model="minutes" class="form-control plc-milestone-mins" data-ng-keypress="validateNumber($event)"  ng-pattern="/^[0-59]+$/" maxlength="2" min="0" max="59" placeholder="MM" ng-required="!hours || hours==''" ng-cloak/>
             </div>
             <div class="col-md-1"></div>
           </div>

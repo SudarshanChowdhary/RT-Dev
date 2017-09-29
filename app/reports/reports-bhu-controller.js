@@ -30,7 +30,7 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         bhureport.bhuReportPhase = sharedService.getPhase();
         angular.element('.table--fixed').css({
             "width": sharedService.getWindowWidth() > 1500 ? "100%" : "1700px"
-          })
+          });
          bhureport.gridOptions = {
             bindType: 1,
             data: {
@@ -54,128 +54,131 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
               bhureport.bhuReportError = true;  
            }else{
                if(bhuReportData.bhurptDetails){
-                sharedService.getTeamMembers().then(function(user){
+                if(!$rootScope.teamMembers){
+                    sharedService.getTeamMembers().then(function(user){
+                        bhureport.populateBhuReportDetailsData(bhuReportData.bhurptDetails, bhuReportData.totalCount);
+                    });
+                }else{
                     bhureport.populateBhuReportDetailsData(bhuReportData.bhurptDetails, bhuReportData.totalCount);
-                  });
-               }
+                }
+             }
            }
         });
-
-        }
+    }
 
     function populateBhuReportDetailsData(bhuReportList, count){
         bhureport.gridOptions.dataOptions.nodata = '';
-        bhureport.columns = [
-        {
-            headerText: 'BHU / IHU',
-            dataField: 'bhuId',
-            thClasses: 'width5',
-            tdClasses: 'width5',
-            sort: true
-        }, {
-            headerText: 'Current Status',
-            dataField: 'currentStatus',
-            thClasses: 'width10',
-            tdClasses: 'width10',
-            sort: true
-        }, {
-            headerText: 'Size',
-            dataField: 'size',
-            //sort: true,
-            thClasses: 'width5',
-            tdClasses: 'width5'
-        },{
-            headerText: 'Impacted objects',
-            dataField: 'noOfObjects',
-            thClasses: 'width5',
-            tdClasses: 'width5'
-        },{
-            headerText: 'Project Manager',
-            dataField: 'projectManager',
-            thClasses: 'width10',
-            tdClasses: 'width10',
-            sort: true
-        },{
-            headerText: 'RT Spoc',
-            dataField: 'rtsSpoc',
-            thClasses: 'width5',
-            tdClasses: 'width5',
-            sort: true
-        },{
-            headerText: 'Extended Team Members',
-            dataField: 'extteammembers',
-            thClasses: 'width5',
-            tdClasses: 'width5'
-        },{
-            headerText: 'Scripts Shared',
-            dataField: 'scriptshared',
-            thClasses: 'width5',
-            tdClasses: 'width5'
-        },{
-            headerText: 'Scripts Utilized',
-            dataField: 'scriptutilized',
-            thClasses: 'width5',
-            tdClasses: 'width5'
-        },{
-            headerText: 'Scripts Executed',
-            dataField: 'scriptexecuted',
-            thClasses: 'width5',
-            tdClasses: 'width5'
-        },{
-            headerText: 'RT Defects',
-            dataField: 'rtdefects',
-            thClasses: 'width5',
-            tdClasses: 'width5'
-        },{
-            headerText: 'RT Miss',
-            dataField: 'rtmiss',
-            thClasses: 'width5',
-            tdClasses: 'width5'
-        },{
-            headerText: 'Warranty Issue',
-            dataField: 'warrantyissue',
-            thClasses: 'width5',
-            tdClasses: 'width5',
-            sort: true
-        },{
-            headerText: 'Scripts Executed part of warranty',
-            dataField: 'scriptExcpartOfwarranty',
-            thClasses: 'width10',
-            tdClasses: 'width10'
-        },{
-            headerText: 'Scripts Modified',
-            dataField: 'scriptsmodified',
-            thClasses: 'width5',
-            tdClasses: 'width5'
-        }
-    ];
+            bhureport.columns = [
+            {
+                headerText: 'BHU/IHU#',
+                dataField: 'bhuId',
+                thClasses: 'width5',
+                tdClasses: 'width5',
+                sort: true
+            }, {
+                headerText: 'Current Status',
+                dataField: 'currentStatus',
+                thClasses: 'width5',
+                tdClasses: 'width5',
+                sort: true
+            }, {
+                headerText: 'Size',
+                dataField: 'size',
+                //sort: true,
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            },{
+                headerText: 'Impacted Objects',
+                dataField: 'noOfObjects',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            },{
+                headerText: 'Project Manager',
+                dataField: 'projectManager',
+                thClasses: 'width10',
+                tdClasses: 'width10',
+                sort: true
+            },{
+                headerText: 'RT Spoc',
+                dataField: 'rtsSpoc',
+                thClasses: 'width5',
+                tdClasses: 'width5',
+                sort: true
+            },{
+                headerText: 'Extended Team Members',
+                dataField: 'extteammembers',
+                thClasses: 'width10',
+                tdClasses: 'width10'
+            },{
+                headerText: 'Scripts Shared',
+                dataField: 'scriptshared',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            },{
+                headerText: 'Scripts Utilized',
+                dataField: 'scriptutilized',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            },{
+                headerText: 'Scripts Executed',
+                dataField: 'scriptexecuted',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            },{
+                headerText: 'RT Defects',
+                dataField: 'rtdefects',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            },{
+                headerText: 'RT Miss',
+                dataField: 'rtmiss',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            },{
+                headerText: 'Warranty Issues',
+                dataField: 'warrantyissue',
+                thClasses: 'width5',
+                tdClasses: 'width5',
+                sort: true
+            },{
+                headerText: 'Scripts Executed as part of Warranty',
+                dataField: 'scriptExcpartOfwarranty',
+                thClasses: 'width10',
+                tdClasses: 'width10'
+            },{
+                headerText: 'Scripts Modified',
+                dataField: 'scriptsmodified',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            }
+        ];
 
-    if($rootScope.isTeamMember == true || ($rootScope.userRoles && $rootScope.userRoles.indexOf("admin")> -1)){
-        var colm15 = bhureport.columns[14];
-        bhureport.columns[14] = {
-            headerText: 'New Scripts Received',
-            dataField: 'newscriptreceived',
-            thClasses: 'width5',
-            tdClasses: 'width5'
-        };
-        bhureport.columns[15] = colm15;
-        bhureport.columns.push({
-            headerText: 'Efforts Utilized',
-            dataField: 'efortsutilized',
-            thClasses: 'width5',
-            tdClasses: 'width5',
-            sort: true
-        });
-    }else if($rootScope.isTeamMember==false){
-        var colm15 = bhureport.columns[14];
-        bhureport.columns[14] = {
-            headerText: 'New Script Received',
-            dataField: 'newscriptreceived',
-            thClasses: 'width10',
-            tdClasses: 'width10'
-        };
-        bhureport.columns[15] = colm15;
-    }
+        if($rootScope.isTeamMember == true || ($rootScope.userRoles && $rootScope.userRoles.indexOf("admin")> -1)){
+            var colm15 = bhureport.columns[14];
+            bhureport.columns[14] = {
+                headerText: 'New Scripts Received',
+                dataField: 'newscriptreceived',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            };
+            bhureport.columns[15] = colm15;
+            bhureport.columns.push({
+                headerText: 'Efforts Utilized',
+                dataField: 'efortsutilized',
+                thClasses: 'width5',
+                tdClasses: 'width5',
+                sort: true
+            });
+        }else if($rootScope.isTeamMember==false){
+            var colm15 = bhureport.columns[14];
+            bhureport.columns[14] = {
+                headerText: 'New Script Received',
+                dataField: 'newscriptreceived',
+                thClasses: 'width10',
+                tdClasses: 'width10'
+            };
+            bhureport.columns[15] = colm15;
+        }
 
         bhureport.itemRenderers = {
             //link going to appear in grid
@@ -184,6 +187,7 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             'warrantyissue': 'warranty-issue-link-renderer',
             'efortsutilized': 'efforts-utilized-link-renderer'
         };
+
         bhureport.data = bhuReportList ? bhuReportList : [];
         bhureport.dataCopy = angular.copy(bhureport.data);
         bhureport.bhuReportCount = bhuReportList ? bhuReportList.length : 0;
@@ -259,9 +263,23 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         angular.element('.table--fixed').css({
             "width": sharedService.getWindowWidth() > 1500 ? "100%" : "1700px"
         })
-        angular.element('.filter-by').toggleClass('hide');
+        angular.element('.grid-filter').toggleClass('hide');
     }
-    
+
+    function hideSideFilterOptions( ){
+        angular.element('.sidenav').toggleClass('hide');
+        angular.element('.sidenav').css({
+                      "width": "0"
+                    });
+        angular.element('.rt-grid__wrapper').css({
+                      "width": "100%"
+                    });
+         angular.element('.table--fixed').css({
+            "width": sharedService.getWindowWidth() > 1500 ? "100%" : "1700px"
+          });
+        angular.element('.grid-filter').toggleClass('hide');
+    }
+
     function populateBhuReportFilterData(filter, startIndex){
       var q =  bhureport.selectedQuarter = filter.bhurptQuarter;
       var y =  bhureport.selectedYear = filter.bhurptYear;
@@ -297,25 +315,12 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             bhureport.bhuReportFilterQuarter =[];
         }
     }
+
     function getMonthsForQuarter(quarter){
        var months = sharedService.getQuarterMonths(quarter);
        bhureport.bhuReportFilterMonth = months;
     }
-
-    function hideSideFilterOptions( ){
-        angular.element('.sidenav').toggleClass('hide');
-        angular.element('.sidenav').css({
-                      "width": "0"
-                    });
-        angular.element('.rt-grid__wrapper').css({
-                      "width": "100%"
-                    });
-         angular.element('.table--fixed').css({
-            "width": sharedService.getWindowWidth() > 1500 ? "100%" : "1700px"
-          })
-        angular.element('.filter-by').toggleClass('hide');
-    }
-
+    
     function resetFilter(){
         bhureport.filterBhuReport = {};
         bhureport.selectedYear = '';
@@ -342,6 +347,7 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         bhureport.count = bhureport.count  + 1;
         bhureport.nOfIndexs = (Math.round(c / 100));
     }
+
     function exportToExcel(){
         var phase = bhureport.filterBhuReport.bhurptPhase;
         var p = phase ? (phase.split(" ").length >1 ? phase.substr(0, phase.indexOf(" ")) :phase ): "0";

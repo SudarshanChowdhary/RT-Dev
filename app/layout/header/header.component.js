@@ -8,8 +8,9 @@ function HeaderController($state, sharedService, $scope, $rootScope) {
     ctrl.userAvatar = '';
     ctrl.isAdminUser = false;
     ctrl.getTestScripts = getTestScripts;
+    ctrl.isTeamMember = $rootScope.isTeamMember;
 
-  //  $rootScope.devUrl =  "https://rtdashboardd.rno.apple.com:9012/RTDashboard/";
+    //$rootScope.devUrl =  "https://rtdashboardd.rno.apple.com:9012/RTDashboard/";
     //$rootScope.devUrl =  "";
 
     sharedService.getUser().then(function(user){
@@ -28,9 +29,13 @@ function HeaderController($state, sharedService, $scope, $rootScope) {
             }
             ctrl.userAvatar = avatar;
          }
+
          if(user.roles && user.roles.length && user.roles.indexOf('admin') > -1){
-          ctrl.isAdminUser = true;
+           ctrl.isAdminUser = true;
          }
+         if(!$rootScope.teamMembers){
+          sharedService.getTeamMembers();
+        }
       }     
     });
 

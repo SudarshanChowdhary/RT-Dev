@@ -15,7 +15,7 @@ function BhuRptModalController($uibModalInstance, modal, reportservice) {
         };
    
     ctrl.modalColumns = [{
-                            headerText: 'BHU/IHU',
+                            headerText: 'BHU/IHU#',
                             dataField: 'bhuId',
                             tdClasses: 'width12',
                             thClasses: 'width12'
@@ -31,7 +31,7 @@ function BhuRptModalController($uibModalInstance, modal, reportservice) {
                             thClasses: 'width15',
                             sort: true
                         },{
-                            headerText: 'RT TICKET',
+                            headerText: 'RT TICKET#',
                             dataField: 'itemName',
                             tdClasses: 'width15',
                             thClasses: 'width15',
@@ -57,7 +57,7 @@ function BhuReportModalDirective($uibModal, reportservice) {
         
         link: function(scope, element, attr, ctrl) {
             element.on('click', function() {
-               if(!isNaN(scope.item.bhuId)){
+               if(scope.item.bhuId){
                 reportservice.getReportBhuDetails(scope.item.bhuId,"bDtl").then(function(resp){
                         if(resp && resp.errorCode){
                             $scope.$emit('alert', {

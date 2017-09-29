@@ -1,6 +1,6 @@
-ReportsService.$inject = ['$http', '$q', '$sce','spinnerService','sharedService', '$rootScope'];
+ReportsService.$inject = ['$http', '$q', '$sce','spinnerService','sharedService'];
 
-function ReportsService($http, $q, $sce, spinnerService, sharedService, $r){
+function ReportsService($http, $q, $sce, spinnerService, sharedService ){
 	var reportsService = {
 		getReportsList: getReportsList,
         getReportsUrl: getReportsUrl,
@@ -23,8 +23,8 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $r){
 	function getReportsList() {
         var def = $q.defer();
          spinnerService.show();
-            //$http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/list")
-            $http.get("reports/list")
+            $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/list")
+          //  $http.get("reports/list")
                 .success(function(data) {
                     def.resolve(data);
                     spinnerService.hide();
@@ -43,11 +43,18 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $r){
     function getBhuReportData() {
         var def = $q.defer();
         spinnerService.show();
-        //$http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport").success(function(data) {
-        $http.get("reports/BHUReport").success(function(data) {
-            var cusmizedData = cunstmizeBhuData(data);
-            def.resolve(cusmizedData);
-            spinnerService.hide();
+        $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport").success(function(data) {
+       // $http.get("reports/BHUReport").success(function(data) {
+            if(data && data.errorCode){
+                //   $scope.$emit('alert', {
+                //   message: data.message,
+                //   success: false
+                // });
+            }else{
+                var cusmizedData = cunstmizeBhuData(data);
+                def.resolve(cusmizedData);
+                spinnerService.hide();
+            }
         }).error(function() {
             def.reject("Failed to get data");
         });
@@ -63,15 +70,14 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $r){
         }
         if(p){
              p =p.split(" ").length >1 ? p.substr(0, p.indexOf(" ")): p;
-             debugger;
-             getUrl = "reports/BHUReport/phase/"+ p;
-            //getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/phase/"+ p;
+            // getUrl = "reports/BHUReport/phase/"+ p;
+            getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/phase/"+ p;
         }else if(!p && y){
-            getUrl = "reports/BHUReport/"+ y;
-            //getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/"+ y;
+            // getUrl = "reports/BHUReport/"+ y;
+            getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/"+ y;
         }else if(!p && y && (q || m)){
-            getUrl = "reports/BHUReport/"+ y +"/"+ q;
-            //getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/"+ y +"/"+ q;
+            //getUrl = "reports/BHUReport/"+ y +"/"+ q;
+            getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/"+ y +"/"+ q;
         }
         $http.get(getUrl, {
             params: {
@@ -211,7 +217,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $r){
                 if(data.length > 0){
                     cusmizedData.totalCount = data.length;
                     angular.forEach(data, function(element, key) {
-                    var estimatedEfforts = 0;//it may come from database from java service with response, pending for clarification
+                    var estimatedEfforts = element.estimatedEff;   
     
                         if(!element.totalActualEff || element.totalActualEff == null){
                             element.totalActualEff = 0;
@@ -266,9 +272,9 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $r){
         return "reports/BHUWarrantyDownload/"+ bhuId;
     }
 
-    function exportEffortsToExcelSrv(bhuId , spoc){
-        //return "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUEffortsDownload/"+ bhuId +"/" + spoc;
-        return "reports/BHUEffortsDownload/"+ bhuId +"/" + spoc;
+    function exportEffortsToExcelSrv(bhuId , spoc, size){
+        //return "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUEffortsDownload/"+ bhuId + "/" + spoc + "/" size;
+        return "reports/BHUEffortsDownload/"+ bhuId +"/" + spoc + "/"+ size;
     }
 
     function exportBhuDtlsToExcelSrv(bhuId){

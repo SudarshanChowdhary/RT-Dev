@@ -7,7 +7,7 @@ function reportbhuIdLinkRenderer(){
                 ].join(''),
                 link: function(scope, element, attr) {
                    scope.displayItemName = function(bhuId) {
-                      if(isNaN(bhuId) || bhuId==null || bhuId== ''){
+                      if(!bhuId || bhuId == null || bhuId == ''){
                         return bhuId;
                       }else{
                         return "<a title='Get deatils' href='javascript:void(0)'>"+bhuId+"</a>";
