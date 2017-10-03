@@ -41,23 +41,23 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     function getQuarterMonths(quarter)
     {
         switch(quarter)
-        {
-            case "Q1": {
-                return ["OCT","NOV","DEC"];
-                break;
-            }
-            case "Q2": {
-                return ["JAN","FEB","MAR"];
-                break;
-            }
-            case "Q3": {
-                return ["APR","MAY","JUN"];
-                break;
-            }
-            case "Q4": {
-                return ["JUL","AUG","SEP"];
-                break;
-            }
+         {
+                    case "Q1": {
+                        return ["OCTOBER","NOVEMBER","DECEMBER"];
+                        break;
+                    }
+                    case "Q2": {
+                        return ["JANUARY","FEBRUARY","MARCH"];
+                        break;
+                    }
+                    case "Q3": {
+                        return ["APRIL","MAY","JUNE"];
+                        break;
+                    }
+                    case "Q4": {
+                        return ["JULY","AUGUST","SEPEMBER"];
+                        break;
+                    }
         }
     }
     function getWindowWidth() {
@@ -89,8 +89,8 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     function getUser(){
       var def = $q.defer();
         spinnerService.show();
-        $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/homepage/userProfile").success(function(data) {
-      //  $http.get("homepage/userProfile").success(function(data) {
+        //$http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/homepage/userProfile").success(function(data) {
+        $http.get("homepage/userProfile").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
             $rootScope.user = data.emailAddr;
@@ -104,8 +104,8 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     function getTeamMembers(){
         var def = $q.defer();
         spinnerService.show();
-            $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/admin/teamdetails").success(function(data) {
-         //    $http.get("admin/teamdetails").success(function(data) {
+           // $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/admin/teamdetails").success(function(data) {
+             $http.get("admin/teamdetails").success(function(data) {
                 def.resolve(data);
                 var user = $rootScope.user;
                 $rootScope.isTeamMember = false;
@@ -124,7 +124,7 @@ function SharedService($http, $q, $rootScope, spinnerService) {
 
     function getSpocDetails(spoc){
         var def = $q.defer();
-       //$http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users/"+ spoc).success(function(data) {
+      // $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users/"+ spoc).success(function(data) {
        $http.get("utils/users/"+ spoc).success(function(data) {
             def.resolve(data);
             spinnerService.hide();
@@ -137,7 +137,7 @@ function SharedService($http, $q, $rootScope, spinnerService) {
     function getrtSpocsUsers(){
         var def = $q.defer();
         spinnerService.show();
-        //$http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users").success(function(data) {
+       // $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users").success(function(data) {
         $http.get("utils/users").success(function(data) {
             def.resolve(data);
             spinnerService.hide();

@@ -41,11 +41,11 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
             },
             enablePagination: true
         };
-        bhureport.getBhuReportList();
+        bhureport.getBhuReportList(null);
     }
 
-    function getBhuReportList(){
-         reportservice.getBhuReportData().then(function(bhuReportData) {
+    function getBhuReportList(bhuId){
+         reportservice.getBhuReportData(bhuId).then(function(bhuReportData) {
             if(bhuReportData && bhuReportData.errorCode){
                 $scope.$emit('alert', {
                 message: 'RT Dashboard currently down for Maintenance. We will be back soon. Thank you for your patience.',
@@ -218,23 +218,23 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
                         // var filteredData;
                             bhureport.data = $filter('filter')(bhureport.data, function(data) {
                               
-                            if  (data.bhuId == null){
+                            if  (!data.bhuId || data.bhuId == null){
                                 data.bhuId = "";
                             }
                             
-                            if  (data.currentStatus == null){
+                            if  (! data.currentStatus || data.currentStatus == null){
                                 data.currentStatus = "";
                             }
 
-                            if  (data.projectManager == null){
+                            if  (!data.projectManager || data.projectManager == null){
                                 data.projectManager = "";
                             }
 
-                            if  (data.rtsSpoc == null){
+                            if  (!data.rtsSpoc || data.rtsSpoc == null){
                                 data.rtsSpoc = "";
                             }
 
-                            if  (data.size == null){
+                            if  (!data.size || data.size == null){
                                 data.size = "";
                             }
                                 return data.bhuId.toString().toLowerCase().indexOf(bhureport.filterBhuReport.searchKeyword.toLowerCase()) > -1 || data.currentStatus.toString().toLowerCase().indexOf(bhureport.filterBhuReport.searchKeyword.toLowerCase()) > -1 
@@ -262,7 +262,8 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
                     });
         angular.element('.table--fixed').css({
             "width": sharedService.getWindowWidth() > 1500 ? "100%" : "1700px"
-        })
+        });
+        angular.element('.export-excel').css({"margin-right": "20.6%"});
         angular.element('.grid-filter').toggleClass('hide');
     }
 
@@ -277,6 +278,7 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
          angular.element('.table--fixed').css({
             "width": sharedService.getWindowWidth() > 1500 ? "100%" : "1700px"
           });
+          angular.element('.export-excel').css({"margin-right": "110px"});
         angular.element('.grid-filter').toggleClass('hide');
     }
 
@@ -330,7 +332,7 @@ function BhuReportsController($state, $scope, $http, $filter,$sce, reportservice
         bhureport.bhuReportFilterMonth = [];
         bhureport.bhuReportFilterQuarter =[];
         
-        bhureport.getBhuReportList();
+        bhureport.getBhuReportList(null);
     }
 
     function checkFilterSelection(filterSelected){

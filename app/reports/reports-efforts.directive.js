@@ -8,6 +8,7 @@ function EffortsModalController($uibModalInstance, modal, $rootScope, reportserv
     ctrlEfrt.EffortsModalData = modal.reportModalData.effortsDetails;
     ctrlEfrt.rtSpoc = modal.selctedSpoc;
     ctrlEfrt.rtSize = modal.size;
+    
     ctrlEfrt.gridWidth = modal.effortGridWidth;
     ctrlEfrt.gridOptions = {
             bindType: 1,
@@ -33,11 +34,11 @@ function EffortsModalController($uibModalInstance, modal, $rootScope, reportserv
         { headerText: 'UAT REVIEW',dataField: 'uatReview', tdClasses: 'width5',thClasses: 'width5'},
         { headerText: 'RT SCOPING',dataField: 'rtScoping', tdClasses: 'width5',thClasses: 'width5'},
         { headerText: 'RT EXECUTION/ DEFECT',dataField: 'itExecutionDefects', tdClasses: 'width5',thClasses: 'width5', sort: true},
-        { headerText: 'WARRANTY SUPPORT',dataField: 'warrantySupport', tdClasses: 'width5',thClasses: 'width5'},
+        { headerText: 'WARRANTY SUPORT',dataField: 'warrantySupport', tdClasses: 'width5',thClasses: 'width5'},
 
         { headerText: 'P2S',dataField: 'p2s', tdClasses: 'width5',thClasses: 'width5'},
         { headerText: 'PLC FOLLOWUPS',dataField: 'plcFollowups', tdClasses: 'width5',thClasses: 'width5'},
-        { headerText: 'ESTIMATED EFFORTS',dataField: 'estimatedEfforts', tdClasses: 'width5',thClasses: 'width5'},
+        { headerText: 'ESTIMETED EFFORTS',dataField: 'estimatedEfforts', tdClasses: 'width5',thClasses: 'width5'},
         { headerText: 'TOTAL ACTUAL EFFORTS',dataField: 'actualEfforts', tdClasses: 'width5',thClasses: 'width5', sort: true},
         { headerText: 'DEVIATION',dataField: 'deviation', tdClasses: 'width5',thClasses: 'width5', sort: true}
     ];
@@ -51,8 +52,8 @@ function EffortsModalController($uibModalInstance, modal, $rootScope, reportserv
     //     ctrlEfrt.itemRenderers["estimatedEfforts"] = "estimatedefforts-edit";
     //}
 
-    ctrlEfrt.exportEffortsToExcel = function(bhuId, size){
-        window.location.href = reportservice.exportEffortsToExcelSrv(bhuId, size);
+    ctrlEfrt.exportEffortsToExcel = function(bhuId, rtspoc, size){
+        window.location.href = reportservice.exportEffortsToExcelSrv(bhuId, rtspoc, size);
     }
     ctrlEfrt.cancel = function () {
         $uibModalInstance.dismiss('cancel');
@@ -76,6 +77,7 @@ function BhuEffortsDirective($uibModal, reportservice) {
                             scope.selectedBhuId = scope.item.bhuId;
                             scope.reportModalData = resp;
                             scope.selctedSpoc = scope.item.rtsSpoc;
+                            scope.size = scope.item.size;
                             if(reportservice.getWindowsWidthPx() > 1500){
                                 scope.effortGridWidth  ="100%";
                              }else{

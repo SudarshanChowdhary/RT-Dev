@@ -115,7 +115,7 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, Pro
             ProjectLifeCycleService.rtPlcMilestoneAdd($scope.milestoneRequiredData).then(function(res){
               spinnerService.hide();
               $uibModalInstance.close();
-              if(res==true){
+              if(res == true){
                 toaster.pop({
                     type: 'success',
                     body: 'Milestone Successfully Added..!',
@@ -123,12 +123,14 @@ function ModalMileStoneController ($scope, $uibModalInstance, milestoneData, Pro
                     showCloseButton: true               
                 });
             }else{
-                toaster.pop({
-                    type: 'error',
-                    body: 'Milestone Not Added, Please contact with admin..!',
-                    timeout: 3000,
-                    showCloseButton: true               
-                });
+                if(res && res.errorCode){
+                    toaster.pop({
+                        type: 'error',
+                        body: 'Milestone does not added, Please check BHU ID# and RT SPOC details..!',
+                        timeout: 3000,
+                        showCloseButton: true               
+                    });
+                }
             }
           });
         }
@@ -187,9 +189,9 @@ function ModalNotificationController ($scope, $uibModalInstance, $http, notifica
         if ($scope.notificationForm.$valid) {
             var attachment = $scope.myFile;
             var fmData = new FormData();
-            fmData.append('bhu-Id', $scope.bhuId);
+            fmData.append('bhuId', $scope.bhuId);
             fmData.append('rtSpoc', $scope.selected);
-            fmData.append('sent-to', $scope.rt_recipients);
+            fmData.append('sentTo', $scope.rt_recipients);
             fmData.append('status', $scope.plc_phase);
             fmData.append('content', $scope.content);
             fmData.append('from', $rootScope.user);
@@ -197,12 +199,12 @@ function ModalNotificationController ($scope, $uibModalInstance, $http, notifica
            var contentType = undefined;
             if(attachment && attachment.length > 0){
                 fmData.append("file", attachment[0]);
-                contentType = 'multipart/form-data';
+                //contentType = 'multipart/form-data';
             }
-            var url = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/milestone/doEmail";
-          //  var url = "milestone/doEmail";
+           // var url = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/milestone/doEmail";
+            var url = "milestone/doEmail";
             $http.post(url , fmData ,{
-                //transformRequest: angular.identity,
+                transformRequest: angular.identity,
                 headers: {
                     'Content-Type': contentType
                 },

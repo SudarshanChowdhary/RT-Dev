@@ -10,9 +10,6 @@ function HeaderController($state, sharedService, $scope, $rootScope) {
     ctrl.getTestScripts = getTestScripts;
     ctrl.isTeamMember = $rootScope.isTeamMember;
 
-    //$rootScope.devUrl =  "https://rtdashboardd.rno.apple.com:9012/RTDashboard/";
-    //$rootScope.devUrl =  "";
-
     sharedService.getUser().then(function(user){
       if(user && user.errorCode){
                 $scope.$emit('alert', {

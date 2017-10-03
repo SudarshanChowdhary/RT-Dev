@@ -1,6 +1,7 @@
 <div class="rt-tickets-container row report-grid" >
-    <a href="javascript:void(0)" class="filter-by grid-filter" ng-click="bhureport.showFilterOptions()"><span class="glyphicon glyphicon-filter"></span>Filter</a>
-    <a href="javascript:void(0)" class="filter-by export-excel" style="margin-right: 90px;width: 150px;"  ng-click="bhureport.exportToExcel()" ng-disabled="bhureport.filterBhuReport.bhurptQuarter && !bhureport.filterBhuReport.bhurptYear">
+    <toaster-container toaster-options="{'position-class': 'toast-top-center'}"></toaster-container>
+    <a href="javascript:void(0)" class="filter-by grid-filter" style="margin-right: 20px;" ng-click="bhureport.showFilterOptions()"><span class="glyphicon glyphicon-filter"></span>Filter</a>
+    <a href="javascript:void(0)" class="filter-by export-excel" style="margin-right: 110px;width: 150px;"  ng-click="bhureport.exportToExcel()" ng-disabled="bhureport.filterBhuReport.bhurptQuarter && !bhureport.filterBhuReport.bhurptYear">
         <span class="glyphicon glyphicon-export"></span>Export to excel
     </a>
     
