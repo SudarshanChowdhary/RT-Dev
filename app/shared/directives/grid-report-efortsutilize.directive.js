@@ -1,6 +1,5 @@
 
 function effortsUtilizedLinkRenderer(){
-
     return {
         restrict: 'EA',
         template: ['<div ng-bind-html="displayUtilizedEfforts(item.efortsutilized)" effortsutilized-link>',

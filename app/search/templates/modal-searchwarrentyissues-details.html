@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        BHU Warranty details for BHU ID #{{ctrlWar.selBhu}}
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="ctrlWar.cancel()">&times;</button>
+    </h4>
+</div>
+<div class="modal-body ticket-details-by-BHUID">
+    <button type="button" class="btn btn-link export-btn" ng-click="ctrlWar.exportWarrantyToExcel(ctrlWar.selBhu)" ng-disabled="!ctrlWar.bhuWarrantyModalData && ctrlWar.bhuWarrantyModalData.length==0">
+        <span class="glyphicon glyphicon-export"></span>&nbsp;
+        Export to excel
+    </button>
+    <table rt-grid  data="ctrlWar.bhuWarrantyModalData" columns="ctrlWar.modalColumns" grid-options="ctrlWar.gridOptions" item-renderers="ctrlWar.itemRenderers" class="table--compact table-striped table--fixed" data-nodata="No data"></table>
+</div>

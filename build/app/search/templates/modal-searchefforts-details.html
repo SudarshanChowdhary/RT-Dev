@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        Efforts details for BHU ID #{{ ctrlEfrt.selBhuId}}
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="ctrlEfrt.cancel()">&times;</button>
+    </h4>
+</div>
+<div class="modal-body ticket-details-by-BHUID" style="overflow:scroll">
+    <button type="button" class="btn btn-link export-btn" ng-click="ctrlEfrt.exportEffortsToExcel(ctrlEfrt.selBhuId, ctrlEfrt.rtSpoc,  ctrlEfrt.rtSize)" ng-disabled="!ctrlEfrt.EffortsModalData || ctrlEfrt.EffortsModalData.length==0">
+        <span class="glyphicon glyphicon-export"></span>&nbsp;
+        Export to excel
+    </button>
+    <table id="effortGrid" rt-grid ng-style="{ 'width' : ctrlEfrt.gridWidth }"  data="ctrlEfrt.EffortsModalData" columns="ctrlEfrt.modalColumns" grid-options="ctrlEfrt.gridOptions" item-renderers="ctrlEfrt.itemRenderers" class="table--compact table-striped table--fixed effort-model" data-nodata="No data"></table>
+</div>

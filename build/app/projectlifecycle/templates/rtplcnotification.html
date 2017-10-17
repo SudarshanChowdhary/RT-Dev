@@ -1,12 +1,13 @@
 <div class="modal-header">
    <h2>RT PLC NOTIFICATION</h2>
 </div>
-<form name="notificationForm" novalidate role="form" enctype="multipart/form-data" data-ng-submit="submitFormNotfication(this)" method="post">
+<!-- <form name="notificationForm" novalidate role="form" enctype="multipart/form-data" data-ng-submit="submitFormNotfication(this)" method="post"> -->
+    <form name="notificationForm" novalidate role="form" enctype="multipart/form-data">
     <div class="modal-body">
     <div class="form-group row">
         <div class="col-md-2"></div>
         <div class="col-md-4"> <label for="date">BHU / IHU #* :</label></div>
-        <div class="col-md-4"> <input type="text" autocomplete="off" data-ng-keypress="validateNumber($event)" minlength="1" min="1" name="bhuId" class="form-control"  ng-model="bhuId" required> </div>
+        <div class="col-md-4"> <input type="text" autocomplete="off" data-ng-keypress="validateNumber($event)" minlength="1" min="1" name="bhuId" class="form-control"  ng-model="bhuId" ng-readonly="bhuId && isBhuNotify" required> </div>
         <div class="col-md-2"></div>
     </div>
     <div class="form-group row">
@@ -34,7 +35,15 @@
     <div class="form-group row">
         <div class="col-md-2"></div>
         <div class="col-md-4"> <label>ATTACHMENTS :</label></div>
-        <div class="col-md-5"><input type="file" demo-file-model="myFile"  class="form-control" name ="myFileField" /></div>
+        <!-- <div class="col-md-5"><input type="file" demo-file-model="myFile"  class="form-control" name ="myFileField" /></div> -->
+        <div class="col-md-4">
+            <input type="file" ngf-select ng-model="picFile" name="file" class="form-control" accept="*/*" ngf-max-size="2MB" required  ngf-model-invalid="errorFile">
+            <!-- <button ng-click="picFile = null" ng-show="picFile">Remove</button> -->
+            <i class="glyphicon glyphicon-remove" ng-click="picFile = null" ng-show="picFile"></i>
+        </div>
+        <i ng-show="myForm.file.$error.required">*required</i><br>
+        <i ng-show="myForm.file.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 2MB</i>
+        <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb">
         <div class="col-md-1"></div>
     </div>
 
@@ -54,13 +63,13 @@
 	</div>
     <div class="modal-footer row">
         <div class="col-md-4 text-center">
-            <button type="submit" class="btn btn-primary" ng-disabled="notificationForm.$invalid">SEND EMAIL</button>
+            <button class="btn btn-primary" ng-click="submitFormNotfication(picFile)" ng-disabled="notificationForm.$invalid">SEND EMAIL</button>
         </div>
         <div class="col-md-4 text-center">
             <button type="reset" class="btn btn-primary" ng-click="clearImageSource()" ng-disabled="form.userForm.$invalid">RESET</button>
         </div>
         <div class="col-md-4 text-center">
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-warning" ng-click="cancel()">CANCEL</button>
         </div>
     </div>
 </form>

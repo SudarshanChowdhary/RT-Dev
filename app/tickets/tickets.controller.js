@@ -101,8 +101,8 @@ function TicketsController($state, $scope, $http, $sce, ticketservice, ticketFol
                         {
                             headerText: 'Description',
                             dataField: 'description',
-                            tdClasses: 'width38',
-                            thClasses: 'width38',
+                            tdClasses: 'width50',
+                            thClasses: 'width50',
                         },
                         {
                             headerText: 'Created On',
@@ -115,17 +115,17 @@ function TicketsController($state, $scope, $http, $sce, ticketservice, ticketFol
                         {
                             headerText: 'RT Spoc',
                             dataField: 'rtSpoc',
-                            tdClasses: 'width12',
-                            thClasses: 'width12',
-                            sort: true
-                        },
-                        {
-                            headerText: 'Current Status',
-                            dataField: 'status',
                             tdClasses: 'width13',
                             thClasses: 'width13',
                             sort: true
                         }
+                        // {
+                        //     headerText: 'Current Status',
+                        //     dataField: 'status',
+                        //     tdClasses: 'width13',
+                        //     thClasses: 'width13',
+                        //     sort: true
+                        // }
         ];
         vmtic.itemRenderers = {
             'itemName': 'itemname-link-renderer',
@@ -179,13 +179,14 @@ function TicketsController($state, $scope, $http, $sce, ticketservice, ticketFol
                     data.rtSpoc = "";
                 }
 
-                if  (data.status == null){
-                    data.status = "";
-                }
+                // if  (data.status == null){
+                //     data.status = "";
+                // }
 
                     return data.itemName.toString().toLowerCase().indexOf(vmtic.filterTickets.searchKeyword.toLowerCase()) > -1 || data.bhuId.toString().toLowerCase().indexOf(vmtic.filterTickets.searchKeyword.toLowerCase()) > -1 
                         || data.description.toString().toLowerCase().indexOf(vmtic.filterTickets.searchKeyword.toLowerCase()) > -1 || data.creationDate.toString().toLowerCase().indexOf(vmtic.filterTickets.searchKeyword.toLowerCase()) > -1
-                        || data.rtSpoc.toString().toLowerCase().indexOf(vmtic.filterTickets.searchKeyword.toLowerCase()) > -1 || data.status.toString().toLowerCase().indexOf(vmtic.filterTickets.searchKeyword.toLowerCase()) > -1;
+                        || data.rtSpoc.toString().toLowerCase().indexOf(vmtic.filterTickets.searchKeyword.toLowerCase()) > -1 ;
+                        //|| data.status.toString().toLowerCase().indexOf(vmtic.filterTickets.searchKeyword.toLowerCase()) > -1;
 
                 
                 });

@@ -51,7 +51,7 @@ function HeaderController($state, sharedService, $scope, $rootScope) {
         });
     } 
     if(searchKeyword.length >= 5 && !isNaN(searchKeyword)){
-        sharedService.getSearchTestScriptsByBhuid(searchKeyword).then(function(resp) {
+        sharedService.getSearchTestScriptsByBhuidReportData(searchKeyword).then(function(resp) {
             if(resp && resp.errorCode){
                 $scope.$emit('alert', {
                   message: resp.message,

@@ -10,4 +10,5 @@ module.exports = angular
     .directive('effortsutilizedLink', require('./reports-efforts.directive'))
     .directive('warrantyissueLink', require('./reports-warrentyissues.directive'))
     .directive('currentstatusLink', require('./reports-status.directive'))
-    .directive('estimatedeffortsEdit',require("./report-admin-effort-edit.directive"));
+    .directive('estimatedeffortsEdit',require("./report-admin-effort-edit.directive"))
+    .directive('notifyLink',require("./reports-notify.directive"));

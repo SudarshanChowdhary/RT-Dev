@@ -5,25 +5,54 @@ SearchController.$inject = [
     '$http',
     '$filter',
     '$timeout',
-    'repositoryservice'
+    'repositoryservice',
+    'sharedService'
 ];
 
-function SearchController($state, $scope,$rootScope, $http,$filter,$timeout, repositoryservice) {
+function SearchController($state, $scope,$rootScope, $http, $filter, $timeout, repositoryservice, sharedService) {
     var vmsea = this;
     vmsea.folderPath = '';
     vmsea.testScriptCount = '';
     vmsea.selectedAll = [];
     vmsea.array = [];
-   
+
+
+    angular.element('.table--fixed').css({
+        "width": sharedService.getWindowWidth() > 1500 ? "100%" : "1700px"
+      });
+
+    angular.element(".rt-grid__wrapper").css({
+        "margin-top": sharedService.getWindowWidth() > 1500 ? "2%":"2.5%",
+    });
+
+    angular.element(".grid-filter").css({
+        "margin-right": sharedService.getWindowWidth() > 1500 ? "1.1%":"1.5%",
+        "margin-top": "0.5%"
+    });
+    angular.element(".export-excel").css({
+        "margin-right": sharedService.getWindowWidth() > 1500 ? "5.5%":"7.8%",
+        "margin-top": "0.5%"
+    });
+
+    vmsea.gridOptions = {
+        bindType: 1,
+        data: {
+            foo: {}
+        },
+        dataOptions: {
+            nodata: 'No data'
+        },
+        enablePagination: true
+    };
 
     if($state.params && $state.params.searchParam && $state.params.searchParam.searchResponseDTO){
        vmsea.folderPath = $state.params.searchParam.searchResponseDTO; 
     }
-    if($state.params && $state.params.searchParam && $state.params.searchParam.ticketDetails){
-       vmsea.searchResultsByBhuid = $state.params.searchParam.ticketDetails; 
+    if($state.params && $state.params.searchParam && $state.params.searchParam.bhurptDetails){
+       vmsea.searchResultsByBhuid = $state.params.searchParam.bhurptDetails; 
        vmsea.bhuid = $state.params.bhuid;
     }
-    vmsea.testScriptCount =  $state.params.searchParam.testcasescount;
+    vmsea.testScriptCount = ($state.params.searchParam && $state.params.searchParam.testcasescount)? $state.params.searchParam.testcasescount : 0;
 
     vmsea.testScriptsTabs = [{
         title: 'Details',
@@ -76,31 +105,154 @@ function SearchController($state, $scope,$rootScope, $http,$filter,$timeout, rep
         tdClasses: 'width15'
     }];
 
-    vmsea.columnDataByBhuid =[{
-                            headerText: 'Ticket Type',
-                            dataField: 'ticketType',
-                            tdClasses: 'width10',
-                            thClasses: 'width10',
-                            sort: true
-                        }, 
-                        {
-                            headerText: 'Ticket Number',
-                            dataField: 'itemName',
-                            tdClasses: 'width10',
-                            thClasses: 'width10'
-                        }, 
-                        {
-                            headerText: 'Description',
-                            dataField: 'description',
-                            tdClasses: 'width70',
-                            thClasses: 'width70'
-                        },
-                        {
-                            headerText: 'Spoc',
-                            dataField: 'rtSpoc',
-                            tdClasses: 'width10',
-                            thClasses: 'width10'
-    }];
+    vmsea.columnDataByBhuid =[
+    //     {
+    //                         headerText: 'Ticket Type',
+    //                         dataField: 'ticketType',
+    //                         tdClasses: 'width10',
+    //                         thClasses: 'width10',
+    //                         sort: true
+    //                     }, 
+    //                     {
+    //                         headerText: 'Ticket Number',
+    //                         dataField: 'itemName',
+    //                         tdClasses: 'width10',
+    //                         thClasses: 'width10'
+    //                     }, 
+    //                     {
+    //                         headerText: 'Description',
+    //                         dataField: 'description',
+    //                         tdClasses: 'width70',
+    //                         thClasses: 'width70'
+    //                     },
+    //                     {
+    //                         headerText: 'Spoc',
+    //                         dataField: 'rtSpoc',
+    //                         tdClasses: 'width10',
+    //                         thClasses: 'width10'
+    // }
+
+    {
+        headerText: 'BHU/IHU#',
+        dataField: 'bhuId',
+        thClasses: 'width5',
+        tdClasses: 'width5',
+        sort: true
+    }, {
+        headerText: 'Current Status',
+        dataField: 'currentStatus',
+        thClasses: 'width5',
+        tdClasses: 'width5',
+        sort: true
+    }, {
+        headerText: 'Size',
+        dataField: 'size',
+        //sort: true,
+        thClasses: 'width5',
+        tdClasses: 'width5'
+    },{
+        headerText: 'Impacted Objects',
+        dataField: 'noOfObjects',
+        thClasses: 'width5',
+        tdClasses: 'width5'
+    },{
+        headerText: 'Project Manager',
+        dataField: 'projectManager',
+        thClasses: 'width10',
+        tdClasses: 'width10',
+        sort: true
+    },{
+        headerText: 'RT Spoc',
+        dataField: 'rtsSpoc',
+        thClasses: 'width5',
+        tdClasses: 'width5',
+        sort: true
+    },{
+        headerText: 'Extended Team Members',
+        dataField: 'extteammembers',
+        thClasses: 'width10',
+        tdClasses: 'width10'
+    },{
+        headerText: 'Scripts Shared',
+        dataField: 'scriptshared',
+        thClasses: 'width5',
+        tdClasses: 'width5'
+    },{
+        headerText: 'Scripts Utilized',
+        dataField: 'scriptutilized',
+        thClasses: 'width5',
+        tdClasses: 'width5'
+    },{
+        headerText: 'Scripts Executed',
+        dataField: 'scriptexecuted',
+        thClasses: 'width5',
+        tdClasses: 'width5'
+    },{
+        headerText: 'RT Defects',
+        dataField: 'rtdefects',
+        thClasses: 'width5',
+        tdClasses: 'width5'
+    },{
+        headerText: 'RT Miss',
+        dataField: 'rtmiss',
+        thClasses: 'width5',
+        tdClasses: 'width5'
+    },{
+        headerText: 'Warranty Issues',
+        dataField: 'warrantyissue',
+        thClasses: 'width5',
+        tdClasses: 'width5',
+        sort: true
+    },{
+        headerText: 'Scripts Executed as part of Warranty',
+        dataField: 'scriptExcpartOfwarranty',
+        thClasses: 'width10',
+        tdClasses: 'width10'
+    },{
+        headerText: 'Scripts Modified',
+        dataField: 'scriptsmodified',
+        thClasses: 'width5',
+        tdClasses: 'width5'
+    }
+];
+
+
+    if($rootScope.isTeamMember == true || ($rootScope.userRoles && $rootScope.userRoles.indexOf("admin")> -1)){
+        var colm15 = vmsea.columnDataByBhuid[14];
+        vmsea.columnDataByBhuid[14] = {
+            headerText: 'New Scripts Received',
+            dataField: 'newscriptreceived',
+            thClasses: 'width5',
+            tdClasses: 'width5'
+        };
+        vmsea.columnDataByBhuid[15] = colm15;
+        vmsea.columnDataByBhuid.push({
+            headerText: 'Efforts Utilized',
+            dataField: 'efortsutilized',
+            thClasses: 'width5',
+            tdClasses: 'width5',
+            sort: true
+        });
+    }else if($rootScope.isTeamMember==false){
+        var colm15 = vmsea.columnDataByBhuid[14];
+        vmsea.columnDataByBhuid[14] = {
+            headerText: 'New Script Received',
+            dataField: 'newscriptreceived',
+            thClasses: 'width10',
+            tdClasses: 'width10'
+        };
+        vmsea.columnDataByBhuid[15] = colm15;
+    }
+
+    vmsea.itemRenderers = {
+        //link going to appear in grid
+        'bhuId': 'search-bhu-link-renderer',//reportbhu-id-link-renderer
+        'currentStatus': 'search-current-status-link-renderer',
+        'warrantyissue': 'search-warranty-issue-link-renderer',
+        'efortsutilized': 'search-efforts-utilized-link-renderer'
+    };
+
+    //grid-search-status.directive
 
     $scope.itemRenderers = {
         'description': 'repo-desc-item-renderer',

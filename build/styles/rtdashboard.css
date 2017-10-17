@@ -33,7 +33,7 @@ i {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1040;
+    z-index: 2040;
     background: #000 url(../images/loading_apple.gif) center/64px no-repeat;
     opacity: 0.5; }
 
@@ -8052,6 +8052,9 @@ textarea {
   .table--fixed .table--generic__row--head th.width5 {
     width: 5%;
     white-space: normal; }
+  .table--fixed .table--generic__row--head th.width3 {
+    width: 3%;
+    white-space: normal; }
   .table--fixed .table--generic__row--head th.width20 {
     width: 20%; }
   .table--fixed .table--generic__row--head th.width38 {
@@ -8103,6 +8106,8 @@ textarea {
     width: 10%; }
   .table--fixed .table--generic__row--body td.width5 {
     width: 5%; }
+  .table--fixed .table--generic__row--body td.width3 {
+    width: 3%; }
   .table--fixed .table--generic__row--body td.width75 {
     width: 75%; }
   .table--fixed .table--generic__row--body td.width70 {

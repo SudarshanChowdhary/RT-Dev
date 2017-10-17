@@ -26,7 +26,7 @@ function RepositoryTestScriptListController($state, $stateParams, $scope, $rootS
         enablePagination: false
     };
     $scope.designStepsColumns = [{
-        headerText: 'Step Name',
+        headerText: 'Step No',
         dataField: 'itemName',
         tdClasses: 'width10',
         thClasses: 'width10'
@@ -51,7 +51,7 @@ function RepositoryTestScriptListController($state, $stateParams, $scope, $rootS
         thClasses: 'width15',
         tdClasses: 'width15 wordwrap-text'
     }, {
-        headerText: 'Comments',
+        headerText: 'System',
         dataField: 'commentsTxt',
         thClasses: 'width15',
         tdClasses: 'width15'

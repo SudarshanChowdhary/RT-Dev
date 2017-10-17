@@ -1,6 +1,6 @@
 function reportbhuIdLinkRenderer(){
-    
         return {
+         
                 restrict: 'EA',
                 template: ['<div ng-bind-html="displayItemName(item.bhuId)" reportbhu-link>',
                     '</div>'

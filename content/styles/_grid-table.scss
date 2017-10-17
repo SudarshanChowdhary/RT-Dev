@@ -218,6 +218,10 @@ $table--fixed-body-height: 500px;
       width: 5%;
       white-space: normal;
     }
+    th.width3 {
+      width: 3%;
+      white-space: normal;
+    }
     th.width20 {
       width: 20%;
     }
@@ -294,6 +298,9 @@ $table--fixed-body-height: 500px;
     }
      td.width5 {
       width: 5%;
+    }
+    td.width3 {
+      width: 3%;
     }
      td.width75 {
       width: 75%;

@@ -13,17 +13,26 @@ function descItemRenderer(){
 					return p;
 				   }else{
 					   if(desc){
-						   debugger;
 							 if($('span:first', p).html() !=''){
-							 	var str = $('span:first', p).html();
+								 var str = $('span:first', p).html();
+								 if(!str || str==""){
+									var dt = (new DOMParser).parseFromString(p, "text/html").documentElement.textContent;
+									var val = dt.substr(dt.indexOf('\n'),dt.replace("\n","").indexOf("\n"));
+									 return val;
+								 }
 							 	return str;
 							 }else if($('p:first', p).html() !=''){
-							 	var str = $('p:first', p).html();
+								 var str = $('p:first', p).html();
+								 if(!str || str==""){
+									var dt = (new DOMParser).parseFromString(p, "text/html").documentElement.textContent;
+									var val = dt.substr(dt.indexOf('\n'),dt.replace("\n","").indexOf("\n"));
+									 return val;
+								 }
 							 	return str;
 							 }else if(p == null){
 							 	 return '--';
 							 }else{
-							 	 return p;
+								 return p;
 							 }
 					   }else{
 							return p;//(new DOMParser).parseFromString(p, "text/html").documentElement.textContent.replace(new RegExp('\n','g'), '').trim().split(".").join("\n");

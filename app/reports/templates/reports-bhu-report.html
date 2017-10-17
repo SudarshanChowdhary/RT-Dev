@@ -1,7 +1,7 @@
 <div class="rt-tickets-container row report-grid" >
     <toaster-container toaster-options="{'position-class': 'toast-top-center'}"></toaster-container>
-    <a href="javascript:void(0)" class="filter-by grid-filter" style="margin-right: 20px;" ng-click="bhureport.showFilterOptions()"><span class="glyphicon glyphicon-filter"></span>Filter</a>
-    <a href="javascript:void(0)" class="filter-by export-excel" style="margin-right: 110px;width: 150px;"  ng-click="bhureport.exportToExcel()" ng-disabled="bhureport.filterBhuReport.bhurptQuarter && !bhureport.filterBhuReport.bhurptYear">
+    <a href="javascript:void(0)" class="filter-by grid-filter"  ng-click="bhureport.showFilterOptions()"><span class="glyphicon glyphicon-filter"></span>Filter</a>
+    <a href="javascript:void(0)" class="filter-by export-excel" style="width: 150px;"  ng-click="bhureport.exportToExcel()" ng-disabled="bhureport.filterBhuReport.bhurptQuarter && !bhureport.filterBhuReport.bhurptYear">
         <span class="glyphicon glyphicon-export"></span>Export to excel
     </a>
     
@@ -9,7 +9,7 @@
         <span class="glyphicon glyphicon-export"></span>&nbsp;
         Export to excel
     </button> -->
-    <div class="rt-grid__wrapper" style="overflow:auto; width: 100%; margin-top: 1.1%;">
+    <div class="rt-grid__wrapper" style="overflow:auto; width: 100%">
         <p role="alert" aria-atomic="true" id="table-sort-alert" class="a11y">
         </p>
         <table rt-grid  data="bhureport.data" columns="bhureport.columns" item-renderers="bhureport.itemRenderers" grid-options="bhureport.gridOptions" 
@@ -28,12 +28,12 @@
     </div>
     <div class="sidenav hide">
         <span class="glyphicon glyphicon-remove-circle" ng-click="bhureport.hideSideFilterOptions()"></span>
+        <div class="form-group">
+                <label for="bhuReportSearch"></label>
+                    <input type="text" name="bhuReportSearch" class="search-query form-control" placeholder="Enter keyword to search" ng-model="bhureport.filterBhuReport.searchKeyword" 
+                        ng-keyup="bhureport.searchBhuReportTable(bhureport.filterBhuReport.searchKeyword)">
+        </div>
         <form ng-submit="bhureport.populateBhuReportFilterData(bhureport.filterBhuReport,1)" name="bhuReportFilterForm">
-            <div class="form-group">
-            <label for="bhuReportSearch"></label>
-                <input type="text" name="bhuReportSearch" class="search-query form-control" placeholder="Enter keyword to search" ng-model="bhureport.filterBhuReport.searchKeyword" 
-                    ng-keyup="bhureport.searchBhuReportTable(bhureport.filterBhuReport.searchKeyword)">
-            </div>
             <div class="form-group">
                 <label for="bhurptPhase">Select Phase</label>
                 <select class="form-control" name="bhurptPhase" ng-options="phase for phase in bhureport.bhuReportPhase" ng-model="bhureport.filterBhuReport.bhurptPhase">
@@ -54,7 +54,7 @@
                     <option value="">Select Quarter</option>
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display:none">
                 <label for="bhurptMonth">Select Month</label>
                 <select class="form-control" name="bhurptMonth" ng-options="month for month in bhureport.bhuReportFilterMonth" ng-model="bhureport.filterBhuReport.bhurptMonth">
                     <option value="">Select Month</option>
@@ -63,7 +63,7 @@
             <div class="form-group">
                 <div>
                 <button type="submit" class="btn btn-default" ng-disabled="bhureport.checkFilterSelection(bhureport.filterBhuReport)">Apply</button>
-                <button type="button" class="btn btn-default" ng-click="bhureport.resetFilter(bhuReportFilterForm)">Reset</button>
+                <button type="button" class="btn btn-default" ng-disabled="bhureport.checkFilterSelection(bhureport.filterBhuReport)" ng-click="bhureport.resetFilter(bhuReportFilterForm)">Reset</button>
                 </div>
             </div>
         </form>

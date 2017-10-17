@@ -20,7 +20,7 @@
         <div class="form-group row">
           <div class="col-md-2"></div>
           <div class="col-md-4"> <label for="bhu-ihu">BHU / IHU #* :</label></div>
-          <div class="col-md-4"> <input minlength="1" min="1" autocomplete="off" name="bhu-ihu" class="form-control" ng-model="bhuihu" required> </div>
+          <div class="col-md-4"> <input minlength="1" min="1" autocomplete="off" autocomplete="off" name="bhu-ihu" class="form-control" ng-model="bhuihu" required> </div>
           <div class="col-md-2"></div>
         </div>
 
@@ -103,11 +103,11 @@
             <div class="col-md-4">
               <div class="row">
                 <div class="col-md-5">
-              <input type="text" ng-model="hours" class="form-control plc-milestone-hours" data-ng-keypress="validateNumber($event)" ng-pattern="/^[0-23]+$/" maxlength="2" min="0" max="23" placeholder="HH"  ng-required="!minutes || minutes==''" ng-cloak/>
+              <input type="text" ng-model="hours" class="form-control plc-milestone-hours" data-ng-keypress="validateNumber($event)" ng-pattern="/^[1-9]$|^0[0-9]$|^1[0-9]$|^2[0-3]$/" maxlength="2" min="0" max="23" placeholder="HH"  ng-required="!minutes || minutes==''" ng-cloak/>
             </div>
             <div class="col-md-1 colon">: </div>
             <div class="col-md-5">
-              <input type="text" ng-model="minutes" class="form-control plc-milestone-mins" data-ng-keypress="validateNumber($event)"  ng-pattern="/^[0-59]+$/" maxlength="2" min="0" max="59" placeholder="MM" ng-required="!hours || hours==''" ng-cloak/>
+              <input type="text" ng-model="minutes" class="form-control plc-milestone-mins" data-ng-keypress="validateNumber($event)"  ng-pattern="/^[1-6]$|^0[0-9]$|^1[0-9]$|^2[0-9]|^3[0-9]$|^4[0-9]$|^5[0-9]$/" maxlength="2" min="0" max="59" placeholder="MM" ng-required="!hours || hours==''" ng-cloak/>
             </div>
             <div class="col-md-1"></div>
           </div>
@@ -120,6 +120,6 @@
     <div class="modal-footer row ">
         <div class="col-md-4 text-center"><button type="submit" class="btn btn-primary" ng-disabled="form.milestone.$invalid" ng-click="form.milestone.$setPristine()">SAVE</button></div>
         <div class="col-md-4 text-center"><button type="RESET" class="btn btn-primary" ng-click="resetClicked=true" ng-model="resetClicked" >RESET</button></div>
-        <div class="col-md-4 text-center"><button class="btn btn-warning" ng-click="cancel()">Cancel</button></div>
+        <div class="col-md-4 text-center"><button class="btn btn-warning" ng-click="cancel()">CANCEL</button></div>
     </div>
 </form>

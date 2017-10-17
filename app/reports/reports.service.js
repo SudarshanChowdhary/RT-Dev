@@ -2,7 +2,7 @@ ReportsService.$inject = ['$http', '$q', '$sce','spinnerService','sharedService'
 
 function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout, toaster ){
 	var reportsService = {
-		getReportsList: getReportsList,
+		// getReportsList: getReportsList,
         getReportsUrl: getReportsUrl,
         getReportBhuDetails: getReportBhuDetails,
         getBhuReportData: getBhuReportData,
@@ -15,7 +15,8 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
         exportEffortsToExcelSrv : exportEffortsToExcelSrv,
         exportBhuDtlsToExcelSrv : exportBhuDtlsToExcelSrv,
         exportExcel :exportExcel,
-        getWindowsWidthPx :getWindowsWidthPx
+        getWindowsWidthPx :getWindowsWidthPx,
+        sendBhuNotification : sendBhuNotification
 	};
 
 	return reportsService;
@@ -23,10 +24,14 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
 	function getReportsList() {
         var def = $q.defer();
          spinnerService.show();
-            //$http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/list")
-            $http.get("reports/list")
+            $http.get("¸/RTDashboard/reports/list")
+            //$http.get("reports/list")
                 .success(function(data) {
-                    def.resolve(data);
+                    if(data.errorCode){
+                        def.resolve([]);
+                    }else{
+                        def.resolve(data);
+                    }
                     spinnerService.hide();
                 })
                 .error(function() {
@@ -41,28 +46,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
     
     // BHU Report services **************************************************/
     function getBhuReportData(bhuid) {
-        $timeout( function(){
-            spinnerService.show();
-        },500);
-            var def = $q.defer();
-            //$http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport",{ params:{ bhuID : bhuid }}).success(function(data) {
-            $http.get("reports/BHUReport").success(function(data) {
-                if(data && data.errorCode){
-                    toaster.pop({
-                        type: 'error',
-                        body: 'Please try later or contact with admin..!',
-                        timeout: 3000,
-                        showCloseButton: true               
-                    });
-                }else{
-                    var cusmizedData = cunstmizeBhuData(data);
-                    def.resolve(cusmizedData);
-                    spinnerService.hide();
-                }
-            }).error(function() {
-                def.reject("Failed to get data");
-            });
-            return def.promise;
+       return sharedService.getSearchTestScriptsByBhuidReportData(bhuid);
     }
 
     function getBhuReportFilterDetails(p, y, q, m, si){
@@ -74,9 +58,9 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
         }
         if(p){
              p =p.split(" ").length >1 ? p.substr(0, p.indexOf(" ")): p;
-             getUrl = "reports/BHUReport/phase/"+ p;
+            getUrl = "reports/BHUReport/phase/"+ p;
             //getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/phase/"+ p;
-        }else if(!p && y){
+        }else if(!p && y && !(q || m)){
             getUrl = "reports/BHUReport/"+ y;
             //getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/"+ y;
         }else if(!p && y && (q || m)){
@@ -91,7 +75,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
                 startIndex: si
             }
         }).success(function(data) {
-                var cusmizedData = cunstmizeBhuData(data);
+                var cusmizedData =  sharedService.cunstmizeBhuData(data);
                 def.resolve(cusmizedData);
                 spinnerService.hide();
         }).error(function() {
@@ -102,39 +86,6 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
 
     function getWindowsWidthPx(){
        return sharedService.getWindowWidth();
-    }
-
-    function cunstmizeBhuData(data){
-        var cusmizedData = {
-            "totalCount": data.reportDetails ? data.reportDetails.length : 0,
-            "bhurptDetails": []
-         }
-         if(data.reportDetails.length > 0){
-            cusmizedData.totalCount = data.reportDetails.length;
-            angular.forEach(data.reportDetails, function(element, key) {
-                var myjson = {
-                    "bhuId" : element.bhuId,
-                    "currentStatus":element.currentStatus,
-                    "size":element.size,
-                    "noOfObjects":element.objImpacted,
-                    "projectManager":element.projManager,
-                    "rtsSpoc":element.rtSpoc,
-                    "extteammembers":element.rtExtendedTeam,
-                    "scriptshared":element.scriptsShared,
-                    "scriptutilized":element.scriptsUtilized,
-                    "scriptexecuted":element.scriptsExecuted,
-                    "rtdefects":element.rtDefects,
-                    "rtmiss":element.rtMiss,
-                    "warrantyissue":element.warrantyIssues,
-                    "scriptExcpartOfwarranty":element.newScriptsreceived,
-                    "newscriptreceived":element.newScriptsreceived,
-                    "scriptsmodified":element.scriptsModified,
-                    "efortsutilized":element.efforts
-                }
-                cusmizedData.bhurptDetails.push(myjson);
-            }); 
-        }
-        return cusmizedData;
     }
 
     function getMonthFromString(mon){
@@ -221,7 +172,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
                 if(data.length > 0){
                     cusmizedData.totalCount = data.length;
                     angular.forEach(data, function(element, key) {
-                    var estimatedEfforts = 0;//it may come from database from java service with response, pending for clarification
+                    var estimatedEfforts =element.estimatedEff;//it may come from database from java service with response, pending for clarification
     
                         if(!element.totalActualEff || element.totalActualEff == null){
                             element.totalActualEff = 0;
@@ -258,6 +209,24 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
                  def.reject("Failed to get data");
              });
              return def.promise;
+    }
+
+    function sendBhuNotification(reqData){
+        var def = $q.defer();
+        spinnerService.show();
+       
+        $http({
+            //url:"https://rtdashboardd.rno.apple.com:9012/RTDashboard/milestone/doEmail",
+            url: "BHUReport/sendBHUEmail",
+            data: { emailDTO: reqData },
+            method:"POST"
+        }).success(function(data) {
+            def.resolve(data);
+        })
+        .error(function() {
+            def.reject("Failed to get data");
+        });
+        return def.promise;
     }
 
     //this is the common function to export excel

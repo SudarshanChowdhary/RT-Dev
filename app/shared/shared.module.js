@@ -23,10 +23,19 @@ module.exports = angular
     .directive('validateForm', require('./directives/grid-admin-validation.directive'))
     .directive('checkRepository', require('./check-repository/check-repository.directive'))
     .directive('rtRepoBreadcrumb', require('./directives/generate-repository-breadcrumb.directive'))
+
     .directive('currentStatusLinkRenderer',require('./directives/grid-report-status.directive'))
     .directive('warrantyIssueLinkRenderer',require('./directives/grid-report-warrantyIssue.directive'))
     .directive('effortsUtilizedLinkRenderer',require('./directives/grid-report-efortsutilize.directive'))
     .directive('reportbhuIdLinkRenderer', require('./directives/grid-report-bhuid-link.directive'))
+    .directive('reportNotifyLinkRenderer', require('./directives/grid-report-notify-link.directive'))
+
+
+    .directive('searchCurrentStatusLinkRenderer',require('./directives/grid-search-status.directive'))
+    .directive('searchWarrantyIssueLinkRenderer',require('./directives/grid-search-warrantyIssue.directive'))
+    .directive('searchEffortsUtilizedLinkRenderer',require('./directives/grid-search-efortsutilize.directive'))
+    .directive('searchBhuLinkRenderer', require('./directives/grid-search-bhuid-link.directive'))
+
     .directive('highlightCell', require('./directives/grid-deviation-format.directive'))
     .factory('spinnerService', require('./spinner/spinner.service'))
     .factory('checkRepositoryService', require('./check-repository/check-repository.service'))

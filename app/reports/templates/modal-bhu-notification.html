@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h2>BHU REPORT NOTIFICATION</h2>
+ </div>
+ <!-- <form name="notificationForm" novalidate role="form" enctype="multipart/form-data" data-ng-submit="submitFormNotfication(this)" method="post"> -->
+     <form name="notificationForm" novalidate role="form" enctype="multipart/form-data">
+     <div class="modal-body">
+     <div class="form-group row">
+         <div class="col-md-2"></div>
+         <div class="col-md-4"> <label for="date">BHU / IHU #* :</label></div>
+         <div class="col-md-4"> <input type="text" autocomplete="off" data-ng-keypress="validateNumber($event)" minlength="1" min="1" name="bhuId" class="form-control"  ng-model="bhuId" ng-readonly="bhuId" required> </div>
+         <div class="col-md-2"></div>
+     </div>
+     <div class="form-group row">
+         <div class="col-md-2"></div>
+         <div class="col-md-4"> <label for="rt-spoc">RT SPOC* :</label></div>
+         <div class="col-md-4"> <input type="text" autocomplete="off" name="rt_spocs_selected" class="form-control" ng-readonly="selected" uib-typeahead="rt_spoc.name for rt_spoc in rt_spocs | filter:$viewValue | limitTo:10" ng-model="selected" required> </div>
+         <div class="col-md-2"></div>
+     </div>
+     <div class="form-group row">
+         <div class="col-md-2"></div>
+         <div class="col-md-4"> <label for="rt_recipients">RECIPIENTS* :</label></div>
+         <div class="col-md-4"> <input type="text" autocomplete="off" name="rt_recipient" class="form-control"  ng-model="rt_recipients" name="rt_recipients" required> </div>
+         <div class="col-md-2"></div>
+     </div>
+     <div class="form-group row">
+         <div class="col-md-2"></div>
+         <div class="col-md-4">  <label>CONTENT* :</label></div>
+         <div class="col-md-4"><textarea name="content" class="form-control plc-form-textarea" ng-model="content" required placeholder="Enter Content"></textarea></div>
+         <div class="col-md-2"></div>
+     </div>
+     </div>
+     <div class="modal-footer row">
+        <!-- <div class="col-md-3 text-center">
+            <button class="btn btn-info" ng-click="getNotificationPreview()" ng-disabled="notificationForm.$invalid">PREVIEW</button>
+        </div> -->
+         <div class="col-md-4 text-center">
+             <button class="btn btn-primary" ng-click="submitBhuDetailsNotfication()" ng-disabled="notificationForm.$invalid">SEND EMAIL</button>
+         </div>
+         <div class="col-md-4 text-center">
+             <button class="btn btn-primary" ng-click="resetForm()" ng-disabled="form.userForm.$invalid">RESET</button>
+         </div>
+         <div class="col-md-4 text-center">
+             <button class="btn btn-warning" ng-click="cancel()">CANCEL</button>
+         </div>
+     </div>
+ </form>
+ 

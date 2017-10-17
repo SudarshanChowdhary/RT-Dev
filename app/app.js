@@ -10,6 +10,7 @@ require('angular-sanitize');
 require('ui-select');
 require('angular-messages');
 require('angularjs-toaster');
+require('ng-file-upload');
 // application modules
 var layout = require('./layout/layout.module');
 var home = require('./home/home.module');
@@ -30,7 +31,7 @@ angular
 // application top level module
     .module('rt', [
         // external modules
-        'ui.router', 'ui.bootstrap', 'ui.select', 'ncy-angular-breadcrumb', 'ngSanitize','toaster',
+        'ui.router', 'ui.bootstrap', 'ui.select', 'ncy-angular-breadcrumb', 'ngSanitize','toaster', 'ngFileUpload',
         // application modules
         home.name,
         layout.name,
