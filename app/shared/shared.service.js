@@ -128,7 +128,7 @@ function SharedService($http, $q, $rootScope, spinnerService, $timeout, toaster)
         var def = $q.defer();
         spinnerService.show();
         $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users/"+ spoc).success(function(data) {
-        //$http.get("utils/users/"+ spoc).success(function(data) {
+       // $http.get("utils/users/"+ spoc).success(function(data) {
             def.resolve(data);
             spinnerService.hide();
         }).error(function() {
@@ -154,7 +154,7 @@ function SharedService($http, $q, $rootScope, spinnerService, $timeout, toaster)
         var def = $q.defer();
         spinnerService.show();
         $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/tickets/bhudetails/"+bhuId).success(function(data) {
-        //$http.get("tickets/bhudetails/"+bhuId).success(function(data) {
+      //  $http.get("tickets/bhudetails/"+bhuId).success(function(data) {
             def.resolve(data);
             spinnerService.hide();
         }).error(function() {

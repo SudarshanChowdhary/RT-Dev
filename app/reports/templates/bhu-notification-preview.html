@@ -1,34 +1,24 @@
-<div class="modal-header">
-    <h2>BHU REPORT NOTIFICATION</h2>
-</div>
-<!-- <form name="notificationForm" novalidate role="form" enctype="multipart/form-data" data-ng-submit="submitFormNotfication(this)" method="post"> -->
-
-<div class="modal-body">
-    <div class="form-group row">
-        <div class="col-md-2"></div>
-        <div class="col-md-4"> <label for="date">BHU / IHU #* :</label></div>
-        <div class="col-md-4"> </div>
-        <div class="col-md-2"></div>
+<div class="container">
+    <div class="modal-header">
+        <!-- <h3>BHU REPORT NOTIFICATION</h3> -->
     </div>
+    <!-- <form name="notificationForm" novalidate role="form" enctype="multipart/form-data" data-ng-submit="submitFormNotfication(this)" method="post"> -->
     <div class="form-group row">
-        <div class="col-md-2"></div>
-        <div class="col-md-4"> <label for="date">BHU / IHU #* :</label></div>
-        <div class="col-md-4"> </div>
-        <div class="col-md-2"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-6"> Notifivation for BHU/IHU# - {{bhuId}}</div>
+        <div class="col-md-3"></div>
     </div>
-    <div class="form-group row">
-        <div class="col-md-2"></div>
-        <div class="col-md-4"> <label for="date">BHU / IHU #* :</label></div>
-        <div class="col-md-4"> </div>
-        <div class="col-md-2"></div>
+    </hr>
+    <div class="modal-body" ng-repeat="field in keys">
+        <div class="form-group row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4"> <label>{{field.headerText}}</label></div>
+            <div class="col-md-4"> <span>{{fields[field.dataField]}} </span> </div>
+            <div class="col-md-2"></div>
+        </div>
+        </hr>
     </div>
-    <div class="form-group row">
-        <div class="col-md-2"></div>
-        <div class="col-md-4"> <label for="date">BHU / IHU #* :</label></div>
-        <div class="col-md-4"> </div>
-        <div class="col-md-2"></div>
+    <div class="modal-footer row">
+        <button class="btn btn-warning" ng-click="cancel()">CANCEL</button>
     </div>
-</div>
-<div class="modal-footer row">
-    <button class="btn btn-warning" ng-click="cancel()">CANCEL</button>
 </div>

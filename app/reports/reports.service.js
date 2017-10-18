@@ -1,6 +1,6 @@
-ReportsService.$inject = ['$http', '$q', '$sce','spinnerService','sharedService','$timeout', 'toaster'];
+ReportsService.$inject = ['$http', '$q', '$sce','spinnerService','sharedService','$timeout', 'toaster','$rootScope'];
 
-function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout, toaster ){
+function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout, toaster, $rootScope ){
 	var reportsService = {
 		// getReportsList: getReportsList,
         getReportsUrl: getReportsUrl,
@@ -16,7 +16,8 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
         exportBhuDtlsToExcelSrv : exportBhuDtlsToExcelSrv,
         exportExcel :exportExcel,
         getWindowsWidthPx :getWindowsWidthPx,
-        sendBhuNotification : sendBhuNotification
+        sendBhuNotification : sendBhuNotification,
+        getBhuReportColumns : getBhuReportColumns
 	};
 
 	return reportsService;
@@ -24,7 +25,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
 	function getReportsList() {
         var def = $q.defer();
          spinnerService.show();
-            $http.get("¸/RTDashboard/reports/list")
+            $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/list")
             //$http.get("reports/list")
                 .success(function(data) {
                     if(data.errorCode){
@@ -253,6 +254,127 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
     function exportBhuDtlsToExcelSrv(bhuId){
        //return "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUTicketsDownload/"+ bhuId;
        return "reports/BHUTicketsDownload/"+ bhuId;
+    }
+
+    function getBhuReportColumns(){
+       var columns = [
+            {
+                headerText: ' ',
+                dataField: 'notify',
+                thClasses: 'width3',
+                tdClasses: 'width3'
+            },
+            {
+                headerText: 'BHU/IHU#',
+                dataField: 'bhuId',
+                thClasses: 'width5',
+                tdClasses: 'width5',
+                sort: true
+            }, {
+                headerText: 'Current Status',
+                dataField: 'currentStatus',
+                thClasses: 'width5',
+                tdClasses: 'width5',
+                sort: true
+            }, {
+                headerText: 'Size',
+                dataField: 'size',
+                //sort: true,
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            }, {
+                headerText: 'Impacted Objects',
+                dataField: 'noOfObjects',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            }, {
+                headerText: 'Project Manager',
+                dataField: 'projectManager',
+                thClasses: 'width10',
+                tdClasses: 'width10',
+                sort: true
+            }, {
+                headerText: 'RT Spoc',
+                dataField: 'rtsSpoc',
+                thClasses: 'width5',
+                tdClasses: 'width5',
+                sort: true
+            }, {
+                headerText: 'Extended Team Members',
+                dataField: 'extteammembers',
+                thClasses: 'width10',
+                tdClasses: 'width10'
+            }, {
+                headerText: 'Scripts Shared',
+                dataField: 'scriptshared',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            }, {
+                headerText: 'Scripts Utilized',
+                dataField: 'scriptutilized',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            }, {
+                headerText: 'Scripts Executed',
+                dataField: 'scriptexecuted',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            }, {
+                headerText: 'RT Defects',
+                dataField: 'rtdefects',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            }, {
+                headerText: 'RT Miss',
+                dataField: 'rtmiss',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            }, {
+                headerText: 'Warranty Issues',
+                dataField: 'warrantyissue',
+                thClasses: 'width5',
+                tdClasses: 'width5',
+                sort: true
+            }, {
+                headerText: 'Scripts Executed as part of Warranty',
+                dataField: 'scriptExcpartOfwarranty',
+                thClasses: 'width10',
+                tdClasses: 'width10'
+            }, {
+                headerText: 'Scripts Modified',
+                dataField: 'scriptsmodified',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            }
+        ];
+debugger;
+        if ($rootScope.isTeamMember == true || ($rootScope.userRoles && $rootScope.userRoles.indexOf("admin") > -1)) {
+            var colm15 = columns[14];
+            columns[14] = {
+                headerText: 'New Scripts Received',
+                dataField: 'newscriptreceived',
+                thClasses: 'width5',
+                tdClasses: 'width5'
+            };
+            columns[15] = colm15;
+            columns.push({
+                headerText: 'Efforts Utilized',
+                dataField: 'efortsutilized',
+                thClasses: 'width5',
+                tdClasses: 'width5',
+                sort: true
+            });
+        } else if ($rootScope.isTeamMember == false) {
+            var colm15 = columns[14];
+            columns[14] = {
+                headerText: 'New Script Received',
+                dataField: 'newscriptreceived',
+                thClasses: 'width10',
+                tdClasses: 'width10'
+            };
+            columns[15] = colm15;
+        }
+        return columns;
     }
 }
 
