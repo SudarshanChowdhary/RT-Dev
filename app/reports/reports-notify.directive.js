@@ -4,7 +4,7 @@ ReportNotificationController.$inject = ['$uibModal', '$scope', '$uibModalInstanc
 
 function ReportNotificationController($uibModal, $scope, $uibModalInstance, $http, notificationData,
     ProjectLifeCycleService, spinnerService, $q, $rootScope, toaster, Upload, $timeout, $log, sharedService, reportservice) {
-
+debugger;
     $scope.notificationFormData = {};
     $scope.bhuId = notificationData.item.bhuId;
     $scope.isBhuNotify = true;
@@ -140,6 +140,8 @@ function ReportNotificationController($uibModal, $scope, $uibModalInstance, $htt
 
     $scope.getNotificationPreview = function () {
         if ($scope.notificationForm.$valid) {
+            notificationData.recipient = notificationForm.rt_recipient.value;
+            notificationData.content = notificationForm.content.value;
             $uibModal.open({
                 templateUrl: 'app/reports/templates/bhu-notification-preview.html',
                 controller: BhuNotificationPreviewController,
@@ -167,9 +169,10 @@ function BhuNotificationPreviewController($scope, $uibModalInstance, notificatio
     debugger;
     $scope.bhuId = notificationData.item.bhuId;
     $scope.fields = notificationData.item;
-    $scope.recipients = notificationData.item.rt_recipients;
-    $scope.content = notificationData.item.content;
+    $scope.recipients = notificationData.recipient;
+    $scope.content = notificationData.content;
     $scope.keys = reportservice.getBhuReportColumns();
+    $scope.rtspocs = notificationData.item.rtsSpoc;
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };

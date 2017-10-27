@@ -25,8 +25,8 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
 	function getReportsList() {
         var def = $q.defer();
          spinnerService.show();
-            $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/list")
-            //$http.get("reports/list")
+           // $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/list")
+            $http.get("reports/list")
                 .success(function(data) {
                     if(data.errorCode){
                         def.resolve([]);
