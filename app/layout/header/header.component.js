@@ -1,6 +1,6 @@
-HeaderController.$inject = ['$state', 'sharedService', '$scope', '$rootScope'];
+HeaderController.$inject = ['$state', 'sharedService', '$scope', '$rootScope', '$location'];
 
-function HeaderController($state, sharedService, $scope, $rootScope) {
+function HeaderController($state, sharedService, $scope, $rootScope, $location) {
     var ctrl = this;
     ctrl.$state = $state;
     ctrl.userDetails = {};
@@ -9,6 +9,7 @@ function HeaderController($state, sharedService, $scope, $rootScope) {
     ctrl.isAdminUser = false;
     ctrl.getTestScripts = getTestScripts;
     ctrl.isTeamMember = $rootScope.isTeamMember;
+
 
     sharedService.getUser().then(function(user){
       if(user && user.errorCode){
@@ -32,6 +33,26 @@ function HeaderController($state, sharedService, $scope, $rootScope) {
          }
          if(!$rootScope.teamMembers){
           sharedService.getTeamMembers();
+        }
+        var urlSearch = $location.url();
+        if(urlSearch.indexOf('search') > -1){
+          debugger;
+            var bhuidForSearch= urlSearch.split('/')[(urlSearch.split('/').length-1)];
+            if(bhuidForSearch){
+                if(bhuidForSearch.length >= 4 ){
+                    sharedService.getSearchTestScriptsByBhuidReportData(bhuidForSearch).then(function(resp) {
+                        if(resp && resp.errorCode){
+                            $scope.$emit('alert', {
+                              message: resp.message,
+                              success: false
+                          });
+                        }else{
+                          ctrl.searchResults = resp;
+                          $state.go('root.search.Bhuid', {searchParam: ctrl.searchResults, bhuid:bhuidForSearch});
+                        }
+                    });
+                }
+            }
         }
       }     
     });

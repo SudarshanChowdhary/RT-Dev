@@ -284,7 +284,6 @@ function SearchController($state, $scope,$rootScope, $http, $filter, $timeout, r
         if(vmsea.folderPath.length){
             vmsea.getTestScriptDetails(vmsea.folderPath[0].searchDTO[0].id, 0, 0, vmsea.folderPath[0].searchDTO[0].name);
         }
-        
     }
 
     $scope.downloadAttachmentLink = function(aId) {
