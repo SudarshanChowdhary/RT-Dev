@@ -8219,6 +8219,16 @@ textarea {
   background: #fff;
   height: inherit; }
 
+/* ================================================================
+   Report Preview Notify popup
+================================================================== */
+.preview-font {
+  font-weight: bold; }
+
+.preview-header-color {
+  font-size: 20px;
+  color: #ccc; }
+
 /*
  * Toastr
  * Version 2.0.1

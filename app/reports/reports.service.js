@@ -25,7 +25,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
 	function getReportsList() {
         var def = $q.defer();
          spinnerService.show();
-            //$http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/list")
+         //   $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/list")
             $http.get("reports/list")
                 .success(function(data) {
                     if(data.errorCode){
@@ -60,13 +60,13 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
         if(p){
              p =p.split(" ").length >1 ? p.substr(0, p.indexOf(" ")): p;
             getUrl = "reports/BHUReport/phase/"+ p;
-            //getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/phase/"+ p;
+          //  getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/phase/"+ p;
         }else if(!p && y && !(q || m)){
             getUrl = "reports/BHUReport/"+ y;
-            //getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/"+ y;
+          //  getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/"+ y;
         }else if(!p && y && (q || m)){
             getUrl = "reports/BHUReport/"+ y +"/"+ q;
-            //getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/"+ y +"/"+ q;
+          //  getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/"+ y +"/"+ q;
         }
         $http.get(getUrl, {
             params: {
@@ -101,7 +101,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
     function getReportBhuDetails(bhuId, requestFor){
         var def = $q.defer();
          spinnerService.show();
-            //$http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/tickets/bhudetails/"+bhuId)
+          //  $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/tickets/bhudetails/"+bhuId)
             $http.get("tickets/bhudetails/"+bhuId)
                 .success(function(data) {
                     def.resolve(data);
@@ -116,7 +116,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
     function getReportCurrentStatusDetails(bhuId, rtSpoc){
         var def = $q.defer();
          spinnerService.show();
-         //$http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/status/"+bhuId, { params:{ spoc: rtSpoc }})
+       //  $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/status/"+bhuId, { params:{ spoc: rtSpoc }})
          $http.get("reports/BHUReport/status/"+bhuId, { params:{ spoc: rtSpoc }})
              .success(function(data) {
                 var cusmizedData = {
@@ -140,7 +140,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
         var def = $q.defer();
          spinnerService.show();
 
-         //$http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/warranty/"+bhuId)
+       //  $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/warranty/"+bhuId)
          $http.get("reports/BHUReport/warranty/"+bhuId)
              .success(function(data) {
                 var cusmizedData = {
@@ -163,7 +163,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
     function getReportEffortsDetails(bhuId, rtSize , rtSpoc){
         var def = $q.defer();
          spinnerService.show();
-         //$http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/efforts/"+bhuId, { params: {spoc: rtSpoc, size: rtSize}})
+       //  $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/efforts/"+bhuId, { params: {spoc: rtSpoc, size: rtSize}})
          $http.get("reports/BHUReport/efforts/"+bhuId,{ params: {spoc: rtSpoc, size: rtSize}})
              .success(function(data) {
                 var cusmizedData = {
@@ -217,8 +217,8 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
         spinnerService.show();
        
         $http({
-            //url:"https://rtdashboardd.rno.apple.com:9012/RTDashboard/milestone/doEmail",
-            url: "BHUReport/sendBHUEmail",
+           // url:"https://rtdashboardd.rno.apple.com:9012/RTDashboard/milestone/doEmail",
+            url: "reports/BHUReport/sendBHUEmail",
             data: { emailDTO: reqData },
             method:"POST"
         }).success(function(data) {
@@ -258,12 +258,12 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
 
     function getBhuReportColumns(){
        var columns = [
-            {
-                headerText: ' ',
-                dataField: 'notify',
-                thClasses: 'width3',
-                tdClasses: 'width3'
-            },
+            // {
+            //     headerText: ' ',
+            //     dataField: 'notify',
+            //     thClasses: 'width3',
+            //     tdClasses: 'width3'
+            // },
             {
                 headerText: 'BHU/IHU#',
                 dataField: 'bhuId',
@@ -373,6 +373,13 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
                 tdClasses: 'width10'
             };
             columns[15] = colm15;
+        }
+        
+        columns[16]  ={
+            headerText: 'Notify',
+            dataField: 'notify',
+            thClasses: 'width3',
+            tdClasses: 'width3'
         }
         return columns;
     }

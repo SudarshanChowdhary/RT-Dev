@@ -1,7 +1,7 @@
 <div class="container">
     <div class="modal-header">
         <!-- <h3>BHU REPORT NOTIFICATION</h3> -->
-        <h3> Notification for BHU/IHU# - {{bhuId}}</h3>
+        <strong class="preview-header-color"> Notification for BHU/IHU# - {{bhuId}}</strong>
     </div>
     <!-- <form name="notificationForm" novalidate role="form" enctype="multipart/form-data" data-ng-submit="submitFormNotfication(this)" method="post"> -->
     <!-- <div class="form-group row">
@@ -9,18 +9,22 @@
         <div class="col-md-6"> Notification for BHU/IHU# - {{bhuId}}</div>
         <div class="col-md-3"></div>
     </div> -->
-        <div class="form-group row" ng-repeat="field in keys">
+        <div class="form-group row" ng-repeat="field in keys" style=" margin-top: 20px;">
+            <div ng-if="field.headerText!='Notify'" >
             <div class="col-md-2"></div>
-            <div class="col-md-4"> <label>{{field.headerText}}</label></div>
-            <div class="col-md-4"><label>{{fields[field.dataField]}}</label> </div>
+            <div class="col-md-4 preview-font">{{field.headerText}}</div>
+            <div class="col-md-4 preview-font">{{fields[field.dataField]}}</div>
             <div class="col-md-2"></div>
+        </div>
         </div> 
+        <hr>
     <div class="form-group row">
-        <div class="col-md-8"><h3>BHU Report Notification</h3></div>
+        <div class="col-md-8 preview-header-color" style="padding-left: 35px;"><strong>BHU Report Notification</strong></div>
         <div class="col-md-4"> </div>
         <!-- <div class="col-md-4"></div>
         <div class="col-md-2"></div> -->
     </div>
+    
     <!-- <div class="form-group row">
         <div class="col-md-2"></div>
         <div class="col-md-4"><label>BHU / IHU # :</label></div>
@@ -30,24 +34,24 @@
 
     <div class="form-group row">
         <div class="col-md-2"></div>
-        <div class="col-md-4"> <label> To :</label> </div>
-        <div class="col-md-4"><label>{{recipients}}</label></div>
+        <div class="col-md-4 preview-font"> To :</div>
+        <div class="col-md-4 preview-font">{{recipients}}</div>
         <div class="col-md-2"></div>
     </div>
     <div class="form-group row">
         <div class="col-md-2"></div>
-        <div class="col-md-4"><label>Subject:</label></div>
-        <div class="col-md-4"><label> Some Content</label></div> 
+        <div class="col-md-4 preview-font">Subject:</div>
+        <div class="col-md-4 preview-font">Some Content</div> 
         <div class="col-md-2"></div>
     </div>
     
     <div class="form-group row">
         <div class="col-md-2"></div>
-        <div class="col-md-4"> <label>Content :</label> </div>
-        <div class="col-md-4"><label style="word-wrap: break-word;">{{content}}</label></div>
+        <div class="col-md-4 preview-font">Content :</div>
+        <div class="col-md-4 preview-font" style="word-wrap: break-word;">{{content}}</div>
         <div class="col-md-2"></div>
     </div>
-    
+   <hr>
     <!-- <div class="form-group row">
         <div class="col-md-2"></div>
         <div class="col-md-4"> <label>RT Spoc :</label> </div>
@@ -55,7 +59,7 @@
         <div class="col-md-2"></div>
     </div> -->
 
-    <div class="modal-footer row">
-        <button class="btn btn-warning" ng-click="cancel()">Close</button>
+    <div class="modal-footer row" style="text-align: left;">
+        <button class="btn btn-default" style="padding: 0px 40px;" ng-click="cancel()">Close</button>
     </div>
 </div>
