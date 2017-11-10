@@ -19,15 +19,16 @@
     <div class="form-group row">
         <div class="col-md-2"></div>
         <div class="col-md-4"> <label for="rt_recipients">RECIPIENTS* :</label></div>
-        <div class="col-md-4"> <input type="text" autocomplete="off" name="rt_recipient" class="form-control"  ng-model="rt_recipients" name="rt_recipients" required> </div>
+        <div class="col-md-4"> <input type="text" autocomplete="off" name="rt_recipient" class="form-control"  ng-model="rt_recipients" name="rt_recipients" required title="Email should be comma seperated">
+            <span style="font-size: 11px; color:#ccc;">(Email should be comma seperated)</span></div>
         <div class="col-md-2"></div>
     </div>
     <div class="form-group row">
     <div class="col-md-2"></div>
         <div class="col-md-4"> <label for="plc-phase">RT PLC PHASE* :</label></div>
         <div class="col-md-4">
-           <select class="form-control" ng-model="plc_phase" name="plc_phase" ng-change="previewPhase(plc_phase)" ng-options="S.label as S.label for S in selectables">
-            <option value="" selected></option>
+           <select class="form-control" ng-model="plc_phase" name="plc_phase" ng-change="previewPhase(plc_phase)" ng-options="S as S.label for S in phase_selectables.selectables">
+            <option value="selected" ></option>
             </select>
         </div>
         <div class="col-md-2"></div>

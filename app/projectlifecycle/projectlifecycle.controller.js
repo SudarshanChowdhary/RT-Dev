@@ -154,25 +154,33 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
     $scope.notificationFormData = {};
     $scope.fileAttachment = [];
     $scope.files = [];
-    $scope.selectables = [{
-        label: 'Design And Development'
-    }, {
-        label: 'Integration and Testing'
-    }, {
-        label: 'UAT'
-    }, {
-        label: 'RT'
-    }, {
-        label: 'Warranty and Phase'
-    }, {
-        label: 'P2S'
-    }];
+    $scope.phase_selectables = {
+        selectables : [{
+            label: 'Design And Development',
+            value: 'Design'
+        }, {
+            label: 'Integration Testing',
+            value:'IT'
+        }, {
+            label: 'UAT',
+            value: 'UAT'
+        }, {
+            label: 'RT',
+            value: 'RT'
+        }, {
+            label: 'Warranty Phase',
+            value: 'Warranty'
+        }, {
+            label: 'P2S',
+            value: 'P2S'
+        }]};
 
-    $scope.previewPhase = function (lable) {
-        $scope.phase_preview = ProjectLifeCycleService.getPhases(lable);
+    $scope.previewPhase = function (phase) {
+        $scope.phase_preview = ProjectLifeCycleService.getPhases(phase.label);
     };
     $scope.clearImageSource = function () {
         $scope.phase_preview = "";
+        $scope.plc_phase="";
     }
     // Any function returning a promise object can be used to load values asynchronously
     $scope.$on("seletedFile", function (event, args) {

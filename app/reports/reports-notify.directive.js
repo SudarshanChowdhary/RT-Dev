@@ -51,14 +51,39 @@ function ReportNotificationController($uibModal, $scope, $uibModalInstance, $htt
     //this function has implemented for new functionality, BHU Report notification
     $scope.submitBhuDetailsNotfication = function () {
         if ($scope.notificationForm.$valid) {
-            var reqData = {
-                bhuDetails: notificationData.item,
-                sentTo: $scope.rt_recipients,
+            var itm = notificationData.item;
+            var dsd={
+                 bhuId:itm.bhuId,
+                 currentStatus:itm.currentStatus,
+                 size:itm.size,
+                 objImpacted:itm.noOfObjects,
+                 projManager:itm.projectManager,
+                 rtSpoc:itm.rtsSpoc,
+                 rtExtendedTeam:itm.extteammembers,
+                 scriptsShared:itm.scriptshared,
+                 scriptsUtilized:itm.scriptutilized,
+
+                 scriptsExecuted:itm.scriptexecuted,
+                 rtDefects:itm.rtdefects,
+                rtMiss:itm.rtmiss,
+                 warrantyIssues:itm.warrantyissue,
+                warrantyScriptsExecuted:itm.scriptExcpartOfwarranty,
+
+                 newScriptsreceived:itm.newscriptreceived,
+                 scriptsModified:itm.scriptsmodified,
+                 efforts:itm.efortsutilized,
+                 description:""
+            }
+            var reqData =  {
+                bhuDetails: JSON.stringify(dsd),
+                recepients: $scope.rt_recipients,
                 content: $scope.content,
                 from: $rootScope.user
             }
             reportservice.sendBhuNotification(reqData).then(function (response) {
-                if (bhuReportData && bhuReportData.errorCode) {
+                console.log(response);
+                $uibModalInstance.dismiss('cancel');
+                if (response && response.errorCode) {
                     toaster.pop({
                         type: 'error',
                         body: 'Notification sending error, Please contact with admin..!',
