@@ -176,7 +176,10 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
         }]};
 
     $scope.previewPhase = function (phase) {
+        console.log(phase)
         $scope.phase_preview = ProjectLifeCycleService.getPhases(phase.label);
+        $scope.plcphase_preview = ProjectLifeCycleService.getPLCPhases(phase.value);
+        $('#summernote').summernote('code', $scope.plcphase_preview);
     };
     $scope.clearImageSource = function () {
         $scope.phase_preview = "";

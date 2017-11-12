@@ -11,8 +11,11 @@ require('ui-select');
 require('angular-messages');
 require('angularjs-toaster');
 require('ng-file-upload');
+require("summernote");
+
 // application modules
 var layout = require('./layout/layout.module');
+
 var home = require('./home/home.module');
 var shared = require('./shared/shared.module');
 var repository = require('./repository/repository.module');
@@ -31,7 +34,7 @@ angular
 // application top level module
     .module('rt', [
         // external modules
-        'ui.router', 'ui.bootstrap', 'ui.select', 'ncy-angular-breadcrumb', 'ngSanitize','toaster', 'ngFileUpload',
+        'ui.router', 'ui.bootstrap', 'ui.select', 'ncy-angular-breadcrumb', 'ngSanitize','toaster', 'ngFileUpload', 
         // application modules
         home.name,
         layout.name,
