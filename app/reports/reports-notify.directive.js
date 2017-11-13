@@ -65,14 +65,14 @@ function ReportNotificationController($uibModal, $scope, $uibModalInstance, $htt
 
                  scriptsExecuted:itm.scriptexecuted,
                  rtDefects:itm.rtdefects,
-                rtMiss:itm.rtmiss,
+                 rtMiss:itm.rtmiss,
                  warrantyIssues:itm.warrantyissue,
-                warrantyScriptsExecuted:itm.scriptExcpartOfwarranty,
+                 warrantyScriptsExecuted:itm.scriptExcpartOfwarranty,
 
                  newScriptsreceived:itm.newscriptreceived,
                  scriptsModified:itm.scriptsmodified,
                  efforts:itm.efortsutilized,
-                 description:""
+                 description:itm.desc
             }
             var reqData =  {
                 bhuDetails: JSON.stringify(dsd),

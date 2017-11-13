@@ -7,13 +7,21 @@
     <div class="form-group row">
         <div class="col-md-2"></div>
         <div class="col-md-4"> <label for="date">BHU / IHU #* :</label></div>
-        <div class="col-md-4"> <input type="text" autocomplete="off" data-ng-keypress="validateNumber($event)" minlength="1" min="1" name="bhuId" class="form-control"  ng-model="bhuId" ng-readonly="bhuId && isBhuNotify" required> </div>
+        <div class="col-md-4"> <input type="text" autocomplete="off" data-ng-keypress="validateNumber($event)" ng-blur="bindrtSpoc(bhuId)" minlength="1" min="1" name="bhuId" class="form-control"  ng-model="bhuId" ng-readonly="bhuId && isBhuNotify" required> </div>
         <div class="col-md-2"></div>
     </div>
     <div class="form-group row">
         <div class="col-md-2"></div>
         <div class="col-md-4"> <label for="rt-spoc">RT SPOC* :</label></div>
-        <div class="col-md-4"> <input type="text" autocomplete="off" name="rt_spocs_selected" class="form-control" uib-typeahead="rt_spoc.name for rt_spoc in rt_spocs | filter:$viewValue | limitTo:10" ng-model="selected" required> </div>
+        <div class="col-md-4">
+        <select class="form-control" ng-model="selected" name="rt_spocs_selected" ng-options="S as S.label for S in rtspoc"  ng-disabled="!bhuId"  class="form-control" required>
+                <option value="" selected ></option>                                     
+                </select>
+            </div>
+
+        <!-- <div class="col-md-4"> <select type="text" autocomplete="off" name="rt_spocs_selected" ng-disabled="!bhuId" class="form-control" uib-typeahead="rt_spoc.name for rt_spoc in rt_spocs | filter:$viewValue | limitTo:10" ng-model="selected" required> </div> -->
+
+
         <div class="col-md-2"></div>
     </div>
     <div class="form-group row">
@@ -51,8 +59,8 @@
     <div class="form-group row" ng-if="plc_phase">
         <div class="col-md-2"></div>
         <div class="col-md-4">  <label>CONTENT* :</label></div>
-        <div class="col-md-4">
-
+        <div class="col-md-4" ng-show="false">
+                <textarea name="content" class="form-control plc-form-textarea" ng-model="content" id="hiddenPLCPhase" required></textarea>
             <!-- <textarea name="content" class="form-control plc-form-textarea" ng-model="content" required placeholder="Enter Content"></textarea>
              -->
             </div>
@@ -64,14 +72,14 @@
         <div id="summernoteParent" class="col-md-8"><div id="summernote"></div></div>
         <div class="col-md-2"></div>
     </div>
-
+               
     </div>
     <div class="form-group row" ng-if="plc_phase">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-          <img ng-src='{{phase_preview}}' ng-model="phase_preview" name="preview" width="500px" height="300px"/>
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <img ng-src='{{phase_preview}}' ng-model="phase_preview" name="preview" width="400px" height="250px"/>
 		</div>
-		<div class="col-md-1"></div>
+        <div class="col-md-2"></div>
 	</div>
     <div class="modal-footer row">
         <div class="col-md-4 text-center">

@@ -92,7 +92,7 @@ function SharedService($http, $q, $rootScope, spinnerService, $timeout, toaster)
       var def = $q.defer();
         spinnerService.show();
         $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/homepage/userProfile").success(function(data) {
-       // $http.get("homepage/userProfile").success(function(data) {
+      //  $http.get("homepage/userProfile").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
             $rootScope.user = data.emailAddr;
@@ -128,7 +128,7 @@ function SharedService($http, $q, $rootScope, spinnerService, $timeout, toaster)
         var def = $q.defer();
         spinnerService.show();
     $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users/"+ spoc).success(function(data) {
-   //   $http.get("utils/users/"+ spoc).success(function(data) {
+  //    $http.get("utils/users/"+ spoc).success(function(data) {
             def.resolve(data);
             spinnerService.hide();
         }).error(function() {
@@ -141,7 +141,7 @@ function SharedService($http, $q, $rootScope, spinnerService, $timeout, toaster)
         var def = $q.defer();
         spinnerService.show();
         $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users").success(function(data) {
-      //  $http.get("utils/users").success(function(data) {
+     //   $http.get("utils/users").success(function(data) {
             def.resolve(data);
             spinnerService.hide();
         }).error(function() {
@@ -236,7 +236,7 @@ function SharedService($http, $q, $rootScope, spinnerService, $timeout, toaster)
 
 
             $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport",{ params:{ bhuID : bhuid }}).success(function(data) {
-          //  $http.get("reports/BHUReport",{ params:{ bhuID : bhuid }}).success(function(data) {
+         //   $http.get("reports/BHUReport",{ params:{ bhuID : bhuid }}).success(function(data) {
                 if(data && data.errorCode){
                     toaster.pop({
                         type: 'error',
@@ -283,7 +283,8 @@ function SharedService($http, $q, $rootScope, spinnerService, $timeout, toaster)
                     "scriptExcpartOfwarranty":element.newScriptsreceived,
                     "newscriptreceived":element.newScriptsreceived,
                     "scriptsmodified":element.scriptsModified,
-                    "efortsutilized":element.efforts
+                    "efortsutilized":element.efforts,
+                    "desc": element.desc
                 }
                 cusmizedData.bhurptDetails.push(myjson);
             }); 

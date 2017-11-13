@@ -41,6 +41,7 @@ function ProjectLifeCycleController($state, $scope, $uibModal, $log, ProjectLife
                 }
             }
         });
+        $('#summernote').summernote();
 
         sharedService.getrtSpocsUsers().then(function (data) {
             $scope.rt_spocs_selected = { items: [] };
@@ -179,11 +180,26 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
         console.log(phase)
         $scope.phase_preview = ProjectLifeCycleService.getPhases(phase.label);
         $scope.plcphase_preview = ProjectLifeCycleService.getPLCPhases(phase.value);
+       
+
+        // //note-editing-area
         $('#summernote').summernote('code', $scope.plcphase_preview);
+        $( "#hiddenPLCPhase" ).val($scope.plcphase_preview).change();
+        $('#summernote').parent().css("display","block");
+        // $('#hiddenPLCPhase').append($scope.plcphase_preview);
+        
+        $(document).bind("keyup",".note-codable",function(e){
+            $( "#hiddenPLCPhase" ).val($('.note-editable').text().trim() ).change();
+        });
+       
+        // $("#summernote").load();
+        // $(".note-codable").keyup();
     };
     $scope.clearImageSource = function () {
         $scope.phase_preview = "";
         $scope.plc_phase="";
+        $('.note-editable').text("").keyup();
+        $('#summernote').parent().css("display","none");
     }
     // Any function returning a promise object can be used to load values asynchronously
     $scope.$on("seletedFile", function (event, args) {
@@ -198,6 +214,24 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
             $event.preventDefault();
         }
     }
+
+    $scope.bindrtSpoc = function(bhuid){
+        ProjectLifeCycleService.getBhuSpocDetails(bhuid).then(function(res){
+            var rtspoc = [];
+            res.forEach(function(element, indx) {
+                //avoiding the duplicate rtspoc
+                if(rtspoc.indexOf(element.rtSpoc) == -1){
+                    rtspoc.push(element.rtSpoc);
+                }
+            }, this);
+            if(rtspoc.length == 0){
+                //do it validation here
+                prompt("BHUID is not valid")
+            }
+            $scope.rt_spocs = rtspoc;
+        });
+    }
+
     $scope.submitFormNotfication = function (picFile) {
         if ($scope.notificationForm.$valid) {
             ProjectLifeCycleService.sendNotification($scope, picFile).then(function (response) {
