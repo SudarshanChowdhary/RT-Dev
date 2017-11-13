@@ -212,6 +212,27 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
              return def.promise;
     }
 
+    function getReportPhases(phase){
+        
+                var reportphase = {
+                    "Design":"<p>Hi Team,<br/><span>As part of RT PLC, we will be performing the following activities at different phases for all the Projects.</span><br/><span> As a 1st step, we would be sharing the relevant RT test scripts from repository to the project team <br/>which can be utilised during the IT phase. This will reduce the effort of writing new scripts for the projects team.</span><br/><br/><span>Please find the attached test scripts that are relevant to this Project<br/><br/> We will be scheduling a call to explain the RT PLC and RT test script walkthrough.</span><br/><br/></p>",
+        
+                    "IT":"<p>Hi Team,<br/><span>As per RT PLC, We will be scheduling a meeting to get System demo of the project changes and walkthrough of the test scripts that was used for Project IT.</span> <br/><span>Also highlight the changes that were made to the existing test script shared from RT repository during the Design phase.</span><br/><br/><span>Please share the IT Test Scripts, Test Results, Defects identified during IT.</span><br/><br/></p>",
+        
+                    "RT":"<p>Hi Team,<br/><span>RT is completed and signed off for the project changes, sign off comments are updated in the RT ticket</span> <br/><span>Thanks for all your support.</span><br/><span>Happy Go-Live!</span><br/><span>Please keep us posted on all the warranty issues to plan RT for analysing and delivering the ticket on time.</span><br/><span>Kindly provide your feedback on RT after Go-Live</span><br/><br/></p>",
+        
+                    "UAT": "<p>Hi Team,<br/><span>As per RT PLC, during the last week of UAT we will be starting with the RT readiness activities to start Testing on the Day 1 of RT timelines.</span><br/><br/><span>Please share the below details for our understanding purpose:</span><br/><span>UAT Test Results, UAT Defects, Any changes after the system demo</span><br/><br/><span>Please fill the below attached sample scoping document with the object details for the project and create a CS-SR ticket to have a final discussion on the Project changes and RT scope finalising.</span><br/><br/></p>",
+        
+                    "Warranty": "<p>Hi Team,<br/><span>In Warranty Phase, RT team does RCA on all warranty issues to check for possible RT miss</span><br/><span>Please pass feedback to project team to include the validation points/scenarios reported on to failed scripts</span><br/><span>Project team append new functionalities /validation checks to  scripts shared by RT team</span><br/><span>Validate scoping template , MetaData part of CS incidents.Mutually agree on CR analysis fields</span><br><br/></p>",
+        
+                    "P2S":"<p>Hi Team,<br/> <span>In P2S Handover, RT Team receives IT scripts from Project Team in prescribed format</span><br/><span>Changes are incorporated in automation script</span><br/><span>PD like cutover complete in QA#. This will help all systems to be in sync</span><br/><br/></p>"
+                }
+                 return plcphase[phase];
+            }
+        
+    
+
+
     function sendBhuNotification(reqData){
         var def = $q.defer();
         // spinnerService.show();

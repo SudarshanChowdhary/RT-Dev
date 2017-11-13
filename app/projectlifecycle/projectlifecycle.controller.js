@@ -183,7 +183,21 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
        
 
         // //note-editing-area
-        $('#summernote').summernote('code', $scope.plcphase_preview);
+    
+
+        $('#summernote').summernote({
+            toolbar: [
+              // [groupName, [list of button]]
+              ['style', ['style']],
+              ['font', ['bold', 'italic', 'underline', 'clear']],
+              ['fontname', ['fontname']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['table', ['table']],
+              ['insert', ['link']],
+                  ]
+          });
+          $('#summernote').summernote('code', $scope.plcphase_preview);
         $( "#hiddenPLCPhase" ).val($scope.plcphase_preview).change();
         $('#summernote').parent().css("display","block");
         // $('#hiddenPLCPhase').append($scope.plcphase_preview);
@@ -236,6 +250,7 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
         if ($scope.notificationForm.$valid) {
             ProjectLifeCycleService.sendNotification($scope, picFile).then(function (response) {
                 $uibModalInstance.close();
+                
                 if (response.status == 200) {
                     toaster.pop({
                         type: 'success',
