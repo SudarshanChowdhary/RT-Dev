@@ -4,19 +4,19 @@
 
  <script>
  $(document).ready(function(){
-        $('#summernoteReport').summernote({
-                toolbar: [
-                  // [groupName, [list of button]]
-                  ['style', ['style']],
-                  ['font', ['bold', 'italic', 'underline', 'clear']],
-                  ['fontname', ['fontname']],
-                  ['color', ['color']],
-                  ['para', ['ul', 'ol', 'paragraph']],
-                  ['table', ['table']],
-                  ['insert', ['link']],
-                      ]
-              });
-              $('#summernoteReport').summernote('code');
+    //     $('#summernote1').summernote({
+    //             toolbar: [
+    //               // [groupName, [list of button]]
+    //               ['style', ['style']],
+    //               ['font', ['bold', 'italic', 'underline', 'clear']],
+    //               ['fontname', ['fontname']],
+    //               ['color', ['color']],
+    //               ['para', ['ul', 'ol', 'paragraph']],
+    //               ['table', ['table']],
+    //               ['insert', ['link']],
+    //                   ]
+    //           });
+              $('#summernote1').summernote('code');
               $( "#hiddenBhuReports" ).change();
             //$('#summernote').parent().css("display","block");
             // $('#hiddenBhuReports').append($scope.plcphase_preview);
@@ -51,16 +51,16 @@
          <div class="col-md-2"></div>
          <div class="col-md-4">  <label>CONTENT* :</label></div>
          
-         <!-- <div class="col-md-4"  ng-show="false"><textarea name="content" class="form-control plc-form-textarea" ng-model="content" id="hiddenBhuReports" required></textarea></div> -->
-         <div class="col-md-4"><textarea name="content" class="form-control plc-form-textarea" ng-model="content" required placeholder="Enter Content"></textarea></div>
+         <div class="col-md-4"  ng-show="false"><textarea name="content" class="form-control plc-form-textarea" ng-model="content" id="hiddenBhuReports" required></textarea></div>
+         <!-- <div class="col-md-4"><textarea name="content" class="form-control plc-form-textarea" ng-model="content" required placeholder="Enter Content"></textarea></div> -->
          <div class="col-md-2"></div>
      </div>
 
-     <!-- <div class="form-group row">
+     <div class="form-group row">
             <div class="col-md-2"></div>
-            <div id="summernoteParent" class="col-md-8"><div id="summernote"></div></div>
+            <div id="summernoteParent1" class="col-md-8"><div id="summernote1"></div></div>
             <div class="col-md-2"></div>
-        </div> -->
+        </div>
 
      </div>
      <div class="modal-footer row">
