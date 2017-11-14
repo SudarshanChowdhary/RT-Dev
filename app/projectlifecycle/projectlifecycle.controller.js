@@ -232,18 +232,18 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
     $scope.bindrtSpoc = function(bhuid){
         ProjectLifeCycleService.getBhuSpocDetails(bhuid).then(function(res){
             var rtspoc = [];
-            res.forEach(function(element, indx) {
-                //avoiding the duplicate rtspoc
-                if(rtspoc.indexOf(element.rtSpoc) == -1){
-                    rtspoc.push(element.rtSpoc);
-                }
-            }, this);
-            if(rtspoc.length == 0){
-                //do it validation here
-                prompt("BHUID is not valid")
+            res.ticketDetails.forEach(function(element, indx) {
+            //avoiding the duplicate rtspoc
+            if(rtspoc.indexOf(element.rtSpoc) == -1){
+           rtspoc.push(element.rtSpoc);
             }
-            $scope.rt_spocs = rtspoc;
-        });
+            },this);
+                if(rtspoc.length == 0){
+                    //do it validation here
+                    prompt("BHUID is not valid")
+                }
+                $scope.rt_spocs = rtspoc;
+            });
     }
 
     $scope.submitFormNotfication = function (picFile) {
@@ -251,29 +251,38 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
             ProjectLifeCycleService.sendNotification($scope, picFile).then(function (response) {
                 $uibModalInstance.close();
                 
-                if (response.status == 200) {
+                if (response) {
                     toaster.pop({
                         type: 'success',
                         body: 'Notification has been sent successfully..!',
                         timeout: 3000,
                         showCloseButton: true
                     });
-                } else if (response.status == 500) {
-                    toaster.pop({
+                } else //if (response == 500 || response.status == 500) {
+                    {
+                        toaster.pop({
                         type: 'error',
-                        body: 'Notification sending error, Please contact with admin..!',
+                        body: 'Notification sending error, Please check recepient or contact with admin..!',
                         timeout: 3000,
                         showCloseButton: true
                     });
                 }
-                else if (response.isError && response.isError == true) {
-                    toaster.pop({
-                        type: 'error',
-                        body: 'Notification sending error, Please contact with admin..!',
-                        timeout: 3000,
-                        showCloseButton: true
-                    });
-                }
+                // else if (response.isError && response.isError == true) {
+                //     toaster.pop({
+                //         type: 'error',
+                //         body: 'Notification sending error, Please contact with admin..!',
+                //         timeout: 3000,
+                //         showCloseButton: true
+                //     });
+                // }
+                // else{
+                //     toaster.pop({
+                //         type: 'success',
+                //         body: response.message,
+                //         timeout: 3000,
+                //         showCloseButton: true
+                //     });
+                // }
             });
             // //var reqUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/milestone/doEmail";
             // var reqUrl = "milestone/doEmail";

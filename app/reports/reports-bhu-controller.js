@@ -57,7 +57,19 @@ function BhuReportsController($state, $scope, $http, $filter, $sce, reportservic
             enablePagination: true
         };
         bhureport.getBhuReportList(null);
+       
     }
+
+    // $scope.ReportPhase = function (phase) {
+    //     console.log(phase)
+        
+    //     $scope.Reportphase_preview = ReportsService.getReportPhases(phase.value);
+       
+    // };
+    // $scope.clearImageSource = function () {
+    //     $scope.phase_preview = "";
+    //     $scope.plc_phase="";
+    // }
 
     function getBhuReportList(bhuId) {
         reportservice.getBhuReportData(bhuId).then(function (bhuReportData) {

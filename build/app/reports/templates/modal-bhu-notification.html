@@ -1,6 +1,31 @@
 <div class="modal-header">
     <h2>BHU REPORT NOTIFICATION</h2>
  </div>
+
+ <script>
+ $(document).ready(function(){
+        $('#summernoteReport').summernote({
+                toolbar: [
+                  // [groupName, [list of button]]
+                  ['style', ['style']],
+                  ['font', ['bold', 'italic', 'underline', 'clear']],
+                  ['fontname', ['fontname']],
+                  ['color', ['color']],
+                  ['para', ['ul', 'ol', 'paragraph']],
+                  ['table', ['table']],
+                  ['insert', ['link']],
+                      ]
+              });
+              $('#summernoteReport').summernote('code');
+              $( "#hiddenBhuReports" ).change();
+            //$('#summernote').parent().css("display","block");
+            // $('#hiddenBhuReports').append($scope.plcphase_preview);
+            
+            $(document).bind("keyup",".note-codable",function(e){
+                $( "#hiddenBhuReports" ).val($('.note-editable').text().trim() ).change();
+            });
+     });
+ </script>
  <!-- <form name="notificationForm" novalidate role="form" enctype="multipart/form-data" data-ng-submit="submitFormNotfication(this)" method="post"> -->
      <form name="notificationForm" novalidate role="form" enctype="multipart/form-data">
      <div class="modal-body">
@@ -33,7 +58,7 @@
 
      <!-- <div class="form-group row">
             <div class="col-md-2"></div>
-            <div id="summernoteParentReport" class="col-md-8"><div id="summernoteReport"></div></div>
+            <div id="summernoteParent" class="col-md-8"><div id="summernote"></div></div>
             <div class="col-md-2"></div>
         </div> -->
 

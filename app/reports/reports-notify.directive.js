@@ -10,7 +10,7 @@ function ReportNotificationController($uibModal, $scope, $uibModalInstance, $htt
     $scope.selected = notificationData.item.rtsSpoc;
     $scope.rt_spocs = notificationData.rt_spocs ? notificationData.rt_spocs : [];
     $scope.rt_spocs_selected = notificationData.rt_spocs_selected ? notificationData.rt_spocs_selected : { items: [] };
-
+    init();
     $scope.selectables = [{
         label: 'Design And Development'
     }, {
@@ -25,6 +25,28 @@ function ReportNotificationController($uibModal, $scope, $uibModalInstance, $htt
         label: 'P2S'
     }];
 
+    function init() {
+        $('#summernote').summernote({
+            toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link']],
+                ]
+        });
+        
+        $( "#hiddenBhuReports" ).change();
+        //$('#summernote').parent().css("display","block");
+        // $('#hiddenBhuReports').append($scope.plcphase_preview);
+        
+        $(document).bind("keyup",".note-codable",function(e){
+            $( "#hiddenBhuReports" ).val($('.note-editable').text().trim() ).change();
+        });
+    }
     $scope.previewPhase = function (lable) {
         $scope.phase_preview = ProjectLifeCycleService.getPhases(lable);
     };
@@ -33,6 +55,7 @@ function ReportNotificationController($uibModal, $scope, $uibModalInstance, $htt
         $scope.phase_preview = "";
         $scope.content = "";
         $scope.rt_recipients = "";
+        $('.note-editable').text("").keyup();
     };
     // Any function returning a promise object can be used to load values asynchronously
     $scope.$on("seletedFile", function (event, args) {
@@ -243,7 +266,28 @@ function BhuNotifyModalDirective($uibModal, sharedService) {
                             }
                         });
                     }
+                    
                 }
+                // $('#summernote').summernote({
+                //                 toolbar: [
+                //                   // [groupName, [list of button]]
+                //                   ['style', ['style']],
+                //                   ['font', ['bold', 'italic', 'underline', 'clear']],
+                //                   ['fontname', ['fontname']],
+                //                   ['color', ['color']],
+                //                   ['para', ['ul', 'ol', 'paragraph']],
+                //                   ['table', ['table']],
+                //                   ['insert', ['link']],
+                //                       ]
+                //               });
+                //               $('#summernote').summernote('code');
+                //               $( "#hiddenBhuReports" ).change();
+                //             //$('#summernote').parent().css("display","block");
+                //             // $('#hiddenBhuReports').append($scope.plcphase_preview);
+                //             
+                //             $(document).bind("keyup",".note-codable",function(e){
+                //                 $( "#hiddenBhuReports" ).val($('.note-editable').text().trim() ).change();
+                //             });
             });
         }
     };

@@ -14,7 +14,7 @@
         <div class="col-md-2"></div>
         <div class="col-md-4"> <label for="rt-spoc">RT SPOC* :</label></div>
         <div class="col-md-4">
-        <select class="form-control" ng-model="selected" name="rt_spocs_selected" ng-options="S as S.label for S in rtspoc"  ng-disabled="!bhuId"  class="form-control" required>
+        <select class="form-control" ng-model="selected" name="rt_spocs_selected" ng-options="S for S in rt_spocs"  ng-disabled="!bhuId" required>
                 <option value="" selected ></option>                                     
                 </select>
             </div>
@@ -35,7 +35,7 @@
     <div class="col-md-2"></div>
         <div class="col-md-4"> <label for="plc-phase">RT PLC PHASE* :</label></div>
         <div class="col-md-4">
-           <select class="form-control" ng-model="plc_phase" name="plc_phase" ng-change="previewPhase(plc_phase)" ng-options="S as S.label for S in phase_selectables.selectables">
+           <select class="form-control" ng-model="plc_phase" name="plc_phase" ng-change="previewPhase(plc_phase)" ng-options="S as S.label for S in phase_selectables.selectables" required>
             <option value="selected" ></option>
             </select>
         </div>
