@@ -1,9 +1,9 @@
 
 ReportNotificationController.$inject = ['$uibModal', '$scope', '$uibModalInstance', '$http', 'notificationData',
-    'ProjectLifeCycleService', 'spinnerService', '$q', '$rootScope', 'toaster', 'Upload', '$timeout', '$log', 'sharedService', 'reportservice'];
+    'ProjectLifeCycleService', 'spinnerService', '$q', '$rootScope', 'toaster', 'Upload', '$timeout', '$log', 'sharedService', 'reportservice','$sce'];
 
 function ReportNotificationController($uibModal, $scope, $uibModalInstance, $http, notificationData,
-    ProjectLifeCycleService, spinnerService, $q, $rootScope, toaster, Upload, $timeout, $log, sharedService, reportservice) {
+    ProjectLifeCycleService, spinnerService, $q, $rootScope, toaster, Upload, $timeout, $log, sharedService, reportservice, $sce) {
     $scope.notificationFormData = {};
     $scope.bhuId = notificationData.item.bhuId;
     $scope.isBhuNotify = true;
@@ -100,7 +100,7 @@ function ReportNotificationController($uibModal, $scope, $uibModalInstance, $htt
             var reqData =  {
                 bhuDetails: JSON.stringify(dsd),
                 recepients: $scope.rt_recipients,
-                content: $scope.content,
+                content:  $("#summernote1").summernote('code'),
                 from: $rootScope.user
             }
             reportservice.sendBhuNotification(reqData).then(function (response) {
@@ -188,7 +188,7 @@ function ReportNotificationController($uibModal, $scope, $uibModalInstance, $htt
     $scope.getNotificationPreview = function () {
         if ($scope.notificationForm.$valid) {
             notificationData.recipient = notificationForm.rt_recipient.value;
-            notificationData.content = notificationForm.content.value;
+            notificationData.content = $sce.trustAsHtml( (new DOMParser).parseFromString($("#summernote1").summernote('code'), "text/html").documentElement.innerHTML );// notificationForm.content.value;
             $uibModal.open({
                 templateUrl: 'app/reports/templates/bhu-notification-preview.html',
                 controller: BhuNotificationPreviewController,
@@ -210,13 +210,15 @@ function ReportNotificationController($uibModal, $scope, $uibModalInstance, $htt
     };
 };
 
-BhuNotificationPreviewController.$inject = ['$scope', '$uibModalInstance', 'notificationData', 'reportservice'];
+BhuNotificationPreviewController.$inject = ['$scope', '$uibModalInstance', 'notificationData', 'reportservice', '$sce'];
 
-function BhuNotificationPreviewController($scope, $uibModalInstance, notificationData, reportservice) {
+function BhuNotificationPreviewController($scope, $uibModalInstance, notificationData, reportservice, $sce) {
     $scope.bhuId = notificationData.item.bhuId;
     $scope.fields = notificationData.item;
     $scope.recipients = notificationData.recipient;
-    $scope.content = notificationData.content;
+    debugger;
+    var str = $('p:first', $("#summernote1").summernote('code')).html();
+    $scope.content = $sce.trustAsHtml( (new DOMParser).parseFromString($("#summernote1").summernote('code'), "text/html").documentElement.innerHTML );//notificationData.content;
     $scope.keys = reportservice.getBhuReportColumns();
     $scope.rtspocs = notificationData.item.rtsSpoc;
     $scope.cancel = function () {

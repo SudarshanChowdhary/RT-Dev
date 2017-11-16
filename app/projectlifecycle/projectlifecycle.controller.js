@@ -154,7 +154,10 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
     $scope.isBhuNotify = false;
     $scope.notificationFormData = {};
     $scope.fileAttachment = [];
+    $scope.rtsdisabled = false;
+    $scope.phaseChange = false;
     $scope.files = [];
+    $scope.rt_spocs =[];
     $scope.phase_selectables = {
         selectables : [{
             label: 'Design And Development',
@@ -179,9 +182,13 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
     $scope.previewPhase = function (phase) {
         console.log(phase)
         $scope.phase_preview = ProjectLifeCycleService.getPhases(phase.label);
-        $scope.plcphase_preview = ProjectLifeCycleService.getPLCPhases(phase.value);
+        var plcphase_preview = ProjectLifeCycleService.getPLCPhases(phase.value);
        
-
+        if($scope.notificationForm.$valid){
+            $scope.phaseChange = true;
+        }else{
+            $scope.phaseChange = false;
+        }
         // //note-editing-area
     
 
@@ -197,8 +204,9 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
               ['insert', ['link']],
                   ]
           });
-          $('#summernote').summernote('code', $scope.plcphase_preview);
-        $( "#hiddenPLCPhase" ).val($scope.plcphase_preview).change();
+          $('#summernote').summernote('code', plcphase_preview);
+          $scope.content = plcphase_preview;
+       // $( "#hiddenPLCPhase" ).val($scope.plcphase_preview);
         $('#summernote').parent().css("display","block");
         // $('#hiddenPLCPhase').append($scope.plcphase_preview);
         
@@ -212,8 +220,11 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
     $scope.clearImageSource = function () {
         $scope.phase_preview = "";
         $scope.plc_phase="";
+        $scope.rt_spocs = [];
         $('.note-editable').text("").keyup();
         $('#summernote').parent().css("display","none");
+        $scope.phaseChange = false;
+        $scope.rtsdisabled = false;
     }
     // Any function returning a promise object can be used to load values asynchronously
     $scope.$on("seletedFile", function (event, args) {
@@ -229,28 +240,48 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
         }
     }
 
-    $scope.bindrtSpoc = function(bhuid){
-        ProjectLifeCycleService.getBhuSpocDetails(bhuid).then(function(res){
-            var rtspoc = [];
-            res.ticketDetails.forEach(function(element, indx) {
-            //avoiding the duplicate rtspoc
-            if(rtspoc.indexOf(element.rtSpoc) == -1){
-           rtspoc.push(element.rtSpoc);
+    $scope.bindrtSpoc = function(){
+        var bhuid = $scope.bhuId;
+        if(bhuid.length > 4){
+            $timeout( function(){
+                ProjectLifeCycleService.getBhuSpocDetails($scope.bhuId).then(function(res){
+                    var rtspoc = [];
+                    if(res && res.ticketDetails ){
+                        res.ticketDetails.forEach(function(element, indx) {
+                        //avoiding the duplicate rtspoc
+                            if(rtspoc.indexOf(element.rtSpoc) == -1){
+                               rtspoc.push(element.rtSpoc);
+                            }
+                        },this);
+                    }
+                    if(rtspoc.length == 0){
+                        //do it validation here
+                        toaster.pop({
+                            type: 'error',
+                            body: 'Please try correct #BHUID...!',
+                            timeout: 3000,
+                            showCloseButton: true               
+                        });
+                        //disabled
+                        $scope.rtsdisabled = false;
+                    }
+                    else{
+                        //enable
+                        $scope.rtsdisabled = true;
+                    }
+                    $scope.rt_spocs = rtspoc;
+                    });
+                },1000);
+            }else{
+                $scope.rt_spocs = [];
+                $scope.rtsdisabled = false;
             }
-            },this);
-                if(rtspoc.length == 0){
-                    //do it validation here
-                    prompt("BHUID is not valid")
-                }
-                $scope.rt_spocs = rtspoc;
-            });
     }
 
     $scope.submitFormNotfication = function (picFile) {
-        if ($scope.notificationForm.$valid) {
+        if ($scope.notificationForm.$valid ) { //$scope.content==""
             ProjectLifeCycleService.sendNotification($scope, picFile).then(function (response) {
                 $uibModalInstance.close();
-                
                 if (response) {
                     toaster.pop({
                         type: 'success',
@@ -267,6 +298,7 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
                         showCloseButton: true
                     });
                 }
+                $(".loading-backdrop").removeClass('loading');
                 // else if (response.isError && response.isError == true) {
                 //     toaster.pop({
                 //         type: 'error',

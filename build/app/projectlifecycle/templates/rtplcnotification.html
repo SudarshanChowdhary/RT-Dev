@@ -7,14 +7,14 @@
     <div class="form-group row">
         <div class="col-md-2"></div>
         <div class="col-md-4"> <label for="date">BHU / IHU #* :</label></div>
-        <div class="col-md-4"> <input type="text" autocomplete="off" data-ng-keypress="validateNumber($event)" ng-blur="bindrtSpoc(bhuId)" minlength="1" min="1" name="bhuId" class="form-control"  ng-model="bhuId" ng-readonly="bhuId && isBhuNotify" required> </div>
+        <div class="col-md-4"> <input type="text" autocomplete="off" data-ng-keypress="validateNumber($event)" ng-change="bindrtSpoc()" minlength="1" min="1" name="bhuId" class="form-control"  ng-model="bhuId" ng-readonly="bhuId && isBhuNotify" required> </div>
         <div class="col-md-2"></div>
     </div>
     <div class="form-group row">
         <div class="col-md-2"></div>
         <div class="col-md-4"> <label for="rt-spoc">RT SPOC* :</label></div>
         <div class="col-md-4">
-        <select class="form-control" ng-model="selected" name="rt_spocs_selected" ng-options="S for S in rt_spocs"  ng-disabled="!bhuId" required>
+        <select class="form-control" ng-model="selected" name="rt_spocs_selected" ng-options="S for S in rt_spocs" ng-disabled="!rtsdisabled" required>
                 <option value="" selected ></option>                                     
                 </select>
             </div>
@@ -33,10 +33,10 @@
     </div>
     <div class="form-group row">
     <div class="col-md-2"></div>
-        <div class="col-md-4"> <label for="plc-phase">RT PLC PHASE* :</label></div>
+        <div class="col-md-4"> <label for="plc_phases">RT PLC PHASE* :</label></div>
         <div class="col-md-4">
-           <select class="form-control" ng-model="plc_phase" name="plc_phase" ng-change="previewPhase(plc_phase)" ng-options="S as S.label for S in phase_selectables.selectables" required>
-            <option value="selected" ></option>
+           <select class="form-control" ng-model="plc_phase" name="plc_phases" ng-change="previewPhase(plc_phase)" ng-options="S as S.label for S in phase_selectables.selectables" required>
+            <option value="selected" selected></option>
             </select>
         </div>
         <div class="col-md-2"></div>
@@ -50,7 +50,7 @@
             <!-- <button ng-click="picFile = null" ng-show="picFile">Remove</button> -->
             <i class="glyphicon glyphicon-remove" ng-click="picFile = null" ng-show="picFile"></i>
         </div>
-        <i ng-show="myForm.file.$error.required">*required</i><br>
+        <!-- <i ng-show="myForm.file.$error.required">*required</i><br> -->
         <i ng-show="myForm.file.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 2MB</i>
         <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb">
         <div class="col-md-1"></div>
@@ -83,10 +83,10 @@
 	</div>
     <div class="modal-footer row">
         <div class="col-md-4 text-center">
-            <button class="btn btn-primary" ng-click="submitFormNotfication(picFile)" ng-disabled="notificationForm.$invalid">SEND EMAIL</button>
+            <button class="btn btn-primary" ng-click="submitFormNotfication(picFile)" ng-disabled="notificationForm.$invalid && !phaseChange" ng-cloak>SEND EMAIL</button>
         </div>
         <div class="col-md-4 text-center">
-            <button type="reset" class="btn btn-primary" ng-click="clearImageSource()" ng-disabled="form.userForm.$invalid">RESET</button>
+            <button type="reset" class="btn btn-primary" ng-click="clearImageSource()">RESET</button>
         </div>
         <div class="col-md-4 text-center">
             <button class="btn btn-warning" ng-click="cancel()">CANCEL</button>

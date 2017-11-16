@@ -26,7 +26,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
         var def = $q.defer();
         if(!$(".loading-backdrop").hasClass('loading')){                    $(".loading-backdrop").addClass('loading');                 }
             $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/list")
-            $http.get("reports/list")
+         //  $http.get("reports/list")
                 .success(function(data) {
                     if(data.errorCode){
                         def.resolve([]);
@@ -63,9 +63,9 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
             getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/phase/"+ p;
         }else if(!p && y && !(q || m)){
           //  getUrl = "reports/BHUReport/"+ y;
-            getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/"+ y;
+           getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/"+ y;
         }else if(!p && y && (q || m)){
-          //  getUrl = "reports/BHUReport/"+ y +"/"+ q;
+        //  getUrl = "reports/BHUReport/"+ y +"/"+ q;
             getUrl = "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/"+ y +"/"+ q;
         }
         $http.get(getUrl, {
@@ -141,7 +141,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
         if(!$(".loading-backdrop").hasClass('loading')){                    $(".loading-backdrop").addClass('loading');                 }
 
          $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/warranty/"+bhuId)
-      //   $http.get("reports/BHUReport/warranty/"+bhuId)
+       // $http.get("reports/BHUReport/warranty/"+bhuId)
              .success(function(data) {
                 var cusmizedData = {
                     "totalCount": data ? data.length : 0,
@@ -254,7 +254,7 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
 
         $http({
             url:"https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport/sendBHUEmail",
-       //     url: "reports/BHUReport/sendBHUEmail",
+          //  url: "reports/BHUReport/sendBHUEmail",
             params: {
                         receipients: reqData.recepients,
                         content: reqData.content,
@@ -274,28 +274,28 @@ function ReportsService($http, $q, $sce, spinnerService, sharedService, $timeout
 
     //this is the common function to export excel
     function exportExcel(p,y,q,m){
-        return "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHURepDownload/"+ p +"/"+ y +"/"+ q +"/"+ m;
-      //   return "reports/BHURepDownload/"+ p +"/"+ y +"/"+ q +"/"+ m;
+      //  return "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHURepDownload/"+ p +"/"+ y +"/"+ q +"/"+ m;
+         return "reports/BHURepDownload/"+ p +"/"+ y +"/"+ q +"/"+ m;
     }
 
     function exportStatusToExcelSrv(bhuId, spoc){
-        return "https://rtdashboardd.rno.apple.com:9012/RTDashboard/milestone/download/"+ bhuId +"/" + spoc;
-      //   return "milestone/download/"+ bhuId +"/" + spoc;
+     //   return "https://rtdashboardd.rno.apple.com:9012/RTDashboard/milestone/download/"+ bhuId +"/" + spoc;
+         return "milestone/download/"+ bhuId +"/" + spoc;
     }
 
     function exportWarrantyToExcelSrv(bhuId){
-        return "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUWarrantyDownload/"+ bhuId;
-      //  return "reports/BHUWarrantyDownload/"+ bhuId;
+     //   return "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUWarrantyDownload/"+ bhuId;
+        return "reports/BHUWarrantyDownload/"+ bhuId;
     }
 
     function exportEffortsToExcelSrv(bhuId , spoc, size){
-        return "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUEffortsDownload/"+ bhuId +"/" + spoc +"/"+ size;
-      //  return "reports/BHUEffortsDownload/"+ bhuId +"/" + spoc +"/"+ size;
+       // return "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUEffortsDownload/"+ bhuId +"/" + spoc +"/"+ size;
+        return "reports/BHUEffortsDownload/"+ bhuId +"/" + spoc +"/"+ size;
     }
 
     function exportBhuDtlsToExcelSrv(bhuId){
-       return "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUTicketsDownload/"+ bhuId;
-      // return "reports/BHUTicketsDownload/"+ bhuId;
+      // return "https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUTicketsDownload/"+ bhuId;
+       return "reports/BHUTicketsDownload/"+ bhuId;
     }
 
     function getBhuReportColumns(){
