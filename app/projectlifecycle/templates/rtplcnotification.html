@@ -8,7 +8,7 @@
         <div class="col-md-2"></div>
         <div class="col-md-4"> <label for="date">BHU / IHU #* :</label></div>
         <div class="col-md-4"> <input type="text" autocomplete="off" data-ng-keypress="validateNumber($event)" ng-change="bindrtSpoc()" minlength="1" min="1" name="bhuId" class="form-control"  ng-model="bhuId" ng-readonly="bhuId && isBhuNotify" required> </div>
-        <div class="col-md-2"></div>
+        <div class="col-md-2"><span ng-if="incorrectBHUID" style="font-size:12px; color:red; right:2px; position:absolute; margin: 7px 15px 0 0;">BHU# not found</span></div>
     </div>
     <div class="form-group row">
         <div class="col-md-2"></div>

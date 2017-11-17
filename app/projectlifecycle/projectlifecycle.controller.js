@@ -56,12 +56,14 @@ function ProjectLifeCycleController($state, $scope, $uibModal, $log, ProjectLife
 }
 
 ModalMileStoneController.$inject = ['$scope', '$uibModalInstance', 'milestoneData',
-    'ProjectLifeCycleService', 'spinnerService', '$filter', 'toaster'];
+    'ProjectLifeCycleService', 'spinnerService', '$filter', 'toaster', '$timeout'];
 
-function ModalMileStoneController($scope, $uibModalInstance, milestoneData, ProjectLifeCycleService, spinnerService, $filter, toaster) {
+function ModalMileStoneController($scope, $uibModalInstance, milestoneData, ProjectLifeCycleService, spinnerService, $filter, toaster, $timeout) {
     $scope.milestoneRequiredData = {};
     $scope.date = new Date();
     $scope.resetClicked = false;
+    $scope.rt_spocs =[];
+    $scope.incorrectBHUID = false;
     $scope.dateOptions = {
         dateDisabled: false,
         showWeeks: false,
@@ -82,6 +84,52 @@ function ModalMileStoneController($scope, $uibModalInstance, milestoneData, Proj
             $event.preventDefault();
         }
     }
+        
+// testing purpose
+
+$scope.bindrtSpoc = function(){
+    var bhuid = $scope.bhuId;
+    $scope.incorrectBHUID = false;
+    if(bhuid.length > 4){
+        $timeout( function(){
+            ProjectLifeCycleService.getBhuSpocDetails($scope.bhuId).then(function(res){
+                var rtspoc = [];
+                if(res && res.ticketDetails ){
+                    res.ticketDetails.forEach(function(element, indx) {
+                    //avoiding the duplicate rtspoc
+                        if(rtspoc.indexOf(element.rtSpoc) == -1){
+                           rtspoc.push(element.rtSpoc);
+                        }
+                    },this);
+                }
+                if(rtspoc.length == 0){
+                    //do it validation here
+                    // toaster.pop({
+                    //     type: 'error',
+                    //     body: 'Please try correct #BHUID...!',
+                    //     timeout: 3000,
+                    //     showCloseButton: true               
+                    // });
+                    $scope.incorrectBHUID = true;
+                    //disabled
+                    $scope.rtsdisabled = false;
+                }
+                else{
+                    //enable
+                    $scope.rtsdisabled = true;
+                }
+                $scope.rt_spocs = rtspoc;
+                });
+            },1000);
+        }else{
+            $scope.rt_spocs = [];
+            $scope.rtsdisabled = false;
+        }
+}
+
+
+
+
 
     $scope.plc_phase = null;
     $scope.modelOptions = {
@@ -127,7 +175,7 @@ function ModalMileStoneController($scope, $uibModalInstance, milestoneData, Proj
                     if (res && res.errorCode) {
                         toaster.pop({
                             type: 'error',
-                            body: 'Milestone does not added, Please check BHU ID# and RT SPOC details..!',
+                            body: 'Milestone not added, Please check BHU ID# and RT SPOC details..!',
                             timeout: 3000,
                             showCloseButton: true
                         });
@@ -156,6 +204,7 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
     $scope.fileAttachment = [];
     $scope.rtsdisabled = false;
     $scope.phaseChange = false;
+    $scope.incorrectBHUID = false;
     $scope.files = [];
     $scope.rt_spocs =[];
     $scope.phase_selectables = {
@@ -242,6 +291,7 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
 
     $scope.bindrtSpoc = function(){
         var bhuid = $scope.bhuId;
+        $scope.incorrectBHUID = false;
         if(bhuid.length > 4){
             $timeout( function(){
                 ProjectLifeCycleService.getBhuSpocDetails($scope.bhuId).then(function(res){
@@ -256,12 +306,13 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
                     }
                     if(rtspoc.length == 0){
                         //do it validation here
-                        toaster.pop({
-                            type: 'error',
-                            body: 'Please try correct #BHUID...!',
-                            timeout: 3000,
-                            showCloseButton: true               
-                        });
+                        // toaster.pop({
+                        //     type: 'error',
+                        //     body: 'Please try correct #BHUID...!',
+                        //     timeout: 3000,
+                        //     showCloseButton: true               
+                        // });
+                        $scope.incorrectBHUID = true;
                         //disabled
                         $scope.rtsdisabled = false;
                     }
@@ -277,7 +328,8 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
                 $scope.rtsdisabled = false;
             }
     }
-
+    
+    
     $scope.submitFormNotfication = function (picFile) {
         if ($scope.notificationForm.$valid ) { //$scope.content==""
             ProjectLifeCycleService.sendNotification($scope, picFile).then(function (response) {

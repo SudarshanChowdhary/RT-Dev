@@ -42,7 +42,7 @@ function BhuReportsController($state, $scope, $http, $filter, $sce, reportservic
             "margin-top": "0.5%"
         });
         angular.element(".export-excel").css({
-            "margin-right": sharedService.getWindowWidth() > 1500 ? "5.5%" : "7.8%",
+            "margin-right": sharedService.getWindowWidth() > 1500 ? "4.5%" : "7.8%",
             "margin-top": "0.5%"
         });
 

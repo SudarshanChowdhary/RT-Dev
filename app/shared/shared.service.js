@@ -91,8 +91,8 @@ function SharedService($http, $q, $rootScope, spinnerService, $timeout, toaster)
     function getUser(){
       var def = $q.defer();
        if(!$(".loading-backdrop").hasClass('loading')){                    $(".loading-backdrop").addClass('loading');                 }
-        $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/homepage/userProfile").success(function(data) {
-      //  $http.get("homepage/userProfile").success(function(data) {
+     //   $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/homepage/userProfile").success(function(data) {
+        $http.get("homepage/userProfile").success(function(data) {
             def.resolve(data);
            $(".loading-backdrop").removeClass('loading');
             $rootScope.user = data.emailAddr;
@@ -107,8 +107,8 @@ function SharedService($http, $q, $rootScope, spinnerService, $timeout, toaster)
         var def = $q.defer();
         if(!$(".loading-backdrop").hasClass('loading')){                    $(".loading-backdrop").addClass('loading');                 }
        // spinnerService.show("B");
-           $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/admin/teamdetails").success(function(data) {
-          // $http.get("admin/teamdetails").success(function(data) {
+        //   $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/admin/teamdetails").success(function(data) {
+           $http.get("admin/teamdetails").success(function(data) {
                 def.resolve(data);
                 var user = $rootScope.user;
                 $rootScope.isTeamMember = false;
@@ -129,8 +129,8 @@ function SharedService($http, $q, $rootScope, spinnerService, $timeout, toaster)
     function getSpocDetails(spoc){
         var def = $q.defer();
        if(!$(".loading-backdrop").hasClass('loading')){                    $(".loading-backdrop").addClass('loading');                 }
-    $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users/"+ spoc).success(function(data) {
-  //    $http.get("utils/users/"+ spoc).success(function(data) {
+  //  $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users/"+ spoc).success(function(data) {
+      $http.get("utils/users/"+ spoc).success(function(data) {
             def.resolve(data);
            $(".loading-backdrop").removeClass('loading');
         }).error(function() {
@@ -142,8 +142,8 @@ function SharedService($http, $q, $rootScope, spinnerService, $timeout, toaster)
     function getrtSpocsUsers(){
         var def = $q.defer();
        if(!$(".loading-backdrop").hasClass('loading')){                    $(".loading-backdrop").addClass('loading');                 }
-        $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users").success(function(data) {
-     //   $http.get("utils/users").success(function(data) {
+     //   $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/utils/users").success(function(data) {
+        $http.get("utils/users").success(function(data) {
             def.resolve(data);
            $(".loading-backdrop").removeClass('loading');
         }).error(function() {
@@ -155,8 +155,8 @@ function SharedService($http, $q, $rootScope, spinnerService, $timeout, toaster)
     function getSearchTestScriptsByBhuid(bhuId){
         var def = $q.defer();
        if(!$(".loading-backdrop").hasClass('loading')){                    $(".loading-backdrop").addClass('loading');                 }
-        $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/tickets/bhudetails/"+bhuId).success(function(data) {
-      // $http.get("tickets/bhudetails/"+bhuId).success(function(data) {
+      //  $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/tickets/bhudetails/"+bhuId).success(function(data) {
+       $http.get("tickets/bhudetails/"+bhuId).success(function(data) {
             def.resolve(data);
            $(".loading-backdrop").removeClass('loading');
         }).error(function() {
@@ -242,8 +242,8 @@ function SharedService($http, $q, $rootScope, spinnerService, $timeout, toaster)
             //    def.resolve(a);
 
 
-            $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport",{ params:{ bhuID : bhuid }}).success(function(data) {
-          // $http.get("reports/BHUReport",{ params:{ bhuID : bhuid }}).success(function(data) {
+          //  $http.get("https://rtdashboardd.rno.apple.com:9012/RTDashboard/reports/BHUReport",{ params:{ bhuID : bhuid }}).success(function(data) {
+           $http.get("reports/BHUReport",{ params:{ bhuID : bhuid }}).success(function(data) {
                 if(data && data.errorCode){
                     toaster.pop({
                         type: 'error',
