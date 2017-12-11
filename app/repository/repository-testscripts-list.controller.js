@@ -38,23 +38,23 @@ function RepositoryTestScriptListController($state, $stateParams, $scope, $rootS
     }, {
         headerText: 'Expected Result',
         dataField: 'expectedTxt',
-        thClasses: 'width15',
-        tdClasses: 'width15 wordwrap-text'
+        thClasses: 'width35',
+        tdClasses: 'width35 wordwrap-text'
     }, {
         headerText: 'T-Code',
         dataField: 'tcodeTxt',
+        thClasses: 'width5',
+        tdClasses: 'width5 wordwrap-text'
+    }, {
+        headerText: 'Business Process Step',
+        dataField: 'inputDataTxt',
         thClasses: 'width10',
         tdClasses: 'width10 wordwrap-text'
     }, {
-        headerText: 'Input Data',
-        dataField: 'inputDataTxt',
-        thClasses: 'width15',
-        tdClasses: 'width15 wordwrap-text'
-    }, {
         headerText: 'System',
         dataField: 'commentsTxt',
-        thClasses: 'width15',
-        tdClasses: 'width15'
+        thClasses: 'width5',
+        tdClasses: 'width5'
     }];
     $scope.itemRenderers = {
         'description': 'repo-desc-item-renderer',

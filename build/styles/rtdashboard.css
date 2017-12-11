@@ -7430,7 +7430,7 @@ textarea {
     .container.main-container .rt-repository-container .details-tab label {
       text-align: left; }
     .container.main-container .rt-repository-container .details-tab .test-script-description {
-      min-height: 200px;
+      min-height: 420px;
       max-height: 300px;
       overflow-y: auto;
       margin-top: 10px; }

@@ -269,6 +269,7 @@ function ModalNotificationController($scope, $uibModalInstance, $http, notificat
     $scope.clearImageSource = function () {
         $scope.phase_preview = "";
         $scope.plc_phase="";
+        $scope.fileAttachment = [];
         $scope.rt_spocs = [];
         $('.note-editable').text("").keyup();
         $('#summernote').parent().css("display","none");
